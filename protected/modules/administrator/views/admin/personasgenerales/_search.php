@@ -34,10 +34,10 @@
 			 </td>
 			 
 			 <td width="20%"align="left" colspan="3">			 
-			 <?php echo $form->labelEx($model,'CESA_ID'); ?>
-			 <?php $data = CHtml::listData(Cesantias::model()->findAll(),'CESA_ID','CESA_NOMBRE') ?>
-			 <?php echo $form->dropDownList($model,'CESA_ID',$data, array('class'=>'span2','prompt'=>'Elige...')); ?>
-			 <?php echo $form->error($model,'CESA_ID'); ?>			 
+			 <?php echo $form->labelEx($model,'UNID_ID'); ?>
+			 <?php $data = CHtml::listData(Unidades::model()->findAll(),'UNID_ID','UNID_NOMBRE') ?>
+			 <?php echo $form->dropDownList($model,'UNID_ID',$data, array('class'=>'span2','prompt'=>'Elige...')); ?>
+			 <?php echo $form->error($model,'UNID_ID'); ?>			 
 			 </td>
             </tr>
 		   

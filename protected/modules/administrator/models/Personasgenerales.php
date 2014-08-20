@@ -58,7 +58,7 @@ class Personasgenerales extends CActiveRecord
 	public $Primatecnica, $Gastorepresentacion, $Tipocargo, $Sindicato, $Unidad, $Cesantias;	
 	public $ESEP_FECHAREGISTRO;	
 	public $PEG_ID, $PEG_IDENTIFICACION, $PEG_PRIMERNOMBRE, $PEG_SEGUNDONOMBRE, $PEG_PRIMERAPELLIDO, $PEG_SEGUNDOAPELLIDOS, $EMPL_CARGO, $EMPL_ID;	
-	public $TICA_ID;	
+	public $TICA_ID, $UNID_ID;	
 	 
 	public static function model($className=__CLASS__)
 	{
@@ -98,7 +98,7 @@ class Personasgenerales extends CActiveRecord
 				   PEGE_EMAIL, PEGE_NUMEROCUENTA, PEGE_FECHANACIMIENTO, PEGE_LUGAREXPEDIDENTIDAD, 
 				   PEGE_FECHAEXPEDIDENTIDAD, PEGE_FOTO, TIID_ID, SALU_ID, PENS_ID, SIND_ID, SEXO_ID, PAIS_ID, 
 				   DEPA_ID, MUNI_ID, GRSA_ID, ESCI_ID, CESA_ID, PEGE_FECHACAMBIO, PEGE_REGISTRADOPOR, 
-				   ESEP_FECHAREGISTRO, TICA_ID', 'safe', 'on'=>'search'),
+				   ESEP_FECHAREGISTRO, TICA_ID, UNID_ID', 'safe', 'on'=>'search'),
 			
 			array('PEGE_ID, PEGE_IDENTIFICACION, PEGE_PRIMERNOMBRE, PEGE_SEGUNDONOMBRE, PEGE_PRIMERAPELLIDO, PEGE_SEGUNDOAPELLIDOS, PEGE_FECHAINGRESO, PEGE_DIRECCION, PEGE_TELEFONOFIJO, PEGE_TELEFONOMOVIL, PEGE_EMAIL, PEGE_NUMEROCUENTA, PEGE_FECHANACIMIENTO, PEGE_LUGAREXPEDIDENTIDAD, PEGE_FECHAEXPEDIDENTIDAD, PEGE_FOTO, TIID_ID, SALU_ID, PENS_ID, SIND_ID, SEXO_ID, PAIS_ID, DEPA_ID, MUNI_ID, GRSA_ID, ESCI_ID, CESA_ID, PEGE_FECHACAMBIO, PEGE_REGISTRADOPOR, ESEP_FECHAREGISTRO', 'safe', 'on'=>'retirados'),
 			
@@ -174,6 +174,7 @@ class Personasgenerales extends CActiveRecord
 						'PEG_SEGUNDOAPELLIDOS' => 'SEGUNDO APELLIDO',
 						'EMPL_CARGO' => 'CARGO',
 						'TICA_ID' => 'TIPO DE CARGO',
+						'UNID_ID' => 'UNIDAD',
 		);
 	}
 
@@ -238,7 +239,12 @@ class Personasgenerales extends CActiveRecord
                                      WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = t."PEGE_ID"
                                      ORDER BY eep."ESEP_FECHAREGISTRO" DESC
                                      LIMIT 1
-                                    ) AS "TICA_ID"';
+                                    ) AS "TICA_ID", (SELECT  ep."UNID_ID"
+                                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = t."PEGE_ID"
+                                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                                     LIMIT 1
+                                    ) AS "UNID_ID"';
 		$criteria->join = ' 
 		                   INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON t."PEGE_ID" = ep."PEGE_ID"  						  
 						  '; 
@@ -274,6 +280,7 @@ class Personasgenerales extends CActiveRecord
 		$criteria->compare('"PEGE_FECHACAMBIO"',$this->PEGE_FECHACAMBIO,true);
 		$criteria->compare('"PEGE_REGISTRADOPOR"',$this->PEGE_REGISTRADOPOR);
 		$criteria->compare('"TICA_ID"',$this->TICA_ID);
+		$criteria->compare('"UNID_ID"',$this->UNID_ID);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
