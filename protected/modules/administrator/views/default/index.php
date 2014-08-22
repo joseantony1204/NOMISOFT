@@ -1,4 +1,9 @@
 <?php
+Yii::import('application.extensions.mail.');
+$phpExcelPath = Yii::getPathOfAlias('ext.mail');
+include($phpExcelPath . DIRECTORY_SEPARATOR . 'class.phpmailer.php');
+include($phpExcelPath . DIRECTORY_SEPARATOR . 'class.smtp.php');
+
 $this->breadcrumbs=array(
 	$this->module->id,
 );
@@ -22,10 +27,84 @@ function NombreMes($m)
   case 12: return "Diciembre";
  }
 }
+
+$Cumpleanios = new Cumpleanios;
+$Cumpleanios->getCumpleaniostoday();
+$filas = count($Cumpleanios->personas);
+
 $dia = date("j");
 $mes = NombreMes(date("m"));
 $anio = date("Y");
 $fecha = $dia." de ".$mes." del ".$anio;
+
+for($ln=0;$ln<=$filas-1;$ln++){
+ $today = date("Y-m-d");
+ $Cumpleanios->updateSendmail($Cumpleanios->personas[$ln][0],$today);
+ $Personasgenerales = Personasgenerales::model()->findByPk($Cumpleanios->personas[$ln][2]);
+ $nombre = trim($Personasgenerales->PEGE_PRIMERAPELLIDO).' '.trim($Personasgenerales->PEGE_SEGUNDOAPELLIDOS).' '.trim($Personasgenerales->PEGE_PRIMERNOMBRE).' '.trim($Personasgenerales->PEGE_SEGUNDONOMBRE);
+ $imageUrl = Yii::app()->request->baseUrl . '/images/cumple.png';
+ $image = CHtml::image($imageUrl);
+ if($Cumpleanios->estado!=1){		
+	$body = '
+	<!DOCTYPE html PUBLIC>
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+	<body>
+
+	<table width="80%" border="0">
+	  <tr>
+		<td width="272">&nbsp;</td>
+	  </tr>
+	  <tr>
+		<td>
+		<div align="justify">
+		  <p><strong>LA UNIVERSIDAD DE LA GUAJIRA  </strong> y la <strong>OFICINA DE TALENTO HUMANO</strong> en este dia tan especial, dia de su cumpleaños, le desea 
+			las mas sinceras felicitaciones, deseandole que pase un feliz dia en compañia de su familia y ademas reiterarle los agradecimientos por su labor prestada como empleado 
+			de esta Institucion.    </p>
+		</div>
+		</td>
+	  </tr>
+	  <tr>
+		<td>Esperamos que se cumplan muchos de tus deseos.
+		<strong> '.$nombre. ' </strong> <p><strong>Feliz Cumpleaños!</strong></p></td>
+	  </tr>
+	  <tr>
+		<td align="center">'.$image.'</td>
+	  </tr>
+	</table>
+
+	</body>
+	</html>';
+	
+	
+	 $email = "th@uniguajira.edu.co";
+	 $pass = "talento";
+	 $asunto = utf8_encode("Felicitar por cumpleanos");
+	 $mail = new PHPMailer();
+	 $mail->Host = "localhost";
+	 $mail->Username = $email; 
+	 $mail->Password = $pass;
+	 $mail->From = $email;
+	 $mail->FromName = "Universidad de la Guajira - Departamento de Talento Humano";
+	 $mail->Subject = $asunto." : ".$Personasgenerales->PEGE_IDENTIFICACION." - ".$nombre;
+	 $mail->Timeout=10;
+	 $mail->AddAddress($Personasgenerales->PEGE_EMAIL);
+	 $mail->Body = $body;
+	 $mail->AddReplyTo($email, "Responder a este mail");
+	 $mail->AddEmbeddedImage($imageUrl, "imagen", "cumple.png");
+	 $mail->AltBody = "Mensaje de prueba mandado con phpmailer en formato solo texto";
+	 $mail->IsHTML(true);
+	 $exito = $mail->Send();
+	 $intentos=1; 
+	  while ((!$exito) && ($intentos < 2)){
+	   sleep(2);
+	   $exito = $mail->Send();
+	   $intentos=$intentos+1;
+	  }
+  }
+}
 
 ?>
 	
@@ -90,14 +169,12 @@ $fecha = $dia." de ".$mes." del ".$anio;
 							  
 							  </td>
                               <td width="370" ><strong>Hoy es :</strong> <?php echo $fecha;?>
-                              <?php
+							  <?php
 							  if($filas>0){
                                echo '<br />
-                               Empleados que se encuentran  cumpliendo años de vida en el dia de hoy : ';							  
-							   echo "<a href=\"javascript:void(0);\"  onclick=\"window.location='files/cumpleanos/cumpleanos.php'\">";
-							   echo $filas; 
-							   echo '</a>';
-							   echo "<font color='#1C8A1F'> E-Mail Enviado. . . </font>";
+                               Empleados que se encuentran  cumpliendo años de vida en el dia de hoy: ';							  
+							   echo CHtml::link($filas,array('admin/cumpleanios/admin'));
+							   echo "<font color='#1C8A1F'> Notificaciones enviadas. . . </font>";
 							  }
 							  ?>
 							  </td>

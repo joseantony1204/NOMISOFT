@@ -19,27 +19,27 @@ Echo.
 
 		Echo    3    DIRECCION                                         
 
-		Echo    4    FACULTAD DE CIENCIAS BASICAS (DOCENTE)            
+		Echo    4    FACULTAD CIENCIAS BASICAS - DOCENTE               
 
-		Echo    5    FACULTAD DE ADMINISTRACION (DOCENTE)              
+		Echo    5    FACULTAD C.ECONOMICA Y ADM - DOCENTE              
 
-		Echo    6    ADMINISTRACION (ADMINISTRATIVO)                   
+		Echo    6    C.ECONOMICA Y ADM  - ADMINISTRATIVO               
 
-		Echo    7    FACULTAD DE EDUCACION (DOCENTE)                   
+		Echo    7    FACULTAD DE EDUCACION - DOCENTE                   
 
-		Echo    8    FACULTAD DE EDUCACION (ADMINISTRATIVO)            
+		Echo    8    EDUCACION - ADMINISTRATIVO                        
 
-		Echo    9    FACULTAD DE INGENIERIA (DOCENTE)                  
+		Echo    9    FACULTAD DE INGENIERIA - DOCENTE                  
 
-		Echo    10   INGENIERIA (ADMINISTRATIVO)                       
+		Echo    10   INGENIERIA - ADMINISTRATIVO                       
 
 		Echo    11   SERVICIOS GENERALES                               
 
-		Echo    12   TRABAJO SOCIAL-ADMINISTRATIVO                     
+		Echo    12   C.SOCIALES Y HUMANAS - ADMINISTRATIVO             
 
-		Echo    13   TRABAJO SOCIAL (DOCENTES)                         
+		Echo    13   FACULTAD C.SOCIALES Y HUMANAS - DOCENTE           
 
-		Echo    14   CIENCIAS BASICAS ADMINISTRATIVOS                  
+		Echo    14   CIENCIAS BASICAS  - ADMINISTRATIVO                
 Echo.
 Echo   1010  TODO
 Echo   1020  ADMINISTRATIVOS

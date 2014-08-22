@@ -136,7 +136,7 @@ class Usuarios extends CActiveRecord
 	public function getDatosUsuario($id)
 	{
 	 $connection = Yii::app()->db;
-	 $sql = 'SELECT  pn."PENA_NOMBRES" AS NOMBRE
+	 $sql = 'SELECT  (pn."PENA_NOMBRES" || '."' '".' || pn."PENA_APELLIDOS") AS "NOMBRE"
 	 FROM "TBL_SEGPERSONASNATURALES" AS pn, "TBL_SEGUSUARIOS" AS u
 	 WHERE u."PENA_ID" = pn."PENA_ID" AND u."USUA_ID" = '.$id.' LIMIT 1';
 	 $data = $connection->createCommand($sql)->queryColumn(); 

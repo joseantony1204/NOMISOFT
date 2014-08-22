@@ -40,7 +40,7 @@ class PersonasgeneralesController extends Controller
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'','view',
                                  'delete','admin','create','update','dptos','municipios','creates', 'retirados','crearretiro',
-                                 'insertretiro', 
+                                 'insertretiro',
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
 			),			
@@ -367,5 +367,18 @@ class PersonasgeneralesController extends Controller
          echo CHtml::tag('option',array('value'=>$valor),CHtml::encode($descripcion), true );                
        }
      }
+	 
+	public function actionCumpleanios()
+     {   
+	  echo $Personasgenerales = Personasgenerales::model()->findAll();	
+	  	  
+	  foreach($Personasgenerales as $persona){
+	  echo $persona->PEGE_ID.'<br>';
+	   $Cumpleanios = new Cumpleanios;
+	   $Cumpleanios->PEGE_ID = $persona->PEGE_ID;
+	   $Cumpleanios->CUMP_FECHANOTIFIACION = '2014-08-21';
+	   $Cumpleanios->save();
+	  }  
+     } 
 	
 }

@@ -30,7 +30,8 @@
                     array('label'=>'Administrar', 'url'=>array('/administrator/admin/personasgenerales/admin',), 'visible'=>!Yii::app()->user->isGuest,),
                     array('label'=>'Nuevo', 'url'=>array('/administrator/admin/personasgenerales/create',), 'visible'=>!Yii::app()->user->isGuest,),
                     array('label'=>'Retirados', 'url'=>array('/administrator/admin/personasgenerales/retirados',), 'visible'=>!Yii::app()->user->isGuest,),
-                    '---',
+                    array('label'=>'Cumpleaños', 'url'=>array('/administrator/admin/cumpleanios/admin',), 'visible'=>!Yii::app()->user->isGuest,),
+					'---',
 					
                     array('label'=>'AFILIACIONES'),
                     array('label'=>'Salud', 'url'=>array('/administrator/admin/salud/admin',), 'visible'=>!Yii::app()->user->isGuest,),
@@ -124,7 +125,7 @@
                     
                 )),
                 
-				array('label'=>'GESTIÓN DE NÓMINAS', 'icon'=>'list-alt', 'url'=>array('#',), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->getState('module')==1, 'items'=>array(
+				array('label'=>'GESTIÓN NÓMINAS', 'icon'=>'list-alt', 'url'=>array('#',), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->getState('module')==1, 'items'=>array(
                     array('label'=>'Mensual',  'url'=>array('/administrator/admin/mensualnomina/admin',), 'visible'=>!Yii::app()->user->isGuest,),
                     array('label'=>'Retroactivos',  'url'=>array('/administrator/admin/retroactivosnomina/admin',), 'visible'=>!Yii::app()->user->isGuest,),
                     array('label'=>'Prima Semestral',  'url'=>array('/administrator/admin/semestralnomina/admin',), 'visible'=>!Yii::app()->user->isGuest,),
