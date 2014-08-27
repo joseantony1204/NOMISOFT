@@ -17,7 +17,7 @@ if %menup%==2 goto Salir
 
 :printFile
 
-print reportes\terceros\ibc.dat
+print reportes\terceros\retefuente.dat
 
 :Salir
 

@@ -8,7 +8,7 @@ $columnas = count($Mensualnominaliquidaciones->prestaciones[1]);
  $modo="w";
  $arc = new Archivo($realPath.".dat",$modo);
  
- $c1=11;$c2=44;$c3=25;$c4=6;$c5=15;$c6=13;$c7=14;
+ $c1=20;$c2=44;$c3=25;$c4=6;$c5=15;$c6=13;$c7=14;
  $encabezado=$arc->izquierda("UNIVERSIDAD DE LA GUAJIRA",90).$arc->enter().
              $arc->izquierda("SECCION DE PERSONAL",90).$arc->izquierda("PERIODO      : $Periodo",60).$arc->enter().
 	         $arc->izquierda("RELACION DE DESCUENTO DE SINDICATO",90).$arc->izquierda("FECHA PROCESO: ".date("d/m/Y"),60).$arc->enter().
