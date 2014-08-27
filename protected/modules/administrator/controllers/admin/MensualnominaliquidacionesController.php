@@ -42,7 +42,7 @@ class MensualnominaliquidacionesController extends Controller
                                  'view','admin','create','update','totales','detalles','resumen','planoPorUnidades',
 								 'planoGeneral','planoPagoExcel','downresumen','salud','downsalud','pension','downpension',
 								 'sindicato','downsindicato','descuento','downdescuento','retefuente','downretefuente',
-                                 'estampilla','downestampilla','email','preview','planogeneralpdf',								 
+                                 'estampilla','downestampilla','email','preview','planogeneralpdf','planocesantias','ibc','downibc',								 
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
 			),			
@@ -262,6 +262,42 @@ class MensualnominaliquidacionesController extends Controller
 		));
 	}
 	
+	public function actionIbc($mensualNomina=NULL,$mensualNomina2=NULL,$personaGral=NULL,$unidad=NULL,$tipoEmpleo=NULL)
+	{
+		$Mensualnominaliquidaciones = new Mensualnominaliquidaciones;		
+		$lista = $this->setParametros($mensualNomina,$mensualNomina2,$personaGral,$unidad,$tipoEmpleo);
+		 	
+		$Mensualnominaliquidaciones->getReporteibc($mensualNomina,$lista['sql']);			
+		$this->render('ibc',array(
+			'Mensualnominaliquidaciones'=>$Mensualnominaliquidaciones,
+			'Periodo'=>$lista['Periodo'],
+			'tercero'=>$lista['tercero'],
+			'mensualNomina'=>$mensualNomina,
+			'mensualNomina2'=>$mensualNomina2,
+			'personaGral'=>$personaGral,
+			'unidad'=>$unidad,
+			'tipoEmpleo'=>$tipoEmpleo,
+		));
+	}
+	
+	public function actionDownibc($mensualNomina=NULL,$mensualNomina2=NULL,$personaGral=NULL,$unidad=NULL,$tipoEmpleo=NULL)
+	{
+		$Mensualnominaliquidaciones = new Mensualnominaliquidaciones;		
+		$lista = $this->setParametros($mensualNomina,$mensualNomina2,$personaGral,$unidad,$tipoEmpleo);
+		 	
+		$Mensualnominaliquidaciones->getReporteibc($mensualNomina,$lista['sql']);			
+		$this->render('terceros/downloadibc',array(
+			'Mensualnominaliquidaciones'=>$Mensualnominaliquidaciones,
+			'Periodo'=>$lista['Periodo'],
+			'tercero'=>$lista['tercero'],
+			'mensualNomina'=>$mensualNomina,
+			'mensualNomina2'=>$mensualNomina2,
+			'personaGral'=>$personaGral,
+			'unidad'=>$unidad,
+			'tipoEmpleo'=>$tipoEmpleo,
+		));
+	}
+	
 	public function actionResumen($mensualNomina=NULL,$mensualNomina2=NULL,$personaGral=NULL,$unidad=NULL,$tipoEmpleo=NULL)
 	{
 		$Mensualnominaliquidaciones = new Mensualnominaliquidaciones;
@@ -300,6 +336,22 @@ class MensualnominaliquidacionesController extends Controller
 		$Mensualnominaliquidaciones->mostrarLiquidacion($sql);
 		
 		$this->render('planopagoexcel',array(
+			'Mensualnominaliquidaciones'=>$Mensualnominaliquidaciones,			
+			'mensualNomina'=>$mensualNomina,			
+		));
+		
+	}
+	
+	public function actionPlanocesantias($mensualNomina=NULL)
+	{
+		$Mensualnominaliquidaciones = new Mensualnominaliquidaciones;
+		if($mensualNomina!=NULL){
+		 $sql = ' mn."MENO_ID" = '.$mensualNomina.' ';
+		}
+        
+		$Mensualnominaliquidaciones->mostrarLiquidacion($sql);
+		
+		$this->render('planocesantias',array(
 			'Mensualnominaliquidaciones'=>$Mensualnominaliquidaciones,			
 			'mensualNomina'=>$mensualNomina,			
 		));

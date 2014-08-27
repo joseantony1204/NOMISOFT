@@ -1166,5 +1166,86 @@ class Mensualnominaliquidaciones extends CActiveRecord
 			  Yii::app()->user->setFlash('error','No se ha podido enviar notificación al correo del contratante...');
 			  return $send;
 			 }
-	} 	
+	}
+	
+	public function getReporteibc($codigo,$parametros)
+	{
+	 $connection = Yii::app()->db;
+	 $anionomina = substr($codigo,0,4);  $mesnomina = substr($codigo,4,-2);
+     $periodo = substr($codigo,0,-2);;
+ 
+     if(($periodo == $anionomina."12") or ($periodo == $anionomina."01")){
+     
+	 
+	 }else{
+	      
+           //echo "<br><br><br>".
+	       $sql='SELECT mnl."MENL_ID", mnl."EMPL_ID", p."PEGE_IDENTIFICACION", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE", p."PEGE_SEGUNDONOMBRE", 
+                  SUM(mnl."MENL_SALARIO"+mnl."MENL_PRIMAANTIGUEDAD"+mnl."MENL_HEDTOTAL"+mnl."MENL_HENTOTAL" +
+                      mnl."MENL_HEDFTOTAL"+mnl."MENL_HENFTOTAL"+mnl."MENL_DYFTOTAL"+mnl."MENL_RENTOTAL"+mnl."MENL_RENDYFTOTAL"+mnl."MENL_PRIMATECNICA" +
+                      mnl."MENL_GASTOSRP"
+		             ) AS "MENL_IBC", s."SALU_NOMBRE", pen."PENS_NOMBRE"
+		   FROM "TBL_NOMMENSUALNOMINALIQUIDACIONES" "mnl"
+		   INNER JOIN "TBL_NOMMENSUALNOMINA" "mn" ON mnl."MENO_ID" = mn."MENO_ID"
+		   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON mnl."EMPL_ID" = ep."EMPL_ID"
+		   INNER JOIN "TBL_NOMUNIDADES" "u" ON ep."UNID_ID" = u."UNID_ID"
+		   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"		  
+		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"
+		   INNER JOIN "TBL_NOMSALUD" "s" ON s."SALU_ID" = p."SALU_ID" 
+		   INNER JOIN "TBL_NOMPENSION" "pen" ON pen."PENS_ID" = p."PENS_ID"  
+		   WHERE '.$parametros.'
+		   GROUP BY mnl."MENL_ID", p."PEGE_ID",  mn."MENO_ID", s."SALU_ID", pen."PENS_ID"
+           ORDER BY mn."MENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC
+		  '; 
+		  
+		  
+		  }
+	  
+     
+	 // armando arreglo para impresiones//
+	 
+     $query = $connection->createCommand($sql)->queryAll();
+	 $this->prestaciones = NULL;
+	 $array = array('ID LIQUIDACION','EMPLEO','No CEDULA','1er APELLIDO', '2do APELLIDO', '1er NOMBRE', '2do NOMBRE','I.B.C','SALUD','PENSION');
+	 $j=0; $i=0;
+	 foreach ($array as $values=>$value) {	
+	  $this->prestaciones[$j][$i] = $value;
+	  $i++;  
+	 }
+	
+	 $j=1;
+	 $total1=0;
+	 foreach ($query as $values) {	
+	  $i=0;
+	  foreach ($values as $value) {      	 
+	   if($i==1){
+	    $total1 = $total1+$value; 
+	    $this->prestaciones[$j][1] = $value;
+	   }else{	   
+	         $this->prestaciones[$j][$i] = $value;
+	        } 
+	   $i++;
+	  }
+      $j++;	 
+     }	
+	 
+	 //armando lista CSqlDataProvider//
+	 $this->prestacionesDataProvider = NULL;
+	 $count=Yii::app()->db->createCommand('SELECT COUNT(*) FROM ('.$sql.') AS q')->queryScalar();
+     $this->prestacionesDataProvider = $dataProvider=new CSqlDataProvider($sql, array(
+      'totalItemCount'=>$count,
+      'sort'=>array(
+        'attributes'=>array(
+             'MENL_ID', 'EMPL_ID', 'PEGE_IDENTIFICACION', 'PEGE_PRIMERAPELLIDO','PEGE_SEGUNDOAPELLIDOS','PEGE_PRIMERNOMBRE','PEGE_SEGUNDONOMBRE','MENL_IBC','SALU_NOMBRE','PENS_NOMBRE',
+        ),
+      ),
+      'pagination'=>array(
+                          'pageSize'=>100,
+                         ),
+      )
+	 );	
+	 
+	}
+
+ 	
 }

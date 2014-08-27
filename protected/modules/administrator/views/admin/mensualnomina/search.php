@@ -166,6 +166,21 @@ function validar(form){
 	  }
 	}
 	
+	function ibc(f){
+	 if(validar(f)==1){
+		var anioInicial = $("#Informes_INFO_ANIOINICIO").val();
+		var anioFinal = $("#Informes_INFO_ANIOFINAL").val();
+		var mesInicial = $("#Informes_INFO_MESINICIO").val();
+		var mesFinal = $("#Informes_INFO_MESFINAL").val();
+		var identificacion = $("#Informes_INFO_IDENTIFICACION").val();
+		var unidad = $("#Informes_INFO_UNIDAD").val();
+		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
+		var idSalud = $("#Informes_INFO_SALUD").val();
+		
+		window.location=("/NOMINA/administrator/admin/mensualnominaliquidaciones/ibc/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
+	  }
+	 }
+	
 	function sindicato(f){
 	 if(validar(f)==1){
 		var anioInicial = $("#Informes_INFO_ANIOINICIO").val();

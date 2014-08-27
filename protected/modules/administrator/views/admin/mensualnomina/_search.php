@@ -98,6 +98,7 @@
 			    'type'=>'success',
 			    'label'=>'VER I.B.C.',
 			    'icon'=>'tag white',
+				'htmlOptions'=>array('onclick' =>'ibc(this.form)'),
 		        ));  
 			    ?>
 			   </td>
