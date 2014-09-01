@@ -27,13 +27,15 @@ $columnas = count($Mensualnominaliquidaciones->prestaciones[1]);
  for($i=1;$i<$filas;$i++){		 
   $nombre = trim($Mensualnominaliquidaciones->prestaciones[$i][3]).$arc->espacio(1).trim($Mensualnominaliquidaciones->prestaciones[$i][4]).$arc->espacio(1).trim($Mensualnominaliquidaciones->prestaciones[$i][5]).$arc->espacio(1).trim($Mensualnominaliquidaciones->prestaciones[$i][6]);				 
   $lista[$index]=$arc->centro(number_format($Mensualnominaliquidaciones->prestaciones[$i][2]),$c1).$arc->izquierda($nombre,$c2).$arc->centro(trim($Mensualnominaliquidaciones->prestaciones[$i][7]),$c3).$arc->derecha(number_format($Mensualnominaliquidaciones->prestaciones[$i][8]),$c4);
-  
+  //echo $index.' -- '.$nombre."<br>";
   $total4=$total4+$Mensualnominaliquidaciones->prestaciones[$i][8]; // total
   $index++;  
  }
- $lista[$index]=$arc->enter().$arc->enter().$arc->centro('TOTALES',$c1).$arc->centro('SON '.($index).' FUNCIONARIOS',$c2).$arc->centro(' - ',$c3).$arc->derecha(number_format($total4),$c4);
+ echo $index;
+ 
  
  //**********************A PARTIR DE AQUI SE COMIENZA A IMPRIMIR LO ANTES GUARDADO************************************//
+ echo $linearep=count($lista);		
  $linearep=count($lista);		
  for($j=0;$j<$linearep;$j++){
 	 if($linpag>=60){
@@ -47,7 +49,9 @@ $columnas = count($Mensualnominaliquidaciones->prestaciones[1]);
 	      $linpag++;
 		  }
  }		
- $firma = $arc->enter().$arc->enter()."DIRECTOR DE TALENTO HUMANO".$arc->enter().$arc->enter()."--------------------------";
+ $lista[$index]=$arc->enter().$arc->enter().$arc->centro('TOTALES',$c1).$arc->centro('SON '.($index).' FUNCIONARIOS',$c2).$arc->centro(' - ',$c3).$arc->derecha(number_format($total4),$c4);
+ $arc->escribir($lista[$index]);
+ $firma = $arc->enter().$arc->enter().$arc->enter().$arc->enter()."DIRECTOR DE TALENTO HUMANO".$arc->enter().$arc->enter()."--------------------------";
  $arc->escribir($firma);
  $arc->cerrar();
 $arc->downloadFile($path,$file); 

@@ -168,11 +168,11 @@ class Descuentosmensuales extends CActiveRecord
 	
 	public function getAfiliados($descuento){
 	$connection = Yii::app()->db;
-     $sql = 'SELECT p."PEGE_IDENTIFICACION", p."PEGE_PRIMERNOMBRE", p."PEGE_SEGUNDONOMBRE", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", dm."DEME_NOMBRE", nm."NOME_VALOR"			 
+     $sql = 'SELECT p."PEGE_IDENTIFICACION", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE", p."PEGE_SEGUNDONOMBRE",  dm."DEME_NOMBRE", nm."NOME_VALOR"			 
              FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMNOVEDADESMENSUALES" nm, "TBL_NOMDESCUENTOSMENSUALES" dm, "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
              WHERE p."PEGE_ID" = ep."PEGE_ID" AND dm."DEME_ID" = nm."DEME_ID" AND nm."EMPL_ID" = ep."EMPL_ID" AND dm."DEME_ID" = '.$descuento.' AND nm."NOME_VALOR"!=0
              AND ep."EMPL_ID" = eep."EMPL_ID" AND eep."ESEM_ID" = 1
-			 ORDER BY p."PEGE_PRIMERNOMBRE", p."PEGE_SEGUNDONOMBRE" ASC
+			 ORDER BY  p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC
 	        ';
 		
 	 $query = $connection->createCommand($sql)->queryAll();

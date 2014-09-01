@@ -8,7 +8,7 @@ $columnas = count($Descuentosmensuales->deducciones[1]);
  $modo="w";
  $arc = new Archivo($realPath.".dat",$modo);
  
- $c1=11;$c2=44;$c3=25;$c4=6;$c5=15;$c6=13;$c7=14;
+ $c1=20;$c2=44;$c3=25;$c4=6;$c5=15;$c6=13;$c7=14;
  $encabezado=$arc->izquierda("UNIVERSIDAD DE LA GUAJIRA",90).$arc->enter().
              $arc->izquierda("SECCION DE PERSONAL",90).$arc->izquierda("PERIODO      : $Periodo",60).$arc->enter().
 	         $arc->izquierda("RELACION DE PERSONAS AFILIADAS",90).$arc->izquierda("FECHA PROCESO: ".date("d/m/Y"),60).$arc->enter().
@@ -26,7 +26,7 @@ $columnas = count($Descuentosmensuales->deducciones[1]);
  $lista = NULL; $index=0;
  for($i=1;$i<$filas;$i++){		 
   $nombre = trim($Descuentosmensuales->deducciones[$i][1]).$arc->espacio(1).trim($Descuentosmensuales->deducciones[$i][2]).$arc->espacio(1).trim($Descuentosmensuales->deducciones[$i][3]).$arc->espacio(1).trim($Descuentosmensuales->deducciones[$i][4]);				 
-  $lista[$index]=$arc->centro(number_format($Descuentosmensuales->deducciones[$i][0]),$c1).$arc->centro($nombre,$c2).$arc->centro(trim($Descuentosmensuales->deducciones[$i][5]),$c3).$arc->derecha(number_format($Descuentosmensuales->deducciones[$i][6]),$c4);
+  $lista[$index]=$arc->centro(number_format($Descuentosmensuales->deducciones[$i][0]),$c1).$arc->izquierda($nombre,$c2).$arc->centro(trim($Descuentosmensuales->deducciones[$i][5]),$c3).$arc->derecha(number_format($Descuentosmensuales->deducciones[$i][6]),$c4);
   
   $total4=$total4+$Descuentosmensuales->deducciones[$i][6]; // total
   $index++;  

@@ -957,7 +957,7 @@ class Mensualnominaliquidaciones extends CActiveRecord
 	   INNER JOIN "TBL_NOMDESCUENTOSMENSUALES" "dm" ON mnd."DEME_ID" = dm."DEME_ID" 
 	   WHERE '.$parametros.' AND mnd."MEND_VALOR"!=0
 	   GROUP BY mnl."MENL_ID", mnd."MEND_ID", p."PEGE_ID", mn."MENO_ID", dm."DEME_ID"
-	   ORDER BY mn."MENO_ID", p."PEGE_PRIMERAPELLIDO" ASC
+	   ORDER BY mn."MENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC
 		  ';  
      
 	 // armando arreglo para impresiones//
