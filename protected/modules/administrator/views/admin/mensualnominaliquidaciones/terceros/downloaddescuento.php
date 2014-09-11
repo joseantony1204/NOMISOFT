@@ -8,11 +8,11 @@ $columnas = count($Mensualnominaliquidaciones->prestaciones[1]);
  $modo="w";
  $arc = new Archivo($realPath.".dat",$modo);
  
- $c1=20;$c2=44;$c3=25;$c4=6;$c5=15;$c6=13;$c7=14;
- $encabezado=$arc->izquierda("UNIVERSIDAD DE LA GUAJIRA",90).$arc->enter().
-             $arc->izquierda("SECCION DE PERSONAL",90).$arc->izquierda("PERIODO      : $Periodo",60).$arc->enter().
-	         $arc->izquierda("RELACION DE DESCUENTO",90).$arc->izquierda("FECHA PROCESO: ".date("d/m/Y"),60).$arc->enter().
-	         $arc->izquierda($tercero,90)."PAGINA       : ";
+ $c1=20;$c2=44;$c3=25;$c4=20;$c5=15;$c6=13;$c7=20;
+ $encabezado=$arc->izquierda("UNIVERSIDAD DE LA GUAJIRA",70).$arc->enter().
+             $arc->izquierda("SECCION DE PERSONAL",70).$arc->izquierda("PERIODO      : $Periodo",60).$arc->enter().
+	         $arc->izquierda("RELACION DE DESCUENTO",70).$arc->izquierda("FECHA PROCESO: ".date("d/m/Y"),60).$arc->enter().
+	         $arc->izquierda($tercero,70)."PAGINA       : ";
 
  ////Titulo
  $titulo = $arc->enter().$arc->enter().
@@ -31,8 +31,7 @@ $columnas = count($Mensualnominaliquidaciones->prestaciones[1]);
   $total4=$total4+$Mensualnominaliquidaciones->prestaciones[$i][8]; // total
   $index++;  
  }
- echo $index;
- 
+ $lista[$index]=$arc->enter().$arc->enter().$arc->centro('TOTALES',$c1).$arc->centro('SON '.($index).' FUNCIONARIOS',$c2).$arc->centro(' - ',$c3).$arc->derecha(number_format($total4),$c4);
  
  //**********************A PARTIR DE AQUI SE COMIENZA A IMPRIMIR LO ANTES GUARDADO************************************//
  echo $linearep=count($lista);		
@@ -43,14 +42,13 @@ $columnas = count($Mensualnominaliquidaciones->prestaciones[1]);
 	  $pagina++;
 	  $linpag=7;
 	  $arc->escribir($encabezado.$pagina);
-	  $arc->escribir($titulo);		
+	  $arc->escribir($titulo);
+      $arc->escribir($lista[$j].$arc->espacio($c1).$arc->enter());	  
 	 }else{
 		  $arc->escribir($lista[$j].$arc->espacio($c1).$arc->enter());
 	      $linpag++;
 		  }
  }		
- $lista[$index]=$arc->enter().$arc->enter().$arc->centro('TOTALES',$c1).$arc->centro('SON '.($index).' FUNCIONARIOS',$c2).$arc->centro(' - ',$c3).$arc->derecha(number_format($total4),$c4);
- $arc->escribir($lista[$index]);
  $firma = $arc->enter().$arc->enter().$arc->enter().$arc->enter()."DIRECTOR DE TALENTO HUMANO".$arc->enter().$arc->enter()."--------------------------";
  $arc->escribir($firma);
  $arc->cerrar();

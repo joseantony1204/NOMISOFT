@@ -55,7 +55,8 @@ $columnasTblD = count($tblD[0]);
 	  $pagina++;
 	  $linpag=7;
 	  $arc->escribir($encabezado.$pagina);
-	  $arc->escribir($titulo);		
+	  $arc->escribir($titulo);
+      $arc->escribir($lista[$j].$arc->espacio($c1).$arc->enter());	  
 	 }else{
 		  $arc->escribir($lista[$j].$arc->espacio($c1).$arc->enter());
 	      $linpag++;

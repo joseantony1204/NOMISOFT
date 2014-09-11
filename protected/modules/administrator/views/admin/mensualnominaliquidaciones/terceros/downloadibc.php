@@ -33,7 +33,9 @@ $columnas = count($Mensualnominaliquidaciones->prestaciones[1]);
  //$lista[$index]=$arc->enter().$arc->enter().$arc->centro('TOTALES',$c1).$arc->centro('SON '.($index).' FUNCIONARIOS',$c2).$arc->centro(' - ',$c3).$arc->derecha(number_format($total1),$c4).$arc->derecha(number_format($total2),$c5).$arc->derecha(number_format($total3),$c6).$arc->derecha(number_format($total4),$c7);
  
  //**********************A PARTIR DE AQUI SE COMIENZA A IMPRIMIR LO ANTES GUARDADO************************************//
- $linearep=count($lista);		
+ //echo $linearep=count($lista);		
+ $linearep=count($lista);
+ 
  for($j=0;$j<$linearep;$j++){
 	 if($linpag>=60){
 	  $arc->bajar(66- ($linpag));//Cada pagina tiene 66 lineas
@@ -41,11 +43,13 @@ $columnas = count($Mensualnominaliquidaciones->prestaciones[1]);
 	  $linpag=7;
 	  $arc->escribir($encabezado.$pagina);
 	  $arc->escribir($titulo);		
+	  $arc->escribir($lista[$j].$arc->espacio($c1).$arc->enter());
 	 }else{
 		  $arc->escribir($lista[$j].$arc->espacio($c1).$arc->enter());
 	      $linpag++;
 		  }
- }		
+ }
+ 
  $firma = $arc->enter().$arc->enter()."DIRECTOR DE TALENTO HUMANO".$arc->enter().$arc->enter()."--------------------------";
  $arc->escribir($firma);
  $arc->cerrar();

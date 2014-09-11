@@ -97,6 +97,7 @@ $Mensualnomina = Mensualnomina::model()->findByPk($Mensualnominaliquidaciones->M
 	'columns'=>array(
 	
 		array('name'=>'PEGE_PRIMERAPELLIDO',  'value'=>'$data->PEGE_PRIMERAPELLIDO', 'htmlOptions'=>array('width'=>'40',),),
+		array('name'=>'PEGE_SEGUNDOAPELLIDOS',  'value'=>'$data->PEGE_SEGUNDOAPELLIDOS', 'htmlOptions'=>array('width'=>'40',),),
 		array('name'=>'PEGE_PRIMERNOMBRE',  'value'=>'$data->PEGE_PRIMERNOMBRE', 'htmlOptions'=>array('width'=>'40',),),
 		array('name'=>'MENL_DIAS', 'type'=>'number', 'value'=>'$data->MENL_DIAS', 'htmlOptions'=>array('width'=>'10','style'=>'text-align: center',),),
 		array('name'=>'MENL_PUNTOS', 'filter'=>false, 'value'=>'$data->MENL_PUNTOS', 'htmlOptions'=>array('width'=>'10','style'=>'text-align: center',),),
