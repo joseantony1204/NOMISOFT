@@ -5902,3 +5902,65 @@ LINE 6: ..." FROM "TBL_NOMNOVEDADESMENSUALES" "t" INNER JOIN "TBL_NOMEM...
 in /var/www/NOMINA/protected/extensions/bootstrap/widgets/TbGridView.php (49)
 in /var/www/NOMINA/protected/modules/administrator/views/admin/novedadesmensuales/admin.php (103)
 in /var/www/NOMINA/protected/modules/administrator/controllers/admin/NovedadesmensualesController.php (231)
+2014/09/12 11:09:44 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «ORDER»
+LINE 14:      ORDER BY PEGE_PRIMERAPELLIDO LIMIT 100
+              ^. The SQL statement executed was: SELECT mnl."MENL_ID", mnl."MENL_CODIGO", p."PEGE_IDENTIFICACION", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE", p."PEGE_SEGUNDONOMBRE",
+     mnp."MENP_RETEFUENTETOTAL"
+
+	 FROM "TBL_NOMMENSUALNOMINALIQUIDACIONES" "mnl" 
+	   INNER JOIN "TBL_NOMMENSUALNOMINAPARAFISCALES" "mnp" ON mnl."MENL_ID" = mnp."MENL_ID"
+	   INNER JOIN "TBL_NOMMENSUALNOMINA" "mn" ON mnl."MENO_ID" = mn."MENO_ID" 
+	   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON mnl."EMPL_ID" = ep."EMPL_ID" 
+	   INNER JOIN "TBL_NOMUNIDADES" "u" ON ep."UNID_ID" = u."UNID_ID" 
+	   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID" 
+	   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"
+	   WHERE  mn."MENO_ID" >= 20130101 AND mn."MENO_ID" <= 20131201  AND mnp."MENP_RETEFUENTETOTAL"!=0
+	   GROUP BY mnl."MENL_ID", mnp."MENP_ID", p."PEGE_ID", mn."MENO_ID"
+	   ORDER BY mn."MENO_ID", p."PEGE_PRIMERAPELLIDO" ASC
+		   ORDER BY PEGE_PRIMERAPELLIDO LIMIT 100.
+in /var/www/NOMINA/protected/extensions/bootstrap/widgets/TbGridView.php (49)
+in /var/www/NOMINA/protected/modules/administrator/views/admin/mensualnominaliquidaciones/retefuente.php (123)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/MensualnominaliquidacionesController.php (539)
+2014/09/15 11:01:14 [error] [system.db.CDbCommand] CDbCommand::fetchColumn() failed: SQLSTATE[42703]: Undefined column: 7 ERROR:  no existe la columna eep.ESEM_IDA
+LINE 1: ...OUNT(*) FROM (SELECT * FROM (SELECT t.* , (SELECT eep."ESEM_...
+                                                             ^. The SQL statement executed was: SELECT COUNT(*) FROM (SELECT * FROM (SELECT t.* , (SELECT eep."ESEM_IDA"
+									 FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+									 WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = t."PEGE_ID"
+									 ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+									 LIMIT 1 
+									) AS "ESEM_ID", (SELECT  ep."TICA_ID"
+                                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = t."PEGE_ID"
+                                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                                     LIMIT 1
+                                    ) AS "TICA_ID", (SELECT  ep."UNID_ID"
+                                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = t."PEGE_ID"
+                                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                                     LIMIT 1
+                                    ) AS "UNID_ID" FROM "TBL_NOMPERSONASGENERALES" "t"  
+		                   INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON t."PEGE_ID" = ep."PEGE_ID"  						  
+						   GROUP BY t."PEGE_ID" ) s WHERE "ESEM_ID" = 1) sq.
+in /var/www/NOMINA/protected/extensions/bootstrap/widgets/TbGridView.php (49)
+in /var/www/NOMINA/protected/modules/administrator/views/admin/personasgenerales/admin.php (139)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/PersonasgeneralesController.php (237)
+2014/09/15 11:28:47 [error] [system.db.CDbCommand] CDbCommand::fetchColumn() failed: SQLSTATE[42703]: Undefined column: 7 ERROR:  no existe la columna eep.ESEM_IDS
+LINE 1: ...OUNT(*) FROM (SELECT * FROM (SELECT t.* , (SELECT eep."ESEM_...
+                                                             ^. The SQL statement executed was: SELECT COUNT(*) FROM (SELECT * FROM (SELECT t.* , (SELECT eep."ESEM_IDS"
+									 FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+									 WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = t."PEGE_ID"
+									 ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+									 LIMIT 1 
+									) AS "ESEM_ID",
+									
+									(SELECT eep."ESEP_FECHAREGISTRO"
+									 FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+									 WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = t."PEGE_ID"
+									 ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+									 LIMIT 1 
+									) AS "ESEP_FECHAREGISTRO" FROM "TBL_NOMPERSONASGENERALES" "t"  
+		                   INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON t."PEGE_ID" = ep."PEGE_ID"  						  
+						   GROUP BY t."PEGE_ID", ep."EMPL_ID" ) s WHERE "ESEM_ID" !=1) sq.
+in /var/www/NOMINA/protected/extensions/bootstrap/widgets/TbGridView.php (49)
+in /var/www/NOMINA/protected/modules/administrator/views/admin/personasgenerales/retirados.php (139)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/PersonasgeneralesController.php (250)
