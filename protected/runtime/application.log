@@ -5964,3 +5964,22 @@ LINE 1: ...OUNT(*) FROM (SELECT * FROM (SELECT t.* , (SELECT eep."ESEM_...
 in /var/www/NOMINA/protected/extensions/bootstrap/widgets/TbGridView.php (49)
 in /var/www/NOMINA/protected/modules/administrator/views/admin/personasgenerales/retirados.php (139)
 in /var/www/NOMINA/protected/modules/administrator/controllers/admin/PersonasgeneralesController.php (250)
+2014/09/17 18:25:44 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42803]: Grouping error: 7 ERROR:  la columna «mnl.MENL_ID» debe aparecer en la cláusula GROUP BY o ser usada en una función de agregación
+LINE 13: ...PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE"ASC, mnl."MENL_...
+                                                              ^. The SQL statement executed was: SELECT mnp.*,	 
+	      SUM(mnp."MENP_SALUDTOTAL"+mnp."MENP_PENSIONTOTAL"+mnp."MENP_SINDICATOTOTAL"+mnp."MENP_FONDOSP"+mnp."MENP_SUBSISTENCIA"
+		      +mnp."MENP_ESTAMPILLA"+mnp."MENP_RETEFUENTETOTAL") AS "TOTAL_PARAFISCALES"
+		  FROM "TBL_NOMMENSUALNOMINAPARAFISCALES" "mnp"
+		  INNER JOIN "TBL_NOMMENSUALNOMINALIQUIDACIONES" "mnl" ON mnp."MENL_ID" = mnl."MENL_ID"	
+		  INNER JOIN "TBL_NOMMENSUALNOMINA" "mn" ON mn."MENO_ID" = mnl."MENO_ID"
+		  INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON mnl."EMPL_ID" = ep."EMPL_ID"
+		  INNER JOIN "TBL_NOMUNIDADES" "u" ON ep."UNID_ID" = u."UNID_ID"
+		  INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"
+		  INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID" 
+		  WHERE   mn."MENO_ID" = 20140901  AND u."UNID_ID" =  3
+		  GROUP BY mn."MENO_ID", p."PEGE_ID", mnp."MENP_ID" 
+          ORDER BY mn."MENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE"ASC, mnl."MENL_ID" DESC
+		  .
+in /var/www/NOMINA/protected/modules/administrator/models/Mensualnominaliquidaciones.php (470)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/MensualnominaliquidacionesController.php (229)
+in /var/www/NOMINA/index.php (13)

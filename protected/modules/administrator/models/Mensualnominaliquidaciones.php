@@ -405,7 +405,7 @@ class Mensualnominaliquidaciones extends CActiveRecord
 		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID" 
 		   WHERE '.$parametros.'
 		   GROUP BY mnl."MENL_ID", p."PEGE_ID",  mn."MENO_ID"
-           ORDER BY mn."MENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC
+           ORDER BY mn."MENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, mnl."MENL_ID" DESC
 		  ';    		  
      $rows = $connection->createCommand($sql)->queryAll(); 
 	 
@@ -452,7 +452,7 @@ class Mensualnominaliquidaciones extends CActiveRecord
 	   }
        $j++;	 
      }			 
-	 //echo "<br><br><br>";
+	 //echo "<br><br><br>".
 	 $sql='SELECT mnp.*,	 
 	      SUM(mnp."MENP_SALUDTOTAL"+mnp."MENP_PENSIONTOTAL"+mnp."MENP_SINDICATOTOTAL"+mnp."MENP_FONDOSP"+mnp."MENP_SUBSISTENCIA"
 		      +mnp."MENP_ESTAMPILLA"+mnp."MENP_RETEFUENTETOTAL") AS "TOTAL_PARAFISCALES"
@@ -464,8 +464,8 @@ class Mensualnominaliquidaciones extends CActiveRecord
 		  INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"
 		  INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID" 
 		  WHERE '.$parametros.'
-		  GROUP BY mn."MENO_ID", p."PEGE_ID", mnp."MENP_ID" 
-          ORDER BY mn."MENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC
+		  GROUP BY mn."MENO_ID", p."PEGE_ID", mnp."MENP_ID", mnl."MENL_ID" 
+          ORDER BY mn."MENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE"ASC, mnl."MENL_ID" DESC
 		  ';    		  
      $rows = $connection->createCommand($sql)->queryAll();
 	 
@@ -514,8 +514,9 @@ class Mensualnominaliquidaciones extends CActiveRecord
 	public function getDescuentos($parametros)
 	{
 	 $connection = Yii::app()->db;
-	 //echo "<br><br><br>";
+	 
 	 $this->descuentos = NULL;
+	 //echo "<br><br><br>".
 	 $string1='SELECT  mnl."MENL_ID", mnd."DEME_ID", mnd."MEND_VALOR", mn."MENO_ID"
 	           FROM  "TBL_NOMMENSUALNOMINADESCUENTOS" "mnd"
 		             INNER JOIN "TBL_NOMMENSUALNOMINALIQUIDACIONES" "mnl" ON mnl."MENL_ID" = mnd."MENL_ID"
@@ -526,7 +527,7 @@ class Mensualnominaliquidaciones extends CActiveRecord
 				     INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"
 		       WHERE '.$parametros.'
                GROUP BY mn."MENO_ID", mnl."MENL_ID", mnd."MEND_ID", p."PEGE_ID"
-               ORDER BY mnd."DEME_ID", mn."MENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE", mnl."MENL_ID" ASC';
+               ORDER BY mnd."DEME_ID", mn."MENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, mnl."MENL_ID" DESC';
 		   
      $rows1 = $connection->createCommand($string1)->queryAll();
 	 
@@ -540,7 +541,7 @@ class Mensualnominaliquidaciones extends CActiveRecord
 					 INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"
 			   WHERE '.$parametros.'
 			   GROUP BY mn."MENO_ID", mnl."MENL_ID",  p."PEGE_ID"
-               ORDER BY mn."MENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE", mnl."MENL_ID" ASC
+               ORDER BY mn."MENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, mnl."MENL_ID" DESC
                ';
 		   
      $rows2 = $connection->createCommand($string2)->queryAll();

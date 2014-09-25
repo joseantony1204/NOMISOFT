@@ -37,7 +37,7 @@ Echo.
 
 		Echo    12   C.SOCIALES Y HUMANAS - ADMINISTRATIVO             
 
-		Echo    13   FACULTAD C.SOCIALES Y HUMANAS - DOCENTE           
+		Echo    13   FACULTAD C.SOCIALES HUMANAS - DOCENTE             
 
 		Echo    14   CIENCIAS BASICAS  - ADMINISTRATIVO                
 Echo.

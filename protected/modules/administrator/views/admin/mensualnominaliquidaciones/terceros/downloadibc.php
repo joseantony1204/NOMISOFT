@@ -44,6 +44,7 @@ $columnas = count($Mensualnominaliquidaciones->prestaciones[1]);
 	  $arc->escribir($encabezado.$pagina);
 	  $arc->escribir($titulo);		
 	  $arc->escribir($lista[$j].$arc->espacio($c1).$arc->enter());
+	  $linpag++;
 	 }else{
 		  $arc->escribir($lista[$j].$arc->espacio($c1).$arc->enter());
 	      $linpag++;
