@@ -17,7 +17,7 @@ if %menup%==2 goto Salir
 
 :printFile
 
-print reportes\planogeneral\comprobante.dat
+print reportes/planogeneral/resumen.dat
 
 :Salir
 

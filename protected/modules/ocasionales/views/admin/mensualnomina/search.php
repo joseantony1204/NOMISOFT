@@ -103,7 +103,7 @@ function validar(form){
 		var unidad = $("#Informes_INFO_UNIDAD").val();
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		
-		window.location=("/Dropbox/NOMINA/ocasionales/admin/mensualnominaliquidaciones/detalles/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
+		window.location=("/NOMINA/ocasionales/admin/mensualnominaliquidaciones/detalles/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
 	  }
 	}
 	
@@ -118,7 +118,7 @@ function validar(form){
 		var unidad = $("#Informes_INFO_UNIDAD").val();
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		
-		window.location=("/Dropbox/NOMINA/ocasionales/admin/mensualnominaliquidaciones/resumen/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
+		window.location=("/NOMINA/ocasionales/admin/mensualnominaliquidaciones/resumen/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
 	  }
 	}
 	
@@ -132,7 +132,7 @@ function validar(form){
 		var unidad = $("#Informes_INFO_UNIDAD").val();
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		
-		window.location=("/Dropbox/NOMINA/ocasionales/admin/mensualnominaliquidaciones/email/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
+		window.location=("/NOMINA/ocasionales/admin/mensualnominaliquidaciones/email/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
 	  }
 	}
 	
@@ -147,7 +147,7 @@ function validar(form){
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		var idSalud = $("#Informes_INFO_SALUD").val();
 		
-		window.location=("/Dropbox/NOMINA/ocasionales/admin/mensualnominaliquidaciones/salud/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado+"/idSalud/"+idSalud);
+		window.location=("/NOMINA/ocasionales/admin/mensualnominaliquidaciones/salud/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado+"/idSalud/"+idSalud);
 	  }
 	 }
 	 
@@ -162,7 +162,7 @@ function validar(form){
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		var idSalud = $("#Informes_INFO_SALUD").val();
 		
-		window.location=("/Dropbox/NOMINA/ocasionales/admin/mensualnominaliquidaciones/ibc/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
+		window.location=("/NOMINA/ocasionales/admin/mensualnominaliquidaciones/ibc/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
 	  }
 	 }
 	  
@@ -177,7 +177,7 @@ function validar(form){
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		var idPension = $("#Informes_INFO_PENSION").val();
 		
-		window.location=("/Dropbox/NOMINA/ocasionales/admin/mensualnominaliquidaciones/pension/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado+"/idPension/"+idPension);
+		window.location=("/NOMINA/ocasionales/admin/mensualnominaliquidaciones/pension/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado+"/idPension/"+idPension);
 	  }
 	}
 	
@@ -192,7 +192,7 @@ function validar(form){
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		var idSindicato = $("#Informes_INFO_SINDICATOS").val();
 		
-		window.location=("/Dropbox/NOMINA/ocasionales/admin/mensualnominaliquidaciones/sindicato/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado+"/idSindicato/"+idSindicato);
+		window.location=("/NOMINA/ocasionales/admin/mensualnominaliquidaciones/sindicato/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado+"/idSindicato/"+idSindicato);
 	  }
 	}
 	
@@ -210,7 +210,7 @@ function validar(form){
 		 if((idDescuento)==null){
           alert('Debe seleccionar algun descuento de la lista..!');
 		 }else{
-		      window.location=("/Dropbox/NOMINA/ocasionales/admin/mensualnominaliquidaciones/descuento/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado+"/idDescuento/"+idDescuento);
+		      window.location=("/NOMINA/ocasionales/admin/mensualnominaliquidaciones/descuento/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado+"/idDescuento/"+idDescuento);
 	         }		 
 		}
 	 }
@@ -222,7 +222,7 @@ function validar(form){
 		var anioFinal = $("#Informes_INFO_ANIOFINAL").val();
 		var mesInicial = $("#Informes_INFO_MESINICIO").val();
 		var mesFinal = $("#Informes_INFO_MESFINAL").val();		
-		window.location=("/Dropbox/NOMINA/ocasionales/admin/mensualnominaliquidaciones/retefuente/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01");
+		window.location=("/NOMINA/ocasionales/admin/mensualnominaliquidaciones/retefuente/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01");
 	  }
 	}
 	
@@ -232,7 +232,7 @@ function validar(form){
 		var anioFinal = $("#Informes_INFO_ANIOFINAL").val();
 		var mesInicial = $("#Informes_INFO_MESINICIO").val();
 		var mesFinal = $("#Informes_INFO_MESFINAL").val();		
-		window.location=("/Dropbox/NOMINA/ocasionales/admin/mensualnominaliquidaciones/estampilla/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01");
+		window.location=("/NOMINA/ocasionales/admin/mensualnominaliquidaciones/estampilla/mensualNomina/"+anioInicial+mesInicial+"01/mensualNomina2/"+anioFinal+mesFinal+"01");
 	  }
 	}
 </script>

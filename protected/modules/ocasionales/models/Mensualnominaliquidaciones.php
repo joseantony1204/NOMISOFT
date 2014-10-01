@@ -723,6 +723,7 @@ class Mensualnominaliquidaciones extends CActiveRecord
 	public function getUnidadesEnNomina($parametros)
 	{
 	 $connection = Yii::app()->db2;
+	 //echo "<br><br><br>".
 	 $sql='SELECT  u.*
 	           FROM  "TBL_NOMMENSUALNOMINADESCUENTOS" "mnd"
 		             INNER JOIN "TBL_NOMMENSUALNOMINALIQUIDACIONES" "mnl" ON mnl."MENL_ID" = mnd."MENL_ID"

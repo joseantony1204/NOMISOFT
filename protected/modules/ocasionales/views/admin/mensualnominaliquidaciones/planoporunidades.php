@@ -16,7 +16,7 @@ foreach($unidades as $unidad){
  $tblD = $Mensualnominaliquidaciones->descuentos;
  $filasTblD = count($tblD);
  $columnasTblD = count($tblD[0]);
- $path = ("reportes\\planoporunidades\\");
+ $path = ("reportes/planoporunidades/");
  $file = ($Unidades->UNID_ID);
  $realPath = $path.$file; 
  $modo="w";
@@ -48,7 +48,7 @@ foreach($unidades as $unidad){
     $Mensualnomina = Mensualnomina::model()->findByPk($Mensualnominaliquidaciones->liquidacion[$i][26]);
     $Mensualnomina->cargarEmpleoPlanta($Mensualnominaliquidaciones->liquidacion[$i][27]);
 
-	//*************************INCICIA LA CAPTURA DE LOS DATOS BASICOS *************************************************//
+	//*************************INCICIA LA CAPTURA DE LOS DATOS BASICOS *************************************************
 	$basico=NULL;
 	$basico[0]=$arc->espacio($c1)."³".$arc->izquierda("Comprobante No. ".$Mensualnominaliquidaciones->liquidacion[$i][26].'-'.$Mensualnominaliquidaciones->liquidacion[$i][1],$c2);
 	$basico[1]=$arc->espacio($c1)."³".$arc->izquierda(trim($Mensualnomina->MENO_PERIODO), $c2);
@@ -64,12 +64,12 @@ foreach($unidades as $unidad){
 		}
 	$basico[7]=$arc->espacio($c1)."³".$arc->izquierda(trim($Mensualnomina->Unidad->UNID_ID." -> ".$Mensualnomina->Unidad->UNID_NOMBRE), $c2);
 	
-	//*************************INCICIA LA CAPTURA DE LOS PAGOS ************************************************************//
+	//*************************INCICIA LA CAPTURA DE LOS PAGOS ************************************************************
 	$pago=NULL;
 	$pago[0]=$arc->izquierda("SUELDO (".number_format($Mensualnomina->Empleoplanta->EMPL_SUELDO).")",$c3)."³".$arc->centro($Mensualnominaliquidaciones->liquidacion[$i][2],$c4)."³".$arc->derecha(number_format($Mensualnominaliquidaciones->liquidacion[$i][4]),$c5)."³".$arc->espacio($c6)."³".$arc->espacio($c7);
 	$lineapago=1;
 	
-	    /* antiguedad, transporte y alimentacion*/
+	    // antiguedad, transporte y alimentacion*
 		for ($ln=5;$ln<8;$ln++){
 		  if ($Mensualnominaliquidaciones->liquidacion[$i][$ln]!=0){
 			  if ($ln==5){
@@ -82,15 +82,15 @@ foreach($unidades as $unidad){
 		  }
 		}
 		
-		/* horas extras */
+		//horas extras
 		for ($ln=8;$ln<22;$ln=$ln+2){
 			if ($Mensualnominaliquidaciones->liquidacion[$i][$ln]!=0){
 				$pago[$lineapago]=$arc->izquierda($Mensualnominaliquidaciones->liquidacion[0][$ln+1],$c3)."³".$arc->centro($Mensualnominaliquidaciones->liquidacion[$i][$ln],$c4)."³".$arc->derecha(number_format($Mensualnominaliquidaciones->liquidacion[$i][$ln+1]),$c5)."³".$arc->espacio($c6)."³".$arc->espacio($c7);
 				$lineapago++;
 			}
 		}
-		
-		/*prima tecnica, gastos, bonificacion, prima de vacaciones*/
+	
+		//prima tecnica, gastos, bonificacion, prima de vacaciones
 		for ($ln=22;$ln<26;$ln++){
 			if ($Mensualnominaliquidaciones->liquidacion[$i][$ln]!=0){
 				$pago[$lineapago]=$arc->izquierda($Mensualnominaliquidaciones->liquidacion[0][$ln],$c3)."³".$arc->espacio($c4)."³".$arc->derecha(number_format($Mensualnominaliquidaciones->liquidacion[$i][$ln]),$c5)."³".$arc->espacio($c6)."³".$arc->espacio($c7);
@@ -98,8 +98,8 @@ foreach($unidades as $unidad){
 			}
 		}
 		
-		/*parafiscales parte 1*/
-		/*salud, persion y sindicato*/
+		//parafiscales parte 1
+		//salud, persion y sindicato
 		for ($ln=1;$ln<6;$ln=$ln+2){
 		   if($Mensualnominaliquidaciones->parafiscales[$i][$ln+1]!=0){
               if($ln==1){
@@ -117,7 +117,7 @@ foreach($unidades as $unidad){
             }
         }
 		
-		/*parafiscales parte 2*/
+		//parafiscales parte 2
 		for ($ln=7;$ln<11;$ln++){
 			if ($Mensualnominaliquidaciones->parafiscales[$i][$ln]!=0){
 				$pago[$lineapago]=$arc->izquierda($Mensualnominaliquidaciones->parafiscales[0][$ln],$c3)."³".$arc->espacio($c4)."³".$arc->espacio($c5)."³".$arc->derecha(number_format($Mensualnominaliquidaciones->parafiscales[$i][$ln]),$c6)."³".$arc->espacio($c7);
@@ -125,7 +125,7 @@ foreach($unidades as $unidad){
 			}
 		}
 		
-		/*descuentos*/
+		//descuentos
 		for ($c=1;$c<($columnasTblD-1);$c++){
 		   if ($tblD[$i][$c]!=0){
 				$pago[$lineapago]=$arc->izquierda($tblD[0][$c],$c3)."³".$arc->espacio($c4)."³".$arc->espacio($c5)."³";
@@ -134,7 +134,7 @@ foreach($unidades as $unidad){
 			}
 		}
 				
-		/*totales*/
+		//totales
 		$pago[$lineapago]=$arc->centro("TOTALES",$c3)."³".$arc->espacio($c4)."³";
 		$pago[$lineapago].=$arc->derecha(number_format($Mensualnominaliquidaciones->liquidacion[$i][$columnas-1]),$c5)."³";
 		$pago[$lineapago].=$arc->derecha(number_format(($Mensualnominaliquidaciones->parafiscales[$i][$parafisales-1])+($tblD[$i][$columnasTblD-1])),$c6)."³";
@@ -185,7 +185,7 @@ foreach($unidades as $unidad){
          $arc->escribir($encabezado.$pagina.$arc->enter());
          $arc->escribir($titulo);   
  
- //*************************INCICIA LA CAPTURA DE LA COLUMNA 1 *************************************************//
+ //*************************INCICIA LA CAPTURA DE LA COLUMNA 1 *************************************************
  $detalle1=NULL;
  $detalle1[0]=$arc->izquierda("SUELDO BASICO------------------->".$arc->derecha(number_format($Mensualnominaliquidaciones->liquidacion[$filas-1][4]),16)."",80);
  $detalle1[1]=$arc->izquierda("GASTOS DE REPRESENTACION-------->".$arc->derecha(number_format($Mensualnominaliquidaciones->liquidacion[$filas-1][23]),16)."",80);
@@ -280,7 +280,7 @@ foreach($unidades as $unidad){
   
   
   
-  //*************************INCICIA LA CAPTURA DE LA COLUMNA 2 *************************************************//
+  //*************************INCICIA LA CAPTURA DE LA COLUMNA 2 *************************************************
   $detalle2=NULL;  $suma = 0;
   $detalle2[0]=$arc->izquierda("RETENCION EN LA FUENTE--------->".$arc->derecha(number_format($Mensualnominaliquidaciones->parafiscales[$filas-1][10]),15)."",50);
   $detalle2[1]=$arc->izquierda("ESTAMPILLA--------------------->".$arc->derecha(number_format($Mensualnominaliquidaciones->parafiscales[$filas-1][9]),15)."",50);
@@ -330,7 +330,7 @@ foreach($unidades as $unidad){
   $detalle2[$lindet2]=$arc->izquierda("CAJA DE COMPENSACION (4%)",31,"-").">".$arc->derecha(number_format($var),15); $lindet2++;
   
   
-  //************************A PARTIR DE AQUI SE COMIENZA A IMPRIMIR LO ANTES GUARDADO*************************************//
+  //************************A PARTIR DE AQUI SE COMIENZA A IMPRIMIR LO ANTES GUARDADO*************************************
 	if(count($detalle1)>count($detalle2)){
 		$linearep=count($detalle1);
 	}else{

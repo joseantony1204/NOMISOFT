@@ -1,5 +1,5 @@
 <?php
-Yii::app()->homeUrl = array('/administrator/');
+Yii::app()->homeUrl = array('/ocasionales/');
 $this->breadcrumbs=array(
 	'Factores Salariales'=>array('admin/factoressalariales/search'),
 	'Buscar persona',
@@ -43,7 +43,7 @@ $('.search-form form').submit(function(){
 					 $imageUrl = Yii::app()->request->baseUrl . '/images/regresar.png';
 					 $htmlOptions = array('class' => 'thumbnail','rel' => 'tooltip','data-title' => 'Regresar');
 					 $image = CHtml::image($imageUrl);
-					 echo CHtml::link($image, array('/administrator',),$htmlOptions ); 
+					 echo CHtml::link($image, array('/ocasionales',),$htmlOptions ); 
 ?>         
 					              </td>
              <td width="13%" align="center">

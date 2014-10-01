@@ -5983,3 +5983,15 @@ LINE 13: ...PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE"ASC, mnl."MENL_...
 in /var/www/NOMINA/protected/modules/administrator/models/Mensualnominaliquidaciones.php (470)
 in /var/www/NOMINA/protected/modules/administrator/controllers/admin/MensualnominaliquidacionesController.php (229)
 in /var/www/NOMINA/index.php (13)
+2014/10/01 08:49:57 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42804]: Datatype mismatch: 7 ERROR:  la columna «MENO_ESTADO» es de tipo boolean pero la expresión es de tipo integer
+LINE 1: ...UES ('20141001', 'OCTUBRE DE 2014', '2014-10-01', 0, '2014-1...
+                                                             ^
+HINT:  Necesitará reescribir la expresión o aplicarle una conversión de tipo.. The SQL statement executed was: INSERT INTO "TBL_NOMMENSUALNOMINA" ("MENO_ID", "MENO_PERIODO", "MENO_FECHAPROCESO", "MENO_ESTADO", "MENO_FECHACAMBIO", "MENO_REGISTRADOPOR", "MENO_ANIO") VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6).
+in /var/www/NOMINA/protected/modules/ocasionales/controllers/admin/MensualnominaController.php (101)
+in /var/www/NOMINA/index.php (13)
+2014/10/01 08:50:06 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42804]: Datatype mismatch: 7 ERROR:  la columna «MENO_ESTADO» es de tipo boolean pero la expresión es de tipo integer
+LINE 1: ...UES ('20141001', 'OCTUBRE DE 2014', '2014-10-01', 0, '2014-1...
+                                                             ^
+HINT:  Necesitará reescribir la expresión o aplicarle una conversión de tipo.. The SQL statement executed was: INSERT INTO "TBL_NOMMENSUALNOMINA" ("MENO_ID", "MENO_PERIODO", "MENO_FECHAPROCESO", "MENO_ESTADO", "MENO_FECHACAMBIO", "MENO_REGISTRADOPOR", "MENO_ANIO") VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6).
+in /var/www/NOMINA/protected/modules/ocasionales/controllers/admin/MensualnominaController.php (101)
+in /var/www/NOMINA/index.php (13)

@@ -7,7 +7,7 @@ $tblD = $Mensualnominaliquidaciones->descuentos;
 $filasTblD = count($tblD);
 $columnasTblD = count($tblD[0]);
 
- $path = ("reportes\\terceros\\");
+ $path = ("reportes/terceros/");
  $file = ("cesantias");
  $realPath = $path.$file; 
  $modo="w";

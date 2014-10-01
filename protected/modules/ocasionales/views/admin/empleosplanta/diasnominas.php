@@ -43,7 +43,7 @@ $('.search-form form').submit(function(){
 					 $imageUrl = Yii::app()->request->baseUrl . '/images/regresar.png';
 					 $htmlOptions = array('class' => 'thumbnail','rel' => 'tooltip','data-title' => 'Ir a Inicio');
 					 $image = CHtml::image($imageUrl);
-					 echo CHtml::link($image, array('/administrator',),$htmlOptions ); 
+					 echo CHtml::link($image, array('/ocasionales',),$htmlOptions ); 
 ?>         
 					              </td>
              <td width="10%" align="center">

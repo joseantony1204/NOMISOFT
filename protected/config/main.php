@@ -113,7 +113,7 @@ return array(
 		'db2'=> array( 
 		    'class'=>'CDbConnection', 
 		    'connectionString' => 'pgsql:host=localhost;dbname=BD_OCASIONALES_UG',
-		    'emulatePrepare' => true,
+		    'emulatePrepare' => false,
 			'username' => 'nominauser', 
 		    'password' => 'nominarootadmin.,-', 
 		    'charset' => 'utf8',
