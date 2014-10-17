@@ -90,10 +90,11 @@ $('.search-form form').submit(function(){
 	'columns'=>array(
 		array('name'=>'EMPL_CARGO', 'value'=>'$data->EMPL_CARGO', 'htmlOptions'=>array('width'=>'200'),),
 		array('name'=>'EMPL_FECHAINGRESO', 'value'=>'$data->EMPL_FECHAINGRESO', 'htmlOptions'=>array('width'=>'50'),),
+		array('name'=>'EMPL_PUNTOS', 'value'=>'$data->EMPL_PUNTOS', 'htmlOptions'=>array('width'=>'30','style'=>'text-align: right',),),
 		array('name'=>'EMPL_SUELDO', 'type'=>'number', 'value'=>'$data->EMPL_SUELDO', 'htmlOptions'=>array('width'=>'30','style'=>'text-align: right',),),
-		array('name'=>'TICA_ID', 'value'=>'$data->Tiposcargos->TICA_NOMBRE',  'filter'=>Empleosplanta::Tiposcargos(), 'htmlOptions'=>array('width'=>'20'),),
+		array('name'=>'TICA_ID', 'value'=>'$data->Tiposcargos->TICA_NOMBRE',  'filter'=>Empleosplanta::Tiposcargos(), 'htmlOptions'=>array('width'=>'30'),),
         array('name'=>'ESEM_NOMBRE', 'filter'=>false, 'value'=>'$data->ESEM_NOMBRE', 'htmlOptions'=>array('width'=>'40',),),
-		array('name'=>'ESEP_FECHAREGISTRO', 'filter'=>false, 'value'=>'$data->ESEP_FECHAREGISTRO', 'htmlOptions'=>array('width'=>'50'),),
+		array('name'=>'ESEP_FECHAREGISTRO', 'filter'=>false, 'value'=>'$data->ESEP_FECHAREGISTRO', 'htmlOptions'=>array('width'=>'20'),),
 		
         array(
               'class'=>'bootstrap.widgets.TbButtonColumn',

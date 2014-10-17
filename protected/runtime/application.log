@@ -5995,3 +5995,6 @@ LINE 1: ...UES ('20141001', 'OCTUBRE DE 2014', '2014-10-01', 0, '2014-1...
 HINT:  Necesitará reescribir la expresión o aplicarle una conversión de tipo.. The SQL statement executed was: INSERT INTO "TBL_NOMMENSUALNOMINA" ("MENO_ID", "MENO_PERIODO", "MENO_FECHAPROCESO", "MENO_ESTADO", "MENO_FECHACAMBIO", "MENO_REGISTRADOPOR", "MENO_ANIO") VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6).
 in /var/www/NOMINA/protected/modules/ocasionales/controllers/admin/MensualnominaController.php (101)
 in /var/www/NOMINA/index.php (13)
+2014/10/16 16:28:03 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[22P02]: Invalid text representation: 7 ERROR:  la sintaxis de entrada no es válida para el tipo numeric: «520,33». The SQL statement executed was: INSERT INTO "TBL_NOMEMPLEOSPLANTA" ("TICA_ID", "EMPL_PUNTOS", "EMPL_SUELDO", "EMPL_CARGO", "GARE_ID", "EMPL_FECHAINGRESO", "EMPL_DIASAPAGAR", "PRTE_ID", "UNID_ID", "NIVE_ID", "GRAD_ID", "PEGE_ID", "EMPL_FECHACAMBIO", "EMPL_REGISTRADOPOR") VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7, :yp8, :yp9, :yp10, :yp11, :yp12, :yp13).
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/EmpleosplantaController.php (91)
+in /var/www/NOMINA/index.php (13)

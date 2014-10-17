@@ -119,7 +119,7 @@ class Empleosplanta extends CActiveRecord
 						'EMPL_DIASAPAGAR' => 'DIAS A PAGAR',
 						'PRTE_ID' => '% PRIMA TECNICA',
 						'GARE_ID' => '% GASTOS DE REPRESENTACION',
-						'TICA_ID' => 'TIPO DE CARGO',
+						'TICA_ID' => 'T. CARGO',
 						'GRAD_ID' => 'GRADO',
 						'NIVE_ID' => 'NIVEL',
 						'UNID_ID' => 'UNIDAD',
@@ -347,7 +347,7 @@ class Empleosplanta extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'sort'=>$sort,
-			'pagination' => array('pageSize' => 2,),
+			'pagination' => array('pageSize' => 5,),
 		));
 	}
   

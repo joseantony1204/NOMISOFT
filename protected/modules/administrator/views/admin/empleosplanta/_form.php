@@ -22,10 +22,10 @@ $(document).ready(function(){
         });
 		 
 		$('#Empleosplanta_EMPL_PUNTOS').keyup(function() {
-          var puntos = parseInt($("#Empleosplanta_EMPL_PUNTOS").val());
-          var valorPunto = parseInt($("#punto").val());
+          var puntos = ($("#Empleosplanta_EMPL_PUNTOS").val());
+          var valorPunto = ($("#punto").val());
    
-          var resultado = parseInt((puntos)*(valorPunto));
+          var resultado = parseInt(Math.ceil((puntos)*(valorPunto)));
           $("#Empleosplanta_EMPL_SUELDO").val(resultado);
        }); 
 });
