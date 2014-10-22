@@ -404,9 +404,16 @@ class Mensualnomina extends CActiveRecord
 	   
 	   $this->devengados[$iterador] = array($basico,$hed,$hen,$hedf,$henf,$dyf,$ren,$rndyf,round($prantiguedad[1]),$subTransporte,$prAlimenta,$primatec,$gastosrp,$bonserv,$prvacaciones,$tdevengado);
        $this->paraficales[$iterador]=array($salud,$pension,$subsistencia,$sindicato,$fondosp,$retefuente,$estampilla,$tparafiscales);
-       $this->setLiquidacion($this->devengados[$iterador],$this->paraficales[$iterador]);
-       $this->codigo = $this->codigo+1;	   
-       $iterador = $iterador+1;	   
+       
+	   
+	   /**
+	   *se validan que los dias a pagar del volante sean mayor que cero (0) antes de guardar la liquidacion.
+	   **/
+	   if(($this->Empleoplanta->EMPL_DIASAPAGAR)>0){
+	    $this->setLiquidacion($this->devengados[$iterador],$this->paraficales[$iterador]);
+        $this->codigo = $this->codigo+1;	   
+        $iterador = $iterador+1;	   
+	   }	 
 	  }	 
 	 }		
 	}
@@ -420,7 +427,7 @@ class Mensualnomina extends CActiveRecord
 	 $Parametrosglobales = new Parametrosglobales; 	 
      $this->valorestablecidos = $Parametrosglobales->getParametrosglobales(date("Y", strtotime($objet->MENO_FECHAPROCESO)));
 	 
-	 $sql = 'SELECT  ep."EMPL_ID" FROM "TBL_NOMEMPLEOSPLANTA" ep WHERE ep."PEGE_ID" = '.$id.' ORDER BY  ep."EMPL_FECHAINGRESO" ASC';
+	 $sql = 'SELECT  ep."EMPL_ID" FROM "TBL_NOMEMPLEOSPLANTA" ep WHERE ep."PEGE_ID" = '.$id.' ORDER BY  ep."EMPL_FECHAINGRESO" DESC';
 	 $query = $connection->createCommand($sql)->queryAll();
 	 $iterador = 1;
 	 $this->codigo = 1;

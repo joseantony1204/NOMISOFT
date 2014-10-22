@@ -272,7 +272,70 @@ class Empleosplanta extends CActiveRecord
 		$Novedadesmensuales->NOME_FECHACAMBIO = date('Y-m-d H:i:s');
 		$Novedadesmensuales->NOME_REGISTRADOPOR = Yii::app()->user->id;
 		$Novedadesmensuales->save(); 
+	  }	 
+	 $this->validarDescuentosMencuales($empleoPlanta);
+	}
+	
+	public function validarDescuentosMencuales($empleoPlanta)
+	{
+		$Empleosplanta = Empleosplanta::model()->findByPk($empleoPlanta);
+		$nuevoCargo = $Empleosplanta->EMPL_ID;
+		$diasNuevoCargo = $Empleosplanta->EMPL_DIASAPAGAR;
+		
+		$criteria = new CDbCriteria();
+	    $criteria->select = 't."EMPL_ID"';
+	    $criteria->condition = 't."PEGE_ID" = '.$Empleosplanta->PEGE_ID;
+	    $criteria->order = 't."EMPL_ID" DESC'; 
+	    $criteria->offset = '1'; 
+	    
+	    $Empleosplanta = Empleosplanta::model()->find($criteria);
+		$antiguoCargo = $Empleosplanta->EMPL_ID;		
+		
+		if(count($antiguoCargo)>0){
+		
+		$criteria = new CDbCriteria();
+	    $criteria->select = 't.*';
+		$criteria->condition = 't."EMPL_ID" = '.$antiguoCargo;
+	    $criteria->order = 't."DEME_ID"';
+	    $Novedadesmensual = Novedadesmensuales::model()->findAll($criteria);	 
+	 
+	  /**
+	  *transladando los descuentos del cargo anterior al nuevo cargo
+	  */
+	  foreach($Novedadesmensual as  $Novedadmensual){		
+		$criteria = new CDbCriteria();
+	    $criteria->select = 't.*';
+		$criteria->condition = 't."EMPL_ID" = '.$nuevoCargo.' AND t."DEME_ID" = '.$Novedadmensual->DEME_ID;
+	    $criteria->order = 't."DEME_ID"';
+	    $Novedadesmensualn = Novedadesmensuales::model()->find($criteria);		
+		$Novedadesmensualnn = Novedadesmensuales::model()->findByPk($Novedadesmensualn->NOME_ID);
+		
+		$Novedadesmensualnn->NOME_VALOR = $Novedadmensual->NOME_VALOR;
+		$Novedadesmensualnn->NOME_FECHACAMBIO = date('Y-m-d H:i:s');
+		$Novedadesmensualnn->NOME_REGISTRADOPOR = Yii::app()->user->id;
+		$Novedadesmensualnn->save(); 
 	  }
+	  
+	  /**
+	  *si los dias del nuevo cargo son completos, los descuentos del cargo anterior 
+	  *se colocan en 0
+	  */
+	  if($diasNuevoCargo==30){
+	    $criteria = new CDbCriteria();
+	    $criteria->select = 't.*';
+		$criteria->condition = 't."EMPL_ID" = '.$antiguoCargo;
+	    $criteria->order = 't."DEME_ID"';
+	    $Novedadesmensuala = Novedadesmensuales::model()->findAll($criteria);
+		
+		foreach($Novedadesmensuala as  $Novedadmensual){				
+		 $Novedadesmensualesan = Novedadesmensuales::model()->findByPk($Novedadmensual->NOME_ID);		
+		 $Novedadesmensualesan->NOME_VALOR = 0;
+		 $Novedadesmensualesan->NOME_FECHACAMBIO = date('Y-m-d H:i:s');
+		 $Novedadesmensualesan->NOME_REGISTRADOPOR = Yii::app()->user->id;
+		 $Novedadesmensualesan->save(); 
+	   }	  
+	  }
+	 }	
 	}
 	
 	public function getLink()

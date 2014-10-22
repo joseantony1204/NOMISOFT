@@ -181,7 +181,9 @@ $Mensualnomina->cargarEmpleoPlanta($Mensualnominaliquidaciones->liquidacion[$i][
 		$estado='<strong> <font color="#009900">Estado:&nbsp;&nbsp;&nbsp;Aprobado</font></strong>';
 	 $tabla2.='<tr>';
 	 
-     $tabla1 = '
+	 echo $diasTrabajoEnMes = $Mensualnominaliquidaciones->liquidacion[$i][2];
+    
+	 $tabla1 = '
 	 <table width="100%" border="1" align="center" CELLSPACING="0" class="tabla2" >
         <tr>
          <th colspan="2" align="center">NOMINA DE EMPLEADOS UNIVERSIDAD DE LA GUAJIRA</th>
@@ -412,7 +414,7 @@ $Mensualnomina->cargarEmpleoPlanta($Mensualnominaliquidaciones->liquidacion[$i][
       </tr>
 	  
      </table>';
-	 ?>
+	 ?>	 
      <?php
 	 if($sw=='sendmail'){
 	 $body = '
@@ -470,7 +472,7 @@ $Mensualnomina->cargarEmpleoPlanta($Mensualnominaliquidaciones->liquidacion[$i][
 	}
     $tabla2.='</tr>';    
 
-	//echo $tabla1.'<div><hr></hr></div>'.$tablacorreos;     
+	echo $tabla1.'<div><hr></hr></div>'.$tablacorreos;     
 }
 $tabla2.='</table>';
 echo $tabla2;	

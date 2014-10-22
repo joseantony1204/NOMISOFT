@@ -341,6 +341,8 @@ class MensualnominaController extends Controller
 		 Yii::app()->user->setFlash('warning','<strong>Oppss!. </strong> La Nomina de: <strong>'.$Mensualnomina->MENO_PERIODO.'</strong> se encuentra <strong>PAGADA</strong>, por lo tanto no se puede modificar el estado.');
 		}else{
 		      $Mensualnomina->MENO_ESTADO = 1;
+			  $Mensualnomina->MENO_FECHACAMBIO =  date('Y-m-d H:i:s');
+			  $Mensualnomina->MENO_REGISTRADOPOR = Yii::app()->user->id;
 		      $Mensualnomina->save();
 			  Yii::app()->user->setFlash('success',' EL estado de la nomina de: <strong>'.$Mensualnomina->MENO_PERIODO.'</strong> ha sido cambiado a <strong>PAGADA</strong> exitosamente...');
 			 }
