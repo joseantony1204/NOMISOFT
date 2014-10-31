@@ -84,7 +84,7 @@ class Archivo
 		$st="";
 		for ($i=1;$i<=$n;$i++)
 		{
-			$st.="-";
+			$st.=chr(196);
 		}
 		
 		return $st;
@@ -122,8 +122,9 @@ class Archivo
      ////CREAR .BAT ///////////////////////////////////
      $modo="w";
      $files = 'ImprimirArchivo.bat';	 
-	 $realPath = $path.$files;
-	 
+	 $realPath = explode('/',$path);
+	 $realPath = implode('\\',$realPath);
+
      $archivo=new Archivo($files,$modo);
      $txt="@echo off".$archivo->enter()."Title PANEL".$archivo->enter()."cls".$archivo->enter()."Menu".$archivo->enter().
      "Title PANEL".$archivo->enter()."cls".$archivo->enter()."Echo.".$archivo->enter().
@@ -135,7 +136,7 @@ class Archivo
      "if %menup%==1 goto printFile".$archivo->enter().
 	 "if %menup%==2 goto Salir".$archivo->enter().$archivo->enter().
 	 ":printFile".$archivo->enter().$archivo->enter().
-	 "print ".$path.$file.".dat".$archivo->enter().$archivo->enter().
+	 "print ".$realPath.$file.".dat".$archivo->enter().$archivo->enter().
      ":Salir".$archivo->enter().$archivo->enter().
 	 "Exit";
      $archivo->escribir($txt);
@@ -156,7 +157,9 @@ class Archivo
     {
      $modo="w";
      $files = 'ImprimirUnidades.bat';	 
-	 $realPath = $path.$files;
+	 
+	 $realPath = explode('/',$path);
+	 $realPath = implode('\\',$realPath);
 	 
      $archivo=new Archivo($files,$modo);
      $txt="
@@ -181,15 +184,15 @@ class Archivo
 		$txt.="
 		Echo ".$archivo->centro($unidad["UNID_ID"],8)."".$unidad["UNID_NOMBRE"]."".$archivo->enter();
 		$opcion.="
-		if %menup%==".$unidad["UNID_ID"]." print ".$path.$unidad["UNID_ID"].".dat".$archivo->enter();
+		if %menup%==".$unidad["UNID_ID"]." print ".$realPath.$unidad["UNID_ID"].".dat".$archivo->enter();
 		$zipfile->add_file(implode("",file($path.$unidad["UNID_ID"].".dat")),$path.$unidad["UNID_ID"].".dat");
 	    
-		$opcion1010.= $path.$unidad["UNID_ID"].".dat ";
+		$opcion1010.= $realPath.$unidad["UNID_ID"].".dat ";
 		if($unidad["TIUN_ID"]==1){		 
-		 $opcion1020.= $path.$unidad["UNID_ID"].".dat ";
+		 $opcion1020.= $realPath.$unidad["UNID_ID"].".dat ";
 		}		
 		if($unidad["TIUN_ID"]==2){		 
-		 $opcion1030.= $path.$unidad["UNID_ID"].".dat ";
+		 $opcion1030.= $realPath.$unidad["UNID_ID"].".dat ";
 		}
 	 
 	 }

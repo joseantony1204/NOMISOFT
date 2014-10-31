@@ -255,7 +255,13 @@
 	   $lista_uno = array(); 
 	   if(isset($Personasgenerales->PAIS_ID)){
         $id_uno = intval($Personasgenerales->PAIS_ID);
-		$lista_uno = CHtml::listData(Departamentos::model()->findAll('"PAIS_ID" = '.$id_uno.'',$criterio),'DEPA_ID','DEPA_NOMBRE');
+		
+		$criteria = new CDbCriteria();
+        $criteria->condition = '"PAIS_ID" = :id_uno';
+        $criteria->params = array(':id_uno' => (int) $id_uno);
+        $criteria->order = '"DEPA_NOMBRE" ASC';
+		
+		$lista_uno = CHtml::listData(Departamentos::model()->findAll($criteria),'DEPA_ID','DEPA_NOMBRE');
 	   }
 	   ?>
        <?php echo $form->dropDownList($Personasgenerales,'DEPA_ID',$lista_uno, 
@@ -280,7 +286,13 @@
 		$lista_uno = array();
 		if(isset($Personasgenerales->DEPA_ID)){
           $id_uno = intval($Personasgenerales->DEPA_ID);
-		  $lista_uno = CHtml::listData(Municipios::model()->findAll('"DEPA_ID" = '.$id_uno.'',$criterio),'MUNI_ID','MUNI_NOMBRE');
+		  
+		  $criteria = new CDbCriteria();
+          $criteria->condition = '"DEPA_ID" = :id_uno';
+          $criteria->params = array(':id_uno' => (int) $id_uno);
+          $criteria->order = '"MUNI_NOMBRE" ASC';
+		  
+		  $lista_uno = CHtml::listData(Municipios::model()->findAll($criteria),'MUNI_ID','MUNI_NOMBRE');
 		 }
 	  ?>
       <?php echo $form->dropDownList($Personasgenerales,'MUNI_ID',$lista_uno, array('class'=>'span3','prompt'=>'Elige un departamento...')); ?>

@@ -189,7 +189,7 @@ $Mensualnomina->cargarEmpleoPlanta($Mensualnominaliquidaciones->liquidacion[$i][
         <tr valign="top">
          <td width="45%">
 			
-			<table width="100%" border="1" CELLSPACING="0" class="tabla2">
+			<table width="100%" rules="all"  border="1" class="tabla2">
               
 			  <tr>
                 <td width="87">Comprobante No.</td>
@@ -254,7 +254,7 @@ $Mensualnomina->cargarEmpleoPlanta($Mensualnominaliquidaciones->liquidacion[$i][
 			
          <td width="55%" >
 			
-		    <table width="100%" border="0" class="tabla2" style="border:1px solid;padding:3px 3px; border-color:#000">
+		    <table width="100%" rules="cols" border="1" class="tabla2">
               <tr border="1">
                <th width="246" align="center" style="border:1px solid;padding:3px 3px; border-color:#000">DESCRIPCION</th>
                <th width="66" align="center" style="border:1px solid;padding:3px 3px;border-color:#000">DIAS</th>
@@ -454,7 +454,7 @@ $Mensualnomina->cargarEmpleoPlanta($Mensualnominaliquidaciones->liquidacion[$i][
 	}
     $tabla2.='</tr>';    
 
-	echo $tabla1.$tablacorreos.'<div><hr></hr></div>';     
+	//echo $tabla1.$tablacorreos.'<div><hr></hr></div>';     
 }
 $tabla2.='</table>';
 echo $tabla2;	

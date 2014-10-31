@@ -91,18 +91,18 @@
 				*/
 				
 				array('label'=>'EMPLEADOS', 'icon'=>'user', 'url'=>array('#',), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->getState('module')==3, 'items'=>array(
-                    array('label'=>'Administrar', 'url'=>array('/administrator/admin/personasgenerales/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-                    array('label'=>'Nuevo', 'url'=>array('/administrator/admin/personasgenerales/create',), 'visible'=>!Yii::app()->user->isGuest,),
-                    array('label'=>'Retirados', 'url'=>array('/administrator/admin/personasgenerales/retirados',), 'visible'=>!Yii::app()->user->isGuest,),
-                    array('label'=>'Cumpleaños', 'url'=>array('/administrator/admin/cumpleanios/admin',), 'visible'=>!Yii::app()->user->isGuest,),
+                    array('label'=>'Administrar', 'url'=>array('/catedraticos/admin/personasgenerales/admin',), 'visible'=>!Yii::app()->user->isGuest,),
+                    array('label'=>'Nuevo', 'url'=>array('/catedraticos/admin/personasgenerales/create',), 'visible'=>!Yii::app()->user->isGuest,),
+                    //array('label'=>'Retirados', 'url'=>array('/catedraticos/admin/personasgenerales/retirados',), 'visible'=>!Yii::app()->user->isGuest,),
+                    array('label'=>'Cumpleaños', 'url'=>array('/catedraticos/admin/cumpleanios/admin',), 'visible'=>!Yii::app()->user->isGuest,),
                     '---',
 					
                     array('label'=>'AFILIACIONES'),
-                    array('label'=>'Salud', 'url'=>array('/administrator/admin/salud/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-                    array('label'=>'Pension', 'url'=>array('/administrator/admin/pension/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-					array('label'=>'Sindicato', 'url'=>array('/administrator/admin/sindicatos/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-					array('label'=>'Cesantias',  'url'=>array('/administrator/admin/cesantias/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-					
+                    array('label'=>'Salud', 'url'=>array('/catedraticos/admin/salud/admin',), 'visible'=>!Yii::app()->user->isGuest,),
+                    array('label'=>'Pension', 'url'=>array('/catedraticos/admin/pension/admin',), 'visible'=>!Yii::app()->user->isGuest,),
+					array('label'=>'Sindicato', 'url'=>array('/catedraticos/admin/sindicatos/admin',), 'visible'=>!Yii::app()->user->isGuest,),
+					//array('label'=>'Cesantias',  'url'=>array('/catedraticos/admin/cesantias/admin',), 'visible'=>!Yii::app()->user->isGuest,),
+					/*
 					'---',
                     array('label'=>'UBICACION'),
                     array('label'=>'Municipios', 'url'=>array('/administrator/admin/municipios/admin',), 'visible'=>!Yii::app()->user->isGuest,),
@@ -113,7 +113,7 @@
                     array('label'=>'OTROS'),
                     array('label'=>'Sexos', 'url'=>array('/administrator/admin/sexos/admin',), 'visible'=>!Yii::app()->user->isGuest,),
 					array('label'=>'Grupos Sanguineos', 'url'=>array('/administrator/admin/grupossanguineos/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-					array('label'=>'Estados Civiles',  'url'=>array('/administrator/admin/estadosciviles/admin',), 'visible'=>!Yii::app()->user->isGuest,),
+					array('label'=>'Estados Civiles',  'url'=>array('/administrator/admin/estadosciviles/admin',), 'visible'=>!Yii::app()->user->isGuest,),*/
                 )),
 				/**
 				*fin menu @empleados para el modulo catedraticos 
@@ -178,22 +178,10 @@
 				*/
 				array('label'=>'GENERALIDADES', 'icon'=>'th', 'url'=>array('#',), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->getState('module')==3, 'items'=>array(
                     array('label'=>'DESCUENTOS'),
-                    array('label'=>'Mensuales', 'url'=>array('/administrator/admin/descuentosmensuales/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-                    array('label'=>'Prima Semestral', 'url'=>array('/administrator/admin/descuentosprestaciones/admin','id'=>1), 'visible'=>!Yii::app()->user->isGuest,),
-					array('label'=>'Prima Vacaciones',  'url'=>array('/administrator/admin/descuentosprestaciones/admin','id'=>3), 'visible'=>!Yii::app()->user->isGuest,),
-					array('label'=>'Prima Navidad', 'url'=>array('/administrator/admin/descuentosprestaciones/admin','id'=>2), 'visible'=>!Yii::app()->user->isGuest,),
-					array('label'=>'Vacaciones',  'url'=>array('/administrator/admin/descuentosprestaciones/admin','id'=>4), 'visible'=>!Yii::app()->user->isGuest,),
-					array('label'=>'Retroactivos',  'url'=>array('/administrator/admin/descuentosprestaciones/admin','id'=>5), 'visible'=>!Yii::app()->user->isGuest,),
-					array('label'=>'Retefuente',  'url'=>array('/administrator/admin/factoresretefuente/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-					
-					'---',
-                    array('label'=>'OTROS'),
-                    array('label'=>'Unidades', 'url'=>array('/administrator/admin/unidades/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-                    array('label'=>'Niveles', 'url'=>array('/administrator/admin/niveles/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-					array('label'=>'Grados', 'url'=>array('/administrator/admin/grados/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-					array('label'=>'Estados Cargos',  'url'=>array('/administrator/admin/estadosempleos/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-					
-					
+                    array('label'=>'Mensuales', 'url'=>array('/catedraticos/admin/descuentosmensuales/admin',), 'visible'=>!Yii::app()->user->isGuest,),
+                    array('label'=>'Categorias', 'url'=>array('/catedraticos/admin/categorias/admin',), 'visible'=>!Yii::app()->user->isGuest,),					
+                    array('label'=>'Facultades', 'url'=>array('/catedraticos/admin/facultades/admin',), 'visible'=>!Yii::app()->user->isGuest,),					
+                    array('label'=>'Periodos Academicos', 'url'=>array('/catedraticos/admin/periodosacademicos/admin',), 'visible'=>!Yii::app()->user->isGuest,),					
                 )),
 				/**
 				*fin menu @generalidades para el modulo catedraticos 
@@ -273,30 +261,14 @@
 				*inicio menu @novedades para el modulo catedraticos 
 				*/
 				array('label'=>'NOVEDADES', 'icon'=>'tags', 'url'=>array('#',), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->getState('module')==3, 'items'=>array(                   
-                    array('label'=>'Historial de cargos', 'url'=>array('/administrator/admin/empleosplanta/search',), 'visible'=>!Yii::app()->user->isGuest,),
-                    array('label'=>'Horas Extras y Recargos', 'url'=>array('/administrator/admin/horasextrasyrecargos/search',), 'visible'=>!Yii::app()->user->isGuest,),
-                    array('label'=>'Factores Salariales', 'url'=>array('/administrator/admin/factoressalariales/search',), 'visible'=>!Yii::app()->user->isGuest,),
-					'---',
-					array('label'=>'DESCUENTOS'),
-                    array('label'=>'Mensuales', 'url'=>array('/administrator/admin/novedadesmensuales/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-                    array('label'=>'Retroactivos',  'url'=>array('/administrator/admin/novedadesprestaciones/search','id'=>5), 'visible'=>!Yii::app()->user->isGuest,),
-					array('label'=>'Prima Semestral', 'url'=>array('/administrator/admin/novedadesprestaciones/search','id'=>1), 'visible'=>!Yii::app()->user->isGuest,),
-					array('label'=>'Prima Vacaciones',  'url'=>array('/administrator/admin/novedadesprestaciones/search','id'=>3), 'visible'=>!Yii::app()->user->isGuest,),
-					array('label'=>'Prima Navidad', 'url'=>array('/administrator/admin/novedadesprestaciones/search','id'=>2), 'visible'=>!Yii::app()->user->isGuest,),
-					array('label'=>'Vacaciones',  'url'=>array('/administrator/admin/novedadesprestaciones/search','id'=>4), 'visible'=>!Yii::app()->user->isGuest,),
-					array('label'=>'Retefuente',  'url'=>array('/administrator/admin/descuentosretefuente/search',), 'visible'=>!Yii::app()->user->isGuest,),
+                    array('label'=>'DESCUENTOS'),
+                    array('label'=>'Mensuales', 'url'=>array('/catedraticos/admin/novedadesmensuales/admin',), 'visible'=>!Yii::app()->user->isGuest,),
                     '---',
-                    array('label'=>'ESTADO EMPLEADOS'),
-					array('label'=>'Administrar',  'url'=>array('/administrator/admin/estadosempleosplanta/search',), 'visible'=>!Yii::app()->user->isGuest,),
-					'---',
-                    array('label'=>'AUMENTO DE SUELDO'),
-                    array('label'=>'Administrativos',  'url'=>array('/administrator/admin/empleosplanta/aumentoadmin',), 'visible'=>!Yii::app()->user->isGuest,),
-                    array('label'=>'Docentes',  'url'=>array('/administrator/admin/empleosplanta/aumentodocen',), 'visible'=>!Yii::app()->user->isGuest,),
-                    '---',
-                    array('label'=>'OTRAS ACTUALIZACIONES'),
-                    array('label'=>'Dias de Nominas',  'url'=>array('/administrator/admin/empleosplanta/diasnominas',), 'visible'=>!Yii::app()->user->isGuest,),
-                    array('label'=>'Actualizar Puntos',  'url'=>array('/administrator/admin/empleosplanta/aumentopuntos',), 'visible'=>!Yii::app()->user->isGuest,),
-                    
+                    array('label'=>'CATEDRAS'),
+					array('label'=>'Agregar',  'url'=>array('/catedraticos/admin/catedras/search',), 'visible'=>!Yii::app()->user->isGuest,),
+					array('label'=>'Actualizar por Facultad',  'url'=>array('/catedraticos/admin/catedras/update',), 'visible'=>!Yii::app()->user->isGuest,),
+					array('label'=>'Importar desde Excel',  'url'=>array('/catedraticos/admin/catedras/import',), 'visible'=>!Yii::app()->user->isGuest,),
+					
                     
                 )),
 				/**
@@ -351,18 +323,7 @@
 				*inicio menu @nomina para el modulo catedraticos 
 				*/
 				array('label'=>'NÓMINAS', 'icon'=>'list-alt', 'url'=>array('#',), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->getState('module')==3, 'items'=>array(
-                    array('label'=>'Mensual',  'url'=>array('/administrator/admin/mensualnomina/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-                    array('label'=>'Retroactivos',  'url'=>array('/administrator/admin/retroactivosnomina/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-                    array('label'=>'Prima Semestral',  'url'=>array('/administrator/admin/semestralnomina/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-                    array('label'=>'Prima Vacaciones',  'url'=>array('/administrator/admin/primavacacionesnomina/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-					array('label'=>'Prima Navidad',  'url'=>array('/administrator/admin/navidadnomina/admin',), 'visible'=>!Yii::app()->user->isGuest,),                    
-                    array('label'=>'Vacaciones',  'url'=>array('/administrator/admin/vacacionesnomina/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-                    array('label'=>'Recreacion',  'url'=>array('/administrator/admin/recreacionnomina/admin',), 'visible'=>!Yii::app()->user->isGuest,),                    
-                    array('label'=>'Cesantias',  'url'=>array('/administrator/admin/cesantiasnomina/admin',), 'visible'=>!Yii::app()->user->isGuest,),                    
-					'---',
-                    array('label'=>'OTRAS NÓMINAS'),
-					array('label'=>'Mensual Posterior',  'url'=>array('/administrator/admin/mensualnomina/postcreate',), 'visible'=>!Yii::app()->user->isGuest,),
-					array('label'=>'Liquidaciones',  'url'=>array('/administrator/admin/liquidaciones/admin',), 'visible'=>!Yii::app()->user->isGuest,),
+                    array('label'=>'Mensual',  'url'=>array('/catedraticos/admin/mensualnomina/admin',), 'visible'=>!Yii::app()->user->isGuest,),
                 )),
 				/**
 				*fin menu @nomina para el modulo catedraticos 
@@ -519,12 +480,6 @@
 				*/
 				array('label'=>'SEGURIDAD', 'icon'=>'lock', 'url'=>array('#',), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->getState('module')==1, 'items'=>array(
                     array('label'=>'Usuarios', 'url'=>array('/administrator/admin/usuarios/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-                    array('label'=>'Another action', 'url'=>'#'),
-                    array('label'=>'Something else here', 'url'=>'#'),
-                    '---',
-                    array('label'=>'NAV HEADER'),
-                    array('label'=>'Separated link', 'url'=>'#'),
-                    array('label'=>'One more separated link', 'url'=>'#'),
                 )),
 				/**
 				*fin menu @seguridad para el modulo planta 
@@ -535,12 +490,6 @@
 				*/
 				array('label'=>'SEGURIDAD', 'icon'=>'lock', 'url'=>array('#',), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->getState('module')==2, 'items'=>array(
                     array('label'=>'Usuarios', 'url'=>array('/ocasionales/admin/usuarios/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-                    array('label'=>'Another action', 'url'=>'#'),
-                    array('label'=>'Something else here', 'url'=>'#'),
-                    '---',
-                    array('label'=>'NAV HEADER'),
-                    array('label'=>'Separated link', 'url'=>'#'),
-                    array('label'=>'One more separated link', 'url'=>'#'),
                 )),
 				/**
 				*fin menu @seguridad para el modulo ocasionales 
@@ -549,15 +498,9 @@
 				/**
 				*inicio menu @seguridad para el modulo catedraticos 
 				*/
-				array('label'=>'SEGURIDAD', 'icon'=>'lock', 'url'=>array('#',), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->getState('module')==3, 'items'=>array(
-                    array('label'=>'Usuarios', 'url'=>array('/administrator/admin/usuarios/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-                    array('label'=>'Another action', 'url'=>'#'),
-                    array('label'=>'Something else here', 'url'=>'#'),
-                    '---',
-                    array('label'=>'NAV HEADER'),
-                    array('label'=>'Separated link', 'url'=>'#'),
-                    array('label'=>'One more separated link', 'url'=>'#'),
-                )),
+				/*array('label'=>'SEGURIDAD', 'icon'=>'lock', 'url'=>array('#',), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->getState('module')==3, 'items'=>array(
+                    array('label'=>'Usuarios', 'url'=>array('/catedraticos/admin/usuarios/admin',), 'visible'=>!Yii::app()->user->isGuest,),
+                )),*/
 				/**
 				*fin menu @seguridad para el modulo catedraticos 
 				*/
@@ -607,7 +550,7 @@
 				
 				/**
 				*inicio menu @configuraciones para el modulo catedraticos 
-				*/
+				*//*
 				array('label'=>'CONFIGURACIONES', 'icon'=>'wrench', 'url'=>array('#',), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->getState('module')==3, 'items'=>array(
                     array('label'=>'LIQUIDACION NOMINA'),
 					array('label'=>'Parametros',  'url'=>array('/administrator/admin/parametrosglobales/admin',), 'visible'=>!Yii::app()->user->isGuest,),
@@ -620,7 +563,7 @@
 					array('label'=>'Vacaciones',  'url'=>array('/administrator/admin/email/admin','id'=>5), 'visible'=>!Yii::app()->user->isGuest,),
 					array('label'=>'Retroactivos',  'url'=>array('/administrator/admin/email/admin','id'=>6), 'visible'=>!Yii::app()->user->isGuest,),
 					
-                )),
+                )),*/
 				/**
 				*fin menu @configuraciones para el modulo catedraticos 
 				*/

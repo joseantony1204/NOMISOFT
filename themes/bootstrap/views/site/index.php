@@ -102,13 +102,3 @@ if(!Yii::app()->user->isGuest){
 <?php
 }
 ?>
-
-<?php 			 
-	$imageUrl = Yii::app()->request->baseUrl . '/images/q.png';
-	echo $image = CHtml::image($imageUrl); 
-?>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-<?php 			 
-	$imageUrl = Yii::app()->request->baseUrl . '/images/t2.jpg';
-	echo $image = CHtml::image($imageUrl); 
-?>

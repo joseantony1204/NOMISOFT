@@ -14,7 +14,7 @@
  * Las siguientes son las relaciones de modelo disponibles:
  * @Propiedad PERSONASGENERALES $pEGE
  */
-class NovedadesPrimaVacaciones extends CActiveRecord
+class Novedadesprimavacaciones extends CActiveRecord
 {
 	/**
 	 * @Devuelve el modelo estático de la clase AR especificado. 

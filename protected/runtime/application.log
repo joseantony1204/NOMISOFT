@@ -5998,3 +5998,52 @@ in /var/www/NOMINA/index.php (13)
 2014/10/16 16:28:03 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[22P02]: Invalid text representation: 7 ERROR:  la sintaxis de entrada no es válida para el tipo numeric: «520,33». The SQL statement executed was: INSERT INTO "TBL_NOMEMPLEOSPLANTA" ("TICA_ID", "EMPL_PUNTOS", "EMPL_SUELDO", "EMPL_CARGO", "GARE_ID", "EMPL_FECHAINGRESO", "EMPL_DIASAPAGAR", "PRTE_ID", "UNID_ID", "NIVE_ID", "GRAD_ID", "PEGE_ID", "EMPL_FECHACAMBIO", "EMPL_REGISTRADOPOR") VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7, :yp8, :yp9, :yp10, :yp11, :yp12, :yp13).
 in /var/www/NOMINA/protected/modules/administrator/controllers/admin/EmpleosplantaController.php (91)
 in /var/www/NOMINA/index.php (13)
+2014/10/24 09:39:43 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23505]: Unique violation: 7 ERROR:  llave duplicada viola restricción de unicidad «tbl_personasnaturales_pkey»
+DETAIL:  Ya existe la llave ("PENA_ID")=(1).. The SQL statement executed was: INSERT INTO "TBL_SEGPERSONASNATURALES" ("PENA_IDENTIFICACION", "PENA_NOMBRES", "PENA_FECHAINGRESO", "PENA_APELLIDOS", "PENA_DIRECCION", "PENA_TELEFONO", "PENA_FECHANACIMIENTO", "PENA_SEXO") VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7).
+in /var/www/NOMINA/protected/modules/ocasionales/controllers/admin/UsuariosController.php (84)
+in /var/www/NOMINA/index.php (13)
+2014/10/24 09:44:21 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23505]: Unique violation: 7 ERROR:  llave duplicada viola restricción de unicidad «USUA_ID»
+DETAIL:  Ya existe la llave ("USUA_ID")=(1).. The SQL statement executed was: INSERT INTO "TBL_SEGUSUARIOS" ("USUA_USUARIO", "USUA_CLAVE", "USUA_FECHAALTA", "USUA_FECHABAJA", "USUA_ULTIMOACCESO", "PENA_ID", "USUA_SESSION") VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6).
+in /var/www/NOMINA/protected/modules/ocasionales/controllers/admin/UsuariosController.php (89)
+in /var/www/NOMINA/index.php (13)
+2014/10/24 09:49:46 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «2»
+LINE 1: SELECT t.*2, p.*, up.*, pn.* FROM "TBL_SEGUSUARIOS" "t" 
+                  ^. The SQL statement executed was: SELECT t.*2, p.*, up.*, pn.* FROM "TBL_SEGUSUARIOS" "t" 
+		INNER JOIN "TBL_SEGPERSONASNATURALES"  pn ON pn."PENA_ID" = t."PENA_ID"
+		INNER JOIN "TBL_SEGPERFILESUSUARIOS"  up ON up."USUA_ID" = t."USUA_ID"
+		INNER JOIN "TBL_SEGPERFILES"  p ON p."USPE_ID" = up."USPE_ID" LIMIT 10.
+in /var/www/NOMINA/protected/extensions/bootstrap/widgets/TbGridView.php (49)
+in /var/www/NOMINA/protected/modules/ocasionales/views/admin/usuarios/admin.php (114)
+in /var/www/NOMINA/protected/modules/ocasionales/controllers/admin/UsuariosController.php (200)
+2014/10/24 10:49:43 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «2»
+LINE 1: SELECT t.*2, p.*, up.*, pn.* FROM "TBL_SEGUSUARIOS" "t" 
+                  ^. The SQL statement executed was: SELECT t.*2, p.*, up.*, pn.* FROM "TBL_SEGUSUARIOS" "t" 
+		INNER JOIN "TBL_SEGPERSONASNATURALES"  pn ON pn."PENA_ID" = t."PENA_ID"
+		INNER JOIN "TBL_SEGPERFILESUSUARIOS"  up ON up."USUA_ID" = t."USUA_ID"
+		INNER JOIN "TBL_SEGPERFILES"  p ON p."USPE_ID" = up."USPE_ID" LIMIT 10.
+in /var/www/NOMINA/protected/extensions/bootstrap/widgets/TbGridView.php (49)
+in /var/www/NOMINA/protected/modules/ocasionales/views/admin/usuarios/admin.php (114)
+in /var/www/NOMINA/protected/modules/ocasionales/controllers/admin/UsuariosController.php (200)
+2014/10/24 11:24:20 [error] [system.db.CDbCommand] CDbCommand::fetchColumn() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «2»
+LINE 1: ...(*) FROM (SELECT * FROM (SELECT t.* , (SELECT eep."ESEM_ID"2
+                                                                      ^. The SQL statement executed was: SELECT COUNT(*) FROM (SELECT * FROM (SELECT t.* , (SELECT eep."ESEM_ID"2
+									 FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+									 WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = t."PEGE_ID"
+									 ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+									 LIMIT 1 
+									) AS "ESEM_ID", (SELECT  ep."TICA_ID"
+                                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = t."PEGE_ID"
+                                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                                     LIMIT 1
+                                    ) AS "TICA_ID" FROM "TBL_NOMPERSONASGENERALES" "t"  
+		                   INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON t."PEGE_ID" = ep."PEGE_ID"  						  
+						   GROUP BY t."PEGE_ID") s WHERE "ESEM_ID" = 1) sq.
+in /var/www/NOMINA/protected/extensions/bootstrap/widgets/TbGridView.php (49)
+in /var/www/NOMINA/protected/modules/ocasionales/views/admin/personasgenerales/admin.php (139)
+in /var/www/NOMINA/protected/modules/ocasionales/controllers/admin/PersonasgeneralesController.php (238)
+2014/10/31 14:34:43 [error] [system.db.CDbCommand] CDbCommand::fetch() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «ORDER»
+LINE 1: ...p" ON p."PEGE_ID" = t."PEGE_ID" AND t."PEGE_ID" = ORDER BY t...
+                                                             ^. The SQL statement executed was: SELECT t.*, p."PEGE_ID", p."PEGE_PRIMERNOMBRE", p."PEGE_PRIMERAPELLIDO" FROM "TBL_CATCATEDRAS" "t" INNER JOIN "TBL_CATPERSONASGENERALES" "p" ON p."PEGE_ID" = t."PEGE_ID" AND t."PEGE_ID" = ORDER BY t."CATE_ID" DESC LIMIT 1.
+in /var/www/NOMINA/protected/modules/catedraticos/controllers/admin/NovedadesmensualesController.php (97)
+in /var/www/NOMINA/index.php (13)

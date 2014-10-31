@@ -1,0 +1,109 @@
+<?php
+
+/**
+ * Esta es la clase de modelo para la tabla "TBL_CATTIPOSIDENTIFICACION".
+ *
+ * Las siguientes son las columnas disponibles en la tabla 'TBL_CATTIPOSIDENTIFICACION':
+ * @Propiedad integer $TIID_ID
+ * @Propiedad string $TIID_NOMBRE
+ * @Propiedad string $TIID_DESCRIPCION
+ * @Propiedad string $TIID_FECHACAMBIO
+ * @Propiedad integer $TIID_REGISTRADOPOR
+ *
+ * Las siguientes son las relaciones de modelo disponibles:
+ * @Propiedad PERSONASGENERALES[] $pERSONASGENERALESs
+ */
+class Tiposidentificacion extends CActiveRecord
+{
+	/**
+	 * @Devuelve el modelo estático de la clase AR especificado. 
+	 * @param string $ className activo nombre de la clase de registro. 
+	 * @Devuelve Tiposidentificacion la clase del modelo estàtico.
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
+
+	/**
+	 * @Devuelve CDbConnection conexiòn a la base de datos.
+	 */
+	public function getDbConnection()
+	{
+		return Yii::app()->db3;
+	}
+
+	/**
+	 * @Devuelve cadena el nombre de tabla de base de datos asociado
+	 */
+	public function tableName()
+	{
+		return 'TBL_CATTIPOSIDENTIFICACION';
+	}
+
+	/**
+	 * @Devuelve las reglas de validación de matriz para los atributos de modelo.
+	 */
+	public function rules()
+	{
+	  //NOTA: sólo se debe definir reglas para los atributos que
+      //van a recibir las entradas de los usuarios.
+		return array(
+			array('TIID_FECHACAMBIO, TIID_REGISTRADOPOR', 'required'),
+			array('TIID_REGISTRADOPOR', 'numerical', 'integerOnly'=>true),
+			array('TIID_NOMBRE', 'length', 'max'=>50),
+			array('TIID_DESCRIPCION', 'length', 'max'=>5),
+			//La siguiente regla es utilizada por search ().
+            //Por favor, elimine los atributos que no se deben buscar.
+			array('TIID_ID, TIID_NOMBRE, TIID_DESCRIPCION, TIID_FECHACAMBIO, TIID_REGISTRADOPOR', 'safe', 'on'=>'search'),
+		);
+	}
+
+	/**
+	 * @Devolver reglas relacionales matriz.
+	 */
+	public function relations()
+	{
+		//Nota: es posible que necesite ajustar el nombre de la relación y la relacionada
+        //Nombre de clase de las relaciones generadas automáticamente a continuación.
+		return array(
+			'pERSONASGENERALESs' => array(self::HAS_MANY, 'PERSONASGENERALES', 'TIID_ID'),
+		);
+	}
+
+	/**
+	 * @Devuelve matriz personalizados etiquetas de atributos  (nombre => etiqueta)
+	 */
+	public function attributeLabels()
+	{
+		return array(
+						'TIID_ID' => 'TIID',
+						'TIID_NOMBRE' => 'TIID NOMBRE',
+						'TIID_DESCRIPCION' => 'TIID DESCRIPCION',
+						'TIID_FECHACAMBIO' => 'TIID FECHACAMBIO',
+						'TIID_REGISTRADOPOR' => 'TIID REGISTRADOPOR',
+		);
+	}
+
+	 /**
+     *@Recupera una lista de los modelos basados ​​en las actuales condiciones de búsqueda / filtro.
+     *@Return CActiveDataProvider el proveedor de datos que puede devolver los modelos basados ​​en las condiciones de búsqueda / filtro.
+     */
+	public function search()
+	{
+		//Advertencia: Por favor, modifique el siguiente código para quitar atributos que
+        //No debe ser buscado.
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('TIID_ID',$this->TIID_ID);
+		$criteria->compare('TIID_NOMBRE',$this->TIID_NOMBRE,true);
+		$criteria->compare('TIID_DESCRIPCION',$this->TIID_DESCRIPCION,true);
+		$criteria->compare('TIID_FECHACAMBIO',$this->TIID_FECHACAMBIO,true);
+		$criteria->compare('TIID_REGISTRADOPOR',$this->TIID_REGISTRADOPOR);
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
+}

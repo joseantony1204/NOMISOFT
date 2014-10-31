@@ -163,7 +163,7 @@ $Mensualnomina->cargarEmpleoPlanta($Mensualnominaliquidaciones->liquidacion[$i][
                 <td><?php echo $Mensualnomina->Empleoplanta->EMPL_CARGO;?></td>
               </tr>
 			  <?php
-              if($Mensualnomina->Tipocargo->TICA_ID==2){
+              if($Mensualnomina->Tipocargo->TICA_ID==3){
 			  ?>
 			  <tr>
                <td>Puntos</td>

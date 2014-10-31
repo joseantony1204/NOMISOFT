@@ -120,6 +120,16 @@ return array(
             'enableProfiling' => true,			
 		),
 		
+		'db3'=> array( 
+		    'class'=>'CDbConnection', 
+		    'connectionString' => 'pgsql:host=localhost;dbname=BD_CATEDRATICOS_UG',
+		    'emulatePrepare' => false,
+			'username' => 'nominauser', 
+		    'password' => 'nominarootadmin.,-', 
+		    'charset' => 'utf8',
+            'enableProfiling' => true,			
+		),
+		
 		
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors

@@ -55,7 +55,7 @@ class UsuariosLogin extends CFormModel
 			switch($identity->errorCode)
 			{
 				case UserIdentity::ERROR_NONE:
-					$duration= $this->recordarme ? 3600*24*1 : 0; //  30 days
+					$duration= $this->recordarme ? 12000*24*1 : 0; //  30 days
 					Yii::app()->user->login($identity,$duration);
 					break;
 				case UserIdentity::ERROR_USERNAME_INVALID:

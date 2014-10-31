@@ -744,7 +744,7 @@ class Mensualnominaliquidaciones extends CActiveRecord
 	{
 	 $connection = Yii::app()->db2;
 	 
-	 //echo "<br><br><br>".
+	//echo "<br><br><br>".
 	 $sql='SELECT mnl."MENL_ID", mnl."MENL_CODIGO", p."PEGE_IDENTIFICACION", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE", p."PEGE_SEGUNDONOMBRE",
      s."SALU_NOMBRE", SUM(mnl."MENL_SALARIO"+mnl."MENL_PRIMAANTIGUEDAD"+mnl."MENL_HEDTOTAL"+mnl."MENL_HENTOTAL"+ 
      mnl."MENL_HEDFTOTAL"+mnl."MENL_HENFTOTAL"+mnl."MENL_DYFTOTAL"+mnl."MENL_RENTOTAL"+mnl."MENL_RENDYFTOTAL"+mnl."MENL_PRIMATECNICA" + 
@@ -810,7 +810,7 @@ class Mensualnominaliquidaciones extends CActiveRecord
       'pagination'=>array(
                           'pageSize'=>100,
                          ),
-      )
+      ),$connection
 	 );	
 	 
 	}
@@ -885,7 +885,7 @@ class Mensualnominaliquidaciones extends CActiveRecord
       'pagination'=>array(
                           'pageSize'=>100,
                          ),
-      )
+      ),$connection
 	 );	
 	 
 	}
@@ -951,7 +951,7 @@ class Mensualnominaliquidaciones extends CActiveRecord
       'pagination'=>array(
                           'pageSize'=>100,
                          ),
-      )
+      ),$connection
 	 );	
 	 
 	}
@@ -1017,7 +1017,7 @@ class Mensualnominaliquidaciones extends CActiveRecord
       'pagination'=>array(
                           'pageSize'=>100,
                          ),
-      )
+      ),$connection
 	 );	
 	 
 	}
@@ -1082,7 +1082,7 @@ class Mensualnominaliquidaciones extends CActiveRecord
       'pagination'=>array(
                           'pageSize'=>100,
                          ),
-      )
+      ),$connection
 	 );	
 	}
 	
@@ -1146,7 +1146,7 @@ class Mensualnominaliquidaciones extends CActiveRecord
       'pagination'=>array(
                           'pageSize'=>100,
                          ),
-      )
+      ),$connection
 	 );	
 	}
 	
@@ -1224,7 +1224,7 @@ class Mensualnominaliquidaciones extends CActiveRecord
       'pagination'=>array(
                           'pageSize'=>100,
                          ),
-      )
+      ),$connection
 	 );	
 	 
 	} 	

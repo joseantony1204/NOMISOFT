@@ -57,7 +57,7 @@ foreach($unidades as $unidad){
 	$basico[3]=$arc->espacio($c1).chr(179).$arc->izquierda(trim($Mensualnomina->Tipocargo->TICA_NOMBRE), $c2);
 	$basico[4]=$arc->espacio($c1).chr(179).$arc->izquierda(trim($Mensualnomina->Empleoplanta->EMPL_CARGO), $c2);
 	if ($Mensualnomina->Tipocargo->TICA_ID==2 or $Mensualnomina->Tipocargo->TICA_ID==3){
-		$basico[5]=$arc->espacio($c1).chr(179).$arc->izquierda(("PUNTOS ".trim($Mensualnomina->Empleoplanta->EMPL_PUNTOS)), $c2);
+		$basico[5]=$arc->espacio($c1).chr(179).$arc->izquierda(("PUNTOS ".trim($Mensualnominaliquidaciones->liquidacion[$i][3])), $c2);
 		$basico[6]=$arc->espacio($c1).chr(179).$arc->izquierda(("VR PUNTO $valorPunto"), $c2);
 	}else{
 		$basico[5]=$arc->espacio($c1).chr(179).$arc->espacio($c2);
@@ -67,7 +67,7 @@ foreach($unidades as $unidad){
 	
 	//*************************INCICIA LA CAPTURA DE LOS PAGOS ************************************************************//
 	$pago=NULL;
-	$pago[0]=$arc->izquierda("SUELDO (".number_format($Mensualnomina->Empleoplanta->EMPL_SUELDO).")",$c3).chr(179).$arc->centro($Mensualnominaliquidaciones->liquidacion[$i][2],$c4).chr(179).$arc->derecha(number_format($Mensualnominaliquidaciones->liquidacion[$i][4]),$c5).chr(179).$arc->espacio($c6).chr(179).$arc->espacio($c7);
+	$pago[0]=$arc->izquierda("SUELDO (".number_format((($Mensualnominaliquidaciones->liquidacion[$i][4])/($Mensualnominaliquidaciones->liquidacion[$i][2]))*30).")",$c3).chr(179).$arc->centro($Mensualnominaliquidaciones->liquidacion[$i][2],$c4).chr(179).$arc->derecha(number_format($Mensualnominaliquidaciones->liquidacion[$i][4]),$c5).chr(179).$arc->espacio($c6).chr(179).$arc->espacio($c7);
 	$lineapago=1;
 	
 	    /* antiguedad, transporte y alimentacion*/

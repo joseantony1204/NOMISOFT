@@ -538,45 +538,45 @@ class Personasgenerales extends CActiveRecord
 	
 	public function defaultNovedadesPrimaNavidad($Personasgenerales)
 	{
-	 $NovedadesPrimaNavidad = new NovedadesPrimaNavidad;	 
+	 $Novedadesprimanavidad = new Novedadesprimanavidad;	 
 	 $fechaCorte = date("Y")."-12-30";
-	 $NovedadesPrimaNavidad->PEGE_ID = $Personasgenerales->PEGE_ID;
-	 $NovedadesPrimaNavidad->NOPN_FECHAINGRESO = $Personasgenerales->PEGE_FECHAINGRESO;
-	 $NovedadesPrimaNavidad->NOPN_MESES = $this->mesesPrimas($Personasgenerales->PEGE_FECHAINGRESO,$fechaCorte);
+	 $Novedadesprimanavidad->PEGE_ID = $Personasgenerales->PEGE_ID;
+	 $Novedadesprimanavidad->NOPN_FECHAINGRESO = $Personasgenerales->PEGE_FECHAINGRESO;
+	 $Novedadesprimanavidad->NOPN_MESES = $this->mesesPrimas($Personasgenerales->PEGE_FECHAINGRESO,$fechaCorte);
 
-	 $NovedadesPrimaNavidad->NOPN_FECHACAMBIO = date('Y-m-d H:i:s');
-	 $NovedadesPrimaNavidad->NOPN_REGISTRADOPOR = Yii::app()->user->id;
-	 $NovedadesPrimaNavidad->save(); 
+	 $Novedadesprimanavidad->NOPN_FECHACAMBIO = date('Y-m-d H:i:s');
+	 $Novedadesprimanavidad->NOPN_REGISTRADOPOR = Yii::app()->user->id;
+	 $Novedadesprimanavidad->save(); 
 
 	}
 	
 	public function defaultNovedadesPrimaVacaciones($Personasgenerales)
 	{
-	 $NovedadesPrimaVacaciones = new NovedadesPrimaVacaciones;	 
+	 $Novedadesprimavacaciones = new Novedadesprimavacaciones;	 
 	 $fechaCorte = date("Y")."-12-30";
-	 $NovedadesPrimaVacaciones->PEGE_ID = $Personasgenerales->PEGE_ID;
-	 $NovedadesPrimaVacaciones->NOPV_FECHAINGRESO = $Personasgenerales->PEGE_FECHAINGRESO;
-	 /*$NovedadesPrimaVacaciones->NOPV_DIAS = $this->mesesPrimas($Empleosplanta->EMPL_FECHAINGRESO,$fechaCorte);*/
-	 $NovedadesPrimaVacaciones->NOPV_DIAS = 20;
+	 $Novedadesprimavacaciones->PEGE_ID = $Personasgenerales->PEGE_ID;
+	 $Novedadesprimavacaciones->NOPV_FECHAINGRESO = $Personasgenerales->PEGE_FECHAINGRESO;
+	 /*$Novedadesprimavacaciones->NOPV_DIAS = $this->mesesPrimas($Empleosplanta->EMPL_FECHAINGRESO,$fechaCorte);*/
+	 $Novedadesprimavacaciones->NOPV_DIAS = 20;
 
-	 $NovedadesPrimaVacaciones->NOPV_FECHACAMBIO = date('Y-m-d H:i:s');
-	 $NovedadesPrimaVacaciones->NOPV_REGISTRADOPOR = Yii::app()->user->id;
-	 $NovedadesPrimaVacaciones->save(); 
+	 $Novedadesprimavacaciones->NOPV_FECHACAMBIO = date('Y-m-d H:i:s');
+	 $Novedadesprimavacaciones->NOPV_REGISTRADOPOR = Yii::app()->user->id;
+	 $Novedadesprimavacaciones->save(); 
 
 	}
 	
 	public function defaultNovedadesVacaciones($Personasgenerales)
 	{
-	 $NovedadesVacaciones = new NovedadesVacaciones;	 
+	 $Novedadesvacaciones = new Novedadesvacaciones;	 
 	 $fechaCorte = date("Y")."-12-30";
-	 $NovedadesVacaciones->PEGE_ID = $Personasgenerales->PEGE_ID;
-	 $NovedadesVacaciones->NOVA_FECHAINGRESO = $Personasgenerales->PEGE_FECHAINGRESO;
-	 /*$NovedadesVacaciones->NOVA_DIAS = $this->mesesPrimas($Empleosplanta->EMPL_FECHAINGRESO,$fechaCorte);*/
-	 $NovedadesVacaciones->NOVA_DIAS = 23;
+	 $Novedadesvacaciones->PEGE_ID = $Personasgenerales->PEGE_ID;
+	 $Novedadesvacaciones->NOVA_FECHAINGRESO = $Personasgenerales->PEGE_FECHAINGRESO;
+	 /*$Novedadesvacaciones->NOVA_DIAS = $this->mesesPrimas($Empleosplanta->EMPL_FECHAINGRESO,$fechaCorte);*/
+	 $Novedadesvacaciones->NOVA_DIAS = 23;
 
-	 $NovedadesVacaciones->NOVA_FECHACAMBIO = date('Y-m-d H:i:s');
-	 $NovedadesVacaciones->NOVA_REGISTRADOPOR = Yii::app()->user->id;
-	 $NovedadesVacaciones->save(); 
+	 $Novedadesvacaciones->NOVA_FECHACAMBIO = date('Y-m-d H:i:s');
+	 $Novedadesvacaciones->NOVA_REGISTRADOPOR = Yii::app()->user->id;
+	 $Novedadesvacaciones->save(); 
 
 	}
 	
@@ -674,7 +674,7 @@ class Personasgenerales extends CActiveRecord
 	}
 
     public function loadPersonageneral($Personageneral){
-	  $connection = Yii::app()->db2;
+	  $connection = Yii::app()->db;
 	  $this->Personageneral = NULL;
 	  $this->Empleoplanta = NULL;
 	  $this->Estadoempleoplanta = NULL;

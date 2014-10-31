@@ -8,7 +8,7 @@ $columnas = count($Mensualnominaliquidaciones->prestaciones[1]);
  $modo="w";
  $arc = new Archivo($realPath.".dat",$modo);
  
- $c1=15;$c2=40;$c3=20;$c4=20;$c5=20;
+ $c1=20;$c2=40;$c3=20;$c4=20;$c5=20;
  $encabezado=$arc->izquierda("UNIVERSIDAD DE LA GUAJIRA",90).$arc->enter().
              $arc->izquierda("SECCION DE PERSONAL",90).$arc->izquierda("PERIODO      : $Periodo",60).$arc->enter().
 	         $arc->izquierda("RELACION DE I.B.C",90).$arc->izquierda("FECHA PROCESO: ".date("d/m/Y"),60).$arc->enter().
@@ -40,7 +40,8 @@ $columnas = count($Mensualnominaliquidaciones->prestaciones[1]);
 	  $pagina++;
 	  $linpag=7;
 	  $arc->escribir($encabezado.$pagina);
-	  $arc->escribir($titulo);		
+	  $arc->escribir($titulo);
+      $arc->escribir($lista[$j].$arc->espacio($c1).$arc->enter());	  
 	 }else{
 		  $arc->escribir($lista[$j].$arc->espacio($c1).$arc->enter());
 	      $linpag++;

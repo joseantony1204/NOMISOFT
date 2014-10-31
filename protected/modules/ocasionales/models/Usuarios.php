@@ -113,7 +113,7 @@ class Usuarios extends CActiveRecord
         //No debe ser buscado.
 
 		$criteria=new CDbCriteria;
-		$criteria->select='t.*, p.*, up.*, pn.*';
+		$criteria->select='t.*2, p.*, up.*, pn.*';
 		$criteria->join ='
 		INNER JOIN "TBL_SEGPERSONASNATURALES"  pn ON pn."PENA_ID" = t."PENA_ID"
 		INNER JOIN "TBL_SEGPERFILESUSUARIOS"  up ON up."USUA_ID" = t."USUA_ID"

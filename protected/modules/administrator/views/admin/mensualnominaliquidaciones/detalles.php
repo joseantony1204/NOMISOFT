@@ -234,7 +234,7 @@ $Mensualnomina->cargarEmpleoPlanta($Mensualnominaliquidaciones->liquidacion[$i][
 			  ?>
 			  <tr>
                <td>Puntos</td>
-               <td><?php echo $Mensualnomina->Empleoplanta->EMPL_PUNTOS; ?></td>
+               <td><?php echo $Mensualnominaliquidaciones->liquidacion[$i][3]; ?> </td>
       	      </tr>
 		      
 			  <tr>
@@ -264,7 +264,7 @@ $Mensualnomina->cargarEmpleoPlanta($Mensualnominaliquidaciones->liquidacion[$i][
                <th width="110" align="center" style="border:1px solid;padding:3px 3px;border-color:#000">NETO</th>
               </tr>
               <tr>
-	           <td>SUELDO(<?php  echo number_format($Mensualnomina->Empleoplanta->EMPL_SUELDO); ?>)</td>
+	           <td>SUELDO(<?php  echo number_format(($Mensualnominaliquidaciones->liquidacion[$i][4]/$Mensualnominaliquidaciones->liquidacion[$i][2])*30); ?>)</td>
 			   <td align='center'><?php echo $Mensualnominaliquidaciones->liquidacion[$i][2]; ?></td>
 			   <td align='right'><?php echo number_format($Mensualnominaliquidaciones->liquidacion[$i][4]); ?></td>
 	           <td>&nbsp;</td>
