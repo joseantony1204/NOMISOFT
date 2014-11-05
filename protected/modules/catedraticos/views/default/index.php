@@ -215,7 +215,7 @@ for($ln=0;$ln<=$filas-1;$ln++){
 					 
 					 <fieldset style="border:1px groove #ccc; background:#FFFFFF;">
                      
-					 <table width="98%" border="1" align="center">
+					 <table width="98%" border="0" align="center">
                           
 						  <tr>
                             <th colspan="5" scope="col"><hr /></th>

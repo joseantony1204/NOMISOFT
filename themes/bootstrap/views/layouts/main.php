@@ -57,7 +57,7 @@
 				/**
 				*inicio menu @empleados para el modulo ocasionales 
 				*/
-				 array('label'=>'EMPLEADOS', 'icon'=>'user', 'url'=>array('#',), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->getState('module')==2, 'items'=>array(
+				 array('label'=>'DOCENTES', 'icon'=>'user', 'url'=>array('#',), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->getState('module')==2, 'items'=>array(
                     array('label'=>'Administrar', 'url'=>array('/ocasionales/admin/personasgenerales/admin',), 'visible'=>!Yii::app()->user->isGuest,),
                     array('label'=>'Nuevo', 'url'=>array('/ocasionales/admin/personasgenerales/create',), 'visible'=>!Yii::app()->user->isGuest,),
                     array('label'=>'Retirados', 'url'=>array('/ocasionales/admin/personasgenerales/retirados',), 'visible'=>!Yii::app()->user->isGuest,),
@@ -89,8 +89,8 @@
 				/**
 				*inicio menu @empleados para el modulo catedraticos 
 				*/
-				
-				array('label'=>'EMPLEADOS', 'icon'=>'user', 'url'=>array('#',), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->getState('module')==3, 'items'=>array(
+				                
+				array('label'=>'DOCENTES', 'icon'=>'user', 'url'=>array('#',), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->getState('module')==3, 'items'=>array(
                     array('label'=>'Administrar', 'url'=>array('/catedraticos/admin/personasgenerales/admin',), 'visible'=>!Yii::app()->user->isGuest,),
                     array('label'=>'Nuevo', 'url'=>array('/catedraticos/admin/personasgenerales/create',), 'visible'=>!Yii::app()->user->isGuest,),
                     //array('label'=>'Retirados', 'url'=>array('/catedraticos/admin/personasgenerales/retirados',), 'visible'=>!Yii::app()->user->isGuest,),
@@ -176,7 +176,7 @@
 				/**
 				*inicio menu @generalidades para el modulo catedraticos 
 				*/
-				array('label'=>'GENERALIDADES', 'icon'=>'th', 'url'=>array('#',), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->getState('module')==3, 'items'=>array(
+				array('label'=>'GENERALES', 'icon'=>'th', 'url'=>array('#',), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->getState('module')==3, 'items'=>array(
                     array('label'=>'DESCUENTOS'),
                     array('label'=>'Mensuales', 'url'=>array('/catedraticos/admin/descuentosmensuales/admin',), 'visible'=>!Yii::app()->user->isGuest,),
                     array('label'=>'Categorias', 'url'=>array('/catedraticos/admin/categorias/admin',), 'visible'=>!Yii::app()->user->isGuest,),					

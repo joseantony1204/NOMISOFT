@@ -126,7 +126,7 @@ function validar(form){
 		var identificacion = $("#Informes_INFO_IDENTIFICACION").val();
 		var facultad = $("#Informes_INFO_UNIDAD").val();
 		
-		window.location=("/Dropbox/NOMINA/catedraticos/admin/mensualnominaliquidaciones/detalles/mensualNomina/"+anioInicial+periodoInicio+mesInicial+"/mensualNomina2/"+anioFinal+periodoFinal+mesFinal+"/facultad/"+facultad+"/personaGral/"+identificacion);
+		window.location=("/NOMINA/catedraticos/admin/mensualnominaliquidaciones/detalles/mensualNomina/"+anioInicial+periodoInicio+mesInicial+"/mensualNomina2/"+anioFinal+periodoFinal+mesFinal+"/facultad/"+facultad+"/personaGral/"+identificacion);
 	  }
 	}
 	
@@ -142,7 +142,7 @@ function validar(form){
 		var identificacion = $("#Informes_INFO_IDENTIFICACION").val();
 		var facultad = $("#Informes_INFO_UNIDAD").val();
 		
-		window.location=("/Dropbox/NOMINA/catedraticos/admin/mensualnominaliquidaciones/resumen/mensualNomina/"+anioInicial+periodoInicio+mesInicial+"/mensualNomina2/"+anioFinal+periodoFinal+mesFinal+"/facultad/"+facultad+"/personaGral/"+identificacion);
+		window.location=("/NOMINA/catedraticos/admin/mensualnominaliquidaciones/resumen/mensualNomina/"+anioInicial+periodoInicio+mesInicial+"/mensualNomina2/"+anioFinal+periodoFinal+mesFinal+"/facultad/"+facultad+"/personaGral/"+identificacion);
 	  }
 	}
 	
@@ -157,7 +157,7 @@ function validar(form){
 		var identificacion = $("#Informes_INFO_IDENTIFICACION").val();
 		var facultad = $("#Informes_INFO_UNIDAD").val();
 		
-		window.location=("/Dropbox/NOMINA/catedraticos/admin/mensualnominaliquidaciones/email/mensualNomina/"+anioInicial+periodoInicio+mesInicial+"/mensualNomina2/"+anioFinal+periodoFinal+mesFinal+"/facultad/"+facultad+"/personaGral/"+identificacion);
+		window.location=("/NOMINA/catedraticos/admin/mensualnominaliquidaciones/email/mensualNomina/"+anioInicial+periodoInicio+mesInicial+"/mensualNomina2/"+anioFinal+periodoFinal+mesFinal+"/facultad/"+facultad+"/personaGral/"+identificacion);
 	  }
 	}
 	
@@ -173,7 +173,7 @@ function validar(form){
 		var facultad = $("#Informes_INFO_UNIDAD").val();
 		var idSalud = $("#Informes_INFO_SALUD").val();
 		
-		window.location=("/Dropbox/NOMINA/catedraticos/admin/mensualnominaliquidaciones/salud/mensualNomina/"+anioInicial+periodoInicio+mesInicial+"/mensualNomina2/"+anioFinal+periodoFinal+mesFinal+"/facultad/"+facultad+"/personaGral/"+identificacion+"/idSalud/"+idSalud);
+		window.location=("/NOMINA/catedraticos/admin/mensualnominaliquidaciones/salud/mensualNomina/"+anioInicial+periodoInicio+mesInicial+"/mensualNomina2/"+anioFinal+periodoFinal+mesFinal+"/facultad/"+facultad+"/personaGral/"+identificacion+"/idSalud/"+idSalud);
 	  }
 	 }
 	 
@@ -189,7 +189,7 @@ function validar(form){
 		var facultad = $("#Informes_INFO_UNIDAD").val();
 		var idSalud = $("#Informes_INFO_SALUD").val();
 		
-		window.location=("/Dropbox/NOMINA/catedraticos/admin/mensualnominaliquidaciones/ibc/mensualNomina/"+anioInicial+periodoInicio+mesInicial+"/mensualNomina2/"+anioFinal+periodoFinal+mesFinal+"/facultad/"+facultad+"/personaGral/"+identificacion);
+		window.location=("/NOMINA/catedraticos/admin/mensualnominaliquidaciones/ibc/mensualNomina/"+anioInicial+periodoInicio+mesInicial+"/mensualNomina2/"+anioFinal+periodoFinal+mesFinal+"/facultad/"+facultad+"/personaGral/"+identificacion);
 	  }
 	 }
 	  
@@ -205,7 +205,7 @@ function validar(form){
 		var facultad = $("#Informes_INFO_UNIDAD").val();
 		var idPension = $("#Informes_INFO_PENSION").val();
 		
-		window.location=("/Dropbox/NOMINA/catedraticos/admin/mensualnominaliquidaciones/pension/mensualNomina/"+anioInicial+periodoInicio+mesInicial+"/mensualNomina2/"+anioFinal+periodoFinal+mesFinal+"/facultad/"+facultad+"/personaGral/"+identificacion+"/idPension/"+idPension);
+		window.location=("/NOMINA/catedraticos/admin/mensualnominaliquidaciones/pension/mensualNomina/"+anioInicial+periodoInicio+mesInicial+"/mensualNomina2/"+anioFinal+periodoFinal+mesFinal+"/facultad/"+facultad+"/personaGral/"+identificacion+"/idPension/"+idPension);
 	  }
 	}
 	
@@ -221,7 +221,7 @@ function validar(form){
 		var facultad = $("#Informes_INFO_UNIDAD").val();
 		var idSindicato = $("#Informes_INFO_SINDICATOS").val();
 		
-		window.location=("/Dropbox/NOMINA/catedraticos/admin/mensualnominaliquidaciones/sindicato/mensualNomina/"+anioInicial+periodoInicio+mesInicial+"/mensualNomina2/"+anioFinal+periodoFinal+mesFinal+"/facultad/"+facultad+"/personaGral/"+identificacion+"/idSindicato/"+idSindicato);
+		window.location=("/NOMINA/catedraticos/admin/mensualnominaliquidaciones/sindicato/mensualNomina/"+anioInicial+periodoInicio+mesInicial+"/mensualNomina2/"+anioFinal+periodoFinal+mesFinal+"/facultad/"+facultad+"/personaGral/"+identificacion+"/idSindicato/"+idSindicato);
 	  }
 	}
 	
@@ -240,7 +240,7 @@ function validar(form){
 		 if((idDescuento)==null){
           alert('Debe seleccionar algun descuento de la lista..!');
 		 }else{
-		      window.location=("/Dropbox/NOMINA/catedraticos/admin/mensualnominaliquidaciones/descuento/mensualNomina/"+anioInicial+periodoInicio+mesInicial+"/mensualNomina2/"+anioFinal+periodoFinal+mesFinal+"/facultad/"+facultad+"/personaGral/"+identificacion+"/idDescuento/"+idDescuento);
+		      window.location=("/NOMINA/catedraticos/admin/mensualnominaliquidaciones/descuento/mensualNomina/"+anioInicial+periodoInicio+mesInicial+"/mensualNomina2/"+anioFinal+periodoFinal+mesFinal+"/facultad/"+facultad+"/personaGral/"+identificacion+"/idDescuento/"+idDescuento);
 	         }		 
 		}
 	 }
@@ -254,7 +254,7 @@ function validar(form){
 		var periodoInicio = $("#Informes_INFO_PERIODOINICIO").val();
 		var mesInicial = $("#Informes_INFO_MESINICIO").val();
 		var mesFinal = $("#Informes_INFO_MESFINAL").val();		
-		window.location=("/Dropbox/NOMINA/catedraticos/admin/mensualnominaliquidaciones/retefuente/mensualNomina/"+anioInicial+periodoInicio+mesInicial+"/mensualNomina2/"+anioFinal+periodoFinal+mesFinal);
+		window.location=("/NOMINA/catedraticos/admin/mensualnominaliquidaciones/retefuente/mensualNomina/"+anioInicial+periodoInicio+mesInicial+"/mensualNomina2/"+anioFinal+periodoFinal+mesFinal);
 	  }
 	}
 	
@@ -266,7 +266,7 @@ function validar(form){
 		var periodoInicio = $("#Informes_INFO_PERIODOINICIO").val();
 		var mesInicial = $("#Informes_INFO_MESINICIO").val();
 		var mesFinal = $("#Informes_INFO_MESFINAL").val();		
-		window.location=("/Dropbox/NOMINA/catedraticos/admin/mensualnominaliquidaciones/estampilla/mensualNomina/"+anioInicial+periodoInicio+mesInicial+"/mensualNomina2/"+anioFinal+periodoFinal+mesFinal);
+		window.location=("/NOMINA/catedraticos/admin/mensualnominaliquidaciones/estampilla/mensualNomina/"+anioInicial+periodoInicio+mesInicial+"/mensualNomina2/"+anioFinal+periodoFinal+mesFinal);
 	  }
 	}
 </script>

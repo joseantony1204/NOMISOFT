@@ -1,9 +1,5 @@
 <?php
 set_time_limit(0);
-$phpExcelPath = Yii::getPathOfAlias('ext.vendors.phpexcel');
-spl_autoload_unregister(array('YiiBase','autoload'));
-include($phpExcelPath . DIRECTORY_SEPARATOR . 'PHPExcel.php');
-
 /**
  * Esta es la clase de modelo para la tabla "TBL_CATCATEDRAS".
  *
@@ -246,11 +242,26 @@ class Catedras extends CActiveRecord
 	}
 	
   public function verificarDocenteEnDB($Catedras){
+   $phpExcelPath = Yii::getPathOfAlias('ext.vendors.phpexcel');
    $connection = Yii::app()->db3;
-   $objReader = PHPExcel_IOFactory::createReader('Excel2007');
-   $objReader->setReadDataOnly(true);
+   spl_autoload_unregister(array('YiiBase','autoload'));
+   include($phpExcelPath . DIRECTORY_SEPARATOR . 'PHPExcel.php');
+   
    $this->importDataProvider = NULL;
    $ruta = $Catedras->CATE_RUTA.'/'.$Catedras->CATE_ARCHIVO;
+   
+   /**
+   *obteniendo extension del archivo para evitar errores de carga
+   *se elige la version adecuada del excel dependiendo la extension del archivo
+   */
+   $extension = pathinfo($ruta, PATHINFO_EXTENSION);
+   if($extension=='xls') {
+        $objReader = PHPExcel_IOFactory::createReader('Excel5');
+   }else{
+        $objReader = PHPExcel_IOFactory::createReader('Excel2007');
+        } 
+   $objReader->setReadDataOnly(true);
+   
    /**
 	*comprobacion si el archivo realmente fue subido al servidor
 	*/
@@ -327,12 +338,27 @@ class Catedras extends CActiveRecord
     }  
   }
   
-   public function verificarInsertDocenteEnDB($Catedras){
-   $connection = Yii::app()->db3;
-   $objReader = PHPExcel_IOFactory::createReader('Excel2007');
-   $objReader->setReadDataOnly(true);
+  public function verificarInsertDocenteEnDB($Catedras){
+   $phpExcelPath = Yii::getPathOfAlias('ext.vendors.phpexcel');
+   $connection = Yii::app()->db3;   
+   spl_autoload_unregister(array('YiiBase','autoload'));
+   include($phpExcelPath . DIRECTORY_SEPARATOR . 'PHPExcel.php');
+   
    $this->importDataProvider = NULL;
    $ruta = $Catedras->CATE_RUTA.'/'.$Catedras->CATE_ARCHIVO;
+   
+   /**
+   *obteniendo extension del archivo para evitar errores de carga
+   *se elige la version adecuada del excel dependiendo la extension del archivo
+   */
+   $extension = pathinfo($ruta, PATHINFO_EXTENSION);
+   if($extension=='xls') {
+        $objReader = PHPExcel_IOFactory::createReader('Excel5');
+   }else{
+        $objReader = PHPExcel_IOFactory::createReader('Excel2007');
+        } 
+   $objReader->setReadDataOnly(true);
+   
    /**
 	*comprobacion si el archivo realmente fue subido al servidor
 	*/
@@ -359,10 +385,9 @@ class Catedras extends CActiveRecord
    for ($i = 0; $i <count($this->importDataProvider); $i++){
     $idemp = $this->importDataProvider[$i][0];
     $nombre = $this->importDataProvider[$i][1].' '.$this->importDataProvider[$i][2];
-    $listnombres = $this->importDataProvider[$i][1];
-    $listapellidos = $this->importDataProvider[$i][2];
     $categoria = $this->importDataProvider[$i][3];       
-    $matrizPesonal[$i][0] = $idemp; $matrizPesonal[$i][1] = $nombre; $matrizPesonal[$i][2] = $categoria; 
+    $matrizPesonal[$i][0] = $idemp; $matrizPesonal[$i][1] = $nombre; $matrizPesonal[$i][2] = $categoria;
+    $matrizPesonal[$i][3] = $this->importDataProvider[$i][2]; $matrizPesonal[$i][4] = $this->importDataProvider[$i][1];	
    }
    
    for ($j=0;$j<(count($matrizPesonal));$j++){
@@ -397,15 +422,15 @@ class Catedras extends CActiveRecord
 	   $this->noExiste = "<font color='#D31F05'>Detalles : Registros que <strong>NO ESTAN</strong> 
 	   almacenados en la <strong>BASE DE DATOS</strong></font>";
 	   
-	   $listnombre = explode(' ', $listnombres);
-	   $listapellido = explode(' ', $listapellidos);
+	   $listnombre = explode(' ', $matrizPesonal[$j][3]);
+	   $listapellido = explode(' ', $matrizPesonal[$j][4]);
 	   
 	   $Personasgenerales = new Personasgenerales;
 	   $Personasgenerales->PEGE_IDENTIFICACION = $idemp;
 	   $Personasgenerales->PEGE_PRIMERNOMBRE = $listnombre[0];
-	   $Personasgenerales->PEGE_SEGUNDONOMBRE = $listnombre[1];
+	   $Personasgenerales->PEGE_SEGUNDONOMBRE = $listnombre[1].' '.$listnombre[2];
 	   $Personasgenerales->PEGE_PRIMERAPELLIDO = $listapellido[0];
-	   $Personasgenerales->PEGE_SEGUNDOAPELLIDOS  = $listapellido[1];   
+	   $Personasgenerales->PEGE_SEGUNDOAPELLIDOS  = $listapellido[1].' '.$listapellido[2];   
 	   $Personasgenerales->PEGE_FECHAINGRESO  =  date('Y-m-d');
 	   $Personasgenerales->PEGE_FECHANACIMIENTO  =  '1900-01-01';
        $Personasgenerales->PEGE_FECHAEXPEDIDENTIDAD = '1900-01-01';	   
@@ -450,10 +475,22 @@ class Catedras extends CActiveRecord
  
  public function insertUpdateCatedras($Catedras){
    $connection = Yii::app()->db3;
-   $objReader = PHPExcel_IOFactory::createReader('Excel2007');
-   $objReader->setReadDataOnly(true);
+   $this->verificarInsertDocenteEnDB($Catedras);   
    $this->importDataProvider = NULL;
    $ruta = $Catedras->CATE_RUTA.'/'.$Catedras->CATE_ARCHIVO;
+   
+   /**
+   *obteniendo extension del archivo para evitar errores de carga
+   *se elige la version adecuada del excel dependiendo la extension del archivo
+   */
+   $extension = pathinfo($ruta, PATHINFO_EXTENSION);
+   if($extension=='xls') {
+        $objReader = PHPExcel_IOFactory::createReader('Excel5');
+   }else{
+        $objReader = PHPExcel_IOFactory::createReader('Excel2007');
+        } 
+   $objReader->setReadDataOnly(true);
+   
    /**
 	*comprobacion si el archivo realmente fue subido al servidor
 	*/
@@ -489,8 +526,6 @@ class Catedras extends CActiveRecord
     $matrizPesonal[$i][0] = $idemp; $matrizPesonal[$i][1] = $nombre; $matrizPesonal[$i][2] = $categoria; 
     $matrizPesonal[$i][3] = $horas;	$matrizPesonal[$i][4] = $periodo;
    }
-   
-   $this->verificarInsertDocenteEnDB($Catedras);
    
    for ($j=0;$j<(count($matrizPesonal));$j++){
      $idemp = $matrizPesonal[$j][0];
@@ -556,6 +591,7 @@ class Catedras extends CActiveRecord
 		  $Catedra->CATE_FECHACAMBIO = date('Y-m-d');
 	      $Catedra->CATE_REGISTRADOPOR = Yii::app()->user->id;
 	      if($Catedra->save()){
+		   $Catedra->defaultDescuentosMensuales($Catedra->CATE_ID);
 		   $this->docSiCateInFacultAct[]=$idemp;
 		  }else{
 		        $msg = print_r($Catedra->getErrors(),1);

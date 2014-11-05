@@ -6047,3 +6047,25 @@ LINE 1: ...p" ON p."PEGE_ID" = t."PEGE_ID" AND t."PEGE_ID" = ORDER BY t...
                                                              ^. The SQL statement executed was: SELECT t.*, p."PEGE_ID", p."PEGE_PRIMERNOMBRE", p."PEGE_PRIMERAPELLIDO" FROM "TBL_CATCATEDRAS" "t" INNER JOIN "TBL_CATPERSONASGENERALES" "p" ON p."PEGE_ID" = t."PEGE_ID" AND t."PEGE_ID" = ORDER BY t."CATE_ID" DESC LIMIT 1.
 in /var/www/NOMINA/protected/modules/catedraticos/controllers/admin/NovedadesmensualesController.php (97)
 in /var/www/NOMINA/index.php (13)
+2014/11/04 10:28:51 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23503]: Foreign key violation: 7 ERROR:  update o delete en «TBL_CATPERSONASGENERALES» viola la llave foránea «PEGE_ID» en la tabla «TBL_CATCATEDRAS»
+DETAIL:  La llave (PEGE_ID)=(24) todavía es referida desde la tabla «TBL_CATCATEDRAS».. The SQL statement executed was: DELETE FROM "TBL_CATPERSONASGENERALES" WHERE "TBL_CATPERSONASGENERALES"."PEGE_ID"=24.
+in /var/www/NOMINA/protected/modules/catedraticos/controllers/admin/PersonasgeneralesController.php (132)
+in /var/www/NOMINA/index.php (13)
+2014/11/04 10:29:03 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23503]: Foreign key violation: 7 ERROR:  update o delete en «TBL_CATPERSONASGENERALES» viola la llave foránea «PEGE_ID» en la tabla «TBL_CATCATEDRAS»
+DETAIL:  La llave (PEGE_ID)=(2) todavía es referida desde la tabla «TBL_CATCATEDRAS».. The SQL statement executed was: DELETE FROM "TBL_CATPERSONASGENERALES" WHERE "TBL_CATPERSONASGENERALES"."PEGE_ID"=2.
+in /var/www/NOMINA/protected/modules/catedraticos/controllers/admin/PersonasgeneralesController.php (132)
+in /var/www/NOMINA/index.php (13)
+2014/11/04 10:29:09 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23503]: Foreign key violation: 7 ERROR:  update o delete en «TBL_CATPERSONASGENERALES» viola la llave foránea «PEGE_ID» en la tabla «TBL_CATCATEDRAS»
+DETAIL:  La llave (PEGE_ID)=(3) todavía es referida desde la tabla «TBL_CATCATEDRAS».. The SQL statement executed was: DELETE FROM "TBL_CATPERSONASGENERALES" WHERE "TBL_CATPERSONASGENERALES"."PEGE_ID"=3.
+in /var/www/NOMINA/protected/modules/catedraticos/controllers/admin/PersonasgeneralesController.php (132)
+in /var/www/NOMINA/index.php (13)
+2014/11/04 10:32:38 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23503]: Foreign key violation: 7 ERROR:  inserción o actualización en la tabla «TBL_CATPERSONASGENERALES» viola la llave foránea «CATE_ID»
+DETAIL:  La llave (CATE_ID)=(4) no está presente en la tabla «TBL_CATCATEGORIAS».. The SQL statement executed was: INSERT INTO "TBL_CATPERSONASGENERALES" ("PEGE_IDENTIFICACION", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE", "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_FECHAINGRESO", "PEGE_FECHANACIMIENTO", "PEGE_FECHAEXPEDIDENTIDAD", "CATE_ID", "TIID_ID", "SALU_ID", "PENS_ID", "SIND_ID", "SEXO_ID", "PEGE_FECHACAMBIO", "PEGE_REGISTRADOPOR") VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7, :yp8, :yp9, :yp10, :yp11, :yp12, :yp13, :yp14, :yp15).
+in /var/www/NOMINA/protected/modules/catedraticos/models/Catedras.php (447)
+in /var/www/NOMINA/protected/modules/catedraticos/controllers/admin/CatedrasController.php (177)
+in /var/www/NOMINA/index.php (13)
+2014/11/04 10:47:26 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23503]: Foreign key violation: 7 ERROR:  inserción o actualización en la tabla «TBL_CATCATEDRAS» viola la llave foránea «PEAC_ID»
+DETAIL:  La llave (PEAC_ID)=(201402) no está presente en la tabla «TBL_CATPERIODOSACADEMICOS».. The SQL statement executed was: INSERT INTO "TBL_CATCATEDRAS" ("PEGE_ID", "CATE_CATEDRA", "CATE_NUMHORAS", "CATE_VALORHORA", "FACU_ID", "PEAC_ID", "CATE_FECHACAMBIO", "CATE_REGISTRADOPOR") VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6, :yp7).
+in /var/www/NOMINA/protected/modules/catedraticos/models/Catedras.php (572)
+in /var/www/NOMINA/protected/modules/catedraticos/controllers/admin/CatedrasController.php (181)
+in /var/www/NOMINA/index.php (13)

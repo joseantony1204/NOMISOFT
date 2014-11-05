@@ -38,7 +38,7 @@ class PersonasgeneralesController extends Controller
 		}
         return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'',''.$array[5].'',
+				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'','view',
                                  'delete','admin','create','update',  
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
@@ -54,10 +54,13 @@ class PersonasgeneralesController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	public function actionView()
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+		$this->render('viewnombres',array(
+		//$this->render('viewnomina',array(
+		//$this->render('view',array(
+		//$this->render('viewimport',array(
+			//'model'=>$this->loadModel($id),
 		));
 	}
 

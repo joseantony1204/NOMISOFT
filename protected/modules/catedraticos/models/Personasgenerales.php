@@ -160,6 +160,46 @@ class Personasgenerales extends CActiveRecord
 	{
 		//Advertencia: Por favor, modifique el siguiente código para quitar atributos que
         //No debe ser buscado.
+		
+		$sort = new CSort();
+		$sort->defaultOrder = '"PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS" ASC';
+		$sort->attributes = array(			
+			'PEGE_IDENTIFICACION'=>array(
+				'asc'=>'"PEGE_IDENTIFICACION"',
+				'desc'=>'"PEGE_IDENTIFICACION" desc',
+			),
+			
+			'PEGE_PRIMERNOMBRE'=>array(
+				'asc'=>'"PEGE_PRIMERNOMBRE"',
+				'desc'=>'"PEGE_PRIMERNOMBRE" desc',
+			),
+			
+			'PEGE_SEGUNDONOMBRE'=>array(
+				'asc'=>'"PEGE_SEGUNDONOMBRE"',
+				'desc'=>'"PEGE_SEGUNDONOMBRE" desc',
+			),
+			
+			'PEGE_PRIMERAPELLIDO'=>array(
+				'asc'=>'"PEGE_PRIMERAPELLIDO"',
+				'desc'=>'"PEGE_PRIMERAPELLIDO" desc',
+			),
+			
+			'PEGE_SEGUNDOAPELLIDOS'=>array(
+				'asc'=>'"PEGE_SEGUNDOAPELLIDOS"',
+				'desc'=>'"PEGE_SEGUNDOAPELLIDOS" desc',
+			),
+			
+			'PEGE_FECHAINGRESO'=>array(
+				'asc'=>'"PEGE_FECHAINGRESO"',
+				'desc'=>'"PEGE_FECHAINGRESO" desc',
+			),
+			
+			'PEGE_NUMEROCUENTA'=>array(
+				'asc'=>'"PEGE_NUMEROCUENTA"',
+				'desc'=>'"PEGE_NUMEROCUENTA" desc',
+			),
+			
+		);
 
 		$criteria=new CDbCriteria;
 
@@ -189,6 +229,8 @@ class Personasgenerales extends CActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'sort'=>$sort,
+			'pagination' => array('pageSize' =>100),
 		));
 	}
 	
