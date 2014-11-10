@@ -103,7 +103,7 @@ function validar(form){
 		var unidad = $("#Informes_INFO_UNIDAD").val();
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		
-		window.location=("/Dropbox/NOMINA/administrator/admin/primavacacionesnominaliquidaciones/detalles/primavacacionesNomina/"+anioInicial+mesInicial+"04/primavacacionesNomina2/"+anioFinal+mesFinal+"04/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
+		window.location=("/NOMINA/administrator/admin/primavacacionesnominaliquidaciones/detalles/primavacacionesNomina/"+anioInicial+mesInicial+"31/primavacacionesNomina2/"+anioFinal+mesFinal+"31/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
 	  }
 	}
 	
@@ -118,7 +118,7 @@ function validar(form){
 		var unidad = $("#Informes_INFO_UNIDAD").val();
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		
-		window.location=("/Dropbox/NOMINA/administrator/admin/primavacacionesnominaliquidaciones/resumen/primavacacionesNomina/"+anioInicial+mesInicial+"04/primavacacionesNomina2/"+anioFinal+mesFinal+"04/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
+		window.location=("/NOMINA/administrator/admin/primavacacionesnominaliquidaciones/resumen/primavacacionesNomina/"+anioInicial+mesInicial+"31/primavacacionesNomina2/"+anioFinal+mesFinal+"31/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
 	  }
 	}
 	
@@ -132,7 +132,7 @@ function validar(form){
 		var unidad = $("#Informes_INFO_UNIDAD").val();
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		
-		window.location=("/Dropbox/NOMINA/administrator/admin/primavacacionesnominaliquidaciones/mail/primavacacionesNomina/"+anioInicial+mesInicial+"04/primavacacionesNomina2/"+anioFinal+mesFinal+"04/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
+		window.location=("/NOMINA/administrator/admin/primavacacionesnominaliquidaciones/mail/primavacacionesNomina/"+anioInicial+mesInicial+"31/primavacacionesNomina2/"+anioFinal+mesFinal+"31/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
 	  }
 	}
 		
@@ -150,7 +150,7 @@ function validar(form){
 		 if((idDescuento)==null){
           alert('Debe seleccionar algun descuento de la lista..!');
 		 }else{
-		      window.location=("/Dropbox/NOMINA/administrator/admin/primavacacionesnominaliquidaciones/descuento/primavacacionesNomina/"+anioInicial+mesInicial+"04/primavacacionesNomina2/"+anioFinal+mesFinal+"04/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado+"/idDescuento/"+idDescuento);
+		      window.location=("/NOMINA/administrator/admin/primavacacionesnominaliquidaciones/descuento/primavacacionesNomina/"+anioInicial+mesInicial+"31/primavacacionesNomina2/"+anioFinal+mesFinal+"31/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado+"/idDescuento/"+idDescuento);
 	         }		 
 		}
 	 }
@@ -162,7 +162,7 @@ function validar(form){
 		var anioFinal = $("#Informes_INFO_ANIOFINAL").val();
 		var mesInicial = $("#Informes_INFO_MESINICIO").val();
 		var mesFinal = $("#Informes_INFO_MESFINAL").val();		
-		window.location=("/Dropbox/NOMINA/administrator/admin/primavacacionesnominaliquidaciones/retefuente/primavacacionesNomina/"+anioInicial+mesInicial+"04/primavacacionesNomina2/"+anioFinal+mesFinal+"04");
+		window.location=("/NOMINA/administrator/admin/primavacacionesnominaliquidaciones/retefuente/primavacacionesNomina/"+anioInicial+mesInicial+"31/primavacacionesNomina2/"+anioFinal+mesFinal+"31");
 	  }
 	}
 </script>

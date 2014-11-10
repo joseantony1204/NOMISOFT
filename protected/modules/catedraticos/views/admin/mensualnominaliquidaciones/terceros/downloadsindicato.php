@@ -2,7 +2,7 @@
 $filas = count($Mensualnominaliquidaciones->prestaciones);
 $columnas = count($Mensualnominaliquidaciones->prestaciones[1]);
  
- $path = ("reportes\\terceros\\");
+ $path = ("reportes/terceros/");
  $file = ("sindicato");
  $realPath = $path.$file; 
  $modo="w";

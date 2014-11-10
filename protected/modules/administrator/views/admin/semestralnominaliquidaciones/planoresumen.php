@@ -7,7 +7,7 @@ $tblD = $Semestralnominaliquidaciones->descuentos;
 $filasTblD = count($tblD);
 $columnasTblD = count($tblD[0]);
  
- $path = ("reportes\\planogeneral\\");
+ $path = ("reportes/planogeneral/");
  $file = ("resumen");
  $realPath = $path.$file; 
  $modo="w";

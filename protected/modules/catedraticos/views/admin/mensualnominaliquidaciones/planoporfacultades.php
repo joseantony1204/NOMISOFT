@@ -16,7 +16,7 @@ foreach($facultades as $facultad){
  $tblD = $Mensualnominaliquidaciones->descuentos;
  $filasTblD = count($tblD);
  $columnasTblD = count($tblD[0]);
- $path = ("reportes\\planoporfacultades\\");
+ $path = ("reportes/planoporfacultades/");
  $file = ($Facultades->FACU_ID);
  $realPath = $path.$file; 
  $modo="w";

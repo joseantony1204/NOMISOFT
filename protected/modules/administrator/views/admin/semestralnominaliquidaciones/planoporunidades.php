@@ -16,7 +16,7 @@ foreach($unidades as $unidad){
  $tblD = $Semestralnominaliquidaciones->descuentos;
  $filasTblD = count($tblD);
  $columnasTblD = count($tblD[0]);
- $path = ("reportes\\planoporunidades\\");
+ $path = ("reportes/planoporunidades/");
  $file = ($Unidades->UNID_ID);
  $realPath = $path.$file; 
  $modo="w";

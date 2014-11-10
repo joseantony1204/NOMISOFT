@@ -38,7 +38,7 @@ class RecreacionnominaController extends Controller
 		}
         return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'',''.$array[5].'',
+				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'','views',
                                  'search','admin','create','update','delete'  
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
@@ -54,10 +54,10 @@ class RecreacionnominaController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	public function actionView()
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+		$this->render('viewnomina',array(
+			//'model'=>$this->loadModel($id),
 		));
 	}
 	
@@ -85,7 +85,7 @@ class RecreacionnominaController extends Controller
 		if(isset($_POST['Recreacionnomina']))
 		{
 			$Recreacionnomina->attributes=$_POST['Recreacionnomina'];
-	        $Recreacionnomina->RENO_ID = date("Y", strtotime($Recreacionnomina->RENO_FECHAPROCESO)).date("m", strtotime($Recreacionnomina->RENO_FECHAPROCESO))."06"; 
+	        $Recreacionnomina->RENO_ID = date("Y", strtotime($Recreacionnomina->RENO_FECHAPROCESO)).date("m", strtotime($Recreacionnomina->RENO_FECHAPROCESO))."51"; 
 	        $Recreacionnomina->RENO_ANIO = date("Y",strtotime($Recreacionnomina->RENO_FECHAPROCESO));
 			$Recreacionnomina->RENO_PERIODO = 'RECRACION '.$Recreacionnomina->RENO_ANIO;         
 			$Recreacionnomina->RENO_ESTADO = 0; 			

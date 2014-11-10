@@ -673,13 +673,13 @@ class Personasgenerales extends CActiveRecord
 	  $this->Unidad = NULL;
 	  
 	  /*creamos un registro persona-empleo-estadoempleo por cada empleo encontrado anteriormente*/
-	 $string =' SELECT p.*, ep.*, eep.*, f.*, h.*, u.*
+	  $string =' SELECT p.*, ep.*, eep.*, f.*, h.*, u.*
 	             FROM "TBL_NOMPERSONASGENERALES" "p", "TBL_NOMEMPLEOSPLANTA" "ep", "TBL_NOMESTADOSEMPLEOSPLANTA" "eep", 
 	             "TBL_NOMFACTORESSALARIALES" "f", "TBL_NOMHORASEXTRASYRECARGOS" "h", "TBL_NOMUNIDADES" "u"  
 			     WHERE p."PEGE_ID" = ep."PEGE_ID" AND ep."EMPL_ID" = eep."EMPL_ID" AND
 			     ep."EMPL_ID" = f."EMPL_ID" AND ep."EMPL_ID" = h."EMPL_ID" AND ep."UNID_ID" = u."UNID_ID"
 			     AND p."PEGE_ID" = '.$Personageneral.'
-				 ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+				 ORDER BY ep."EMPL_FECHAINGRESO" DESC, eep."ESEP_FECHAREGISTRO" DESC
 			     LIMIT 1';	 
 	  $sqlQuery = $connection->createCommand($string)->queryRow();
 	  

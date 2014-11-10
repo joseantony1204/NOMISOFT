@@ -54,6 +54,6 @@ $this->breadcrumbs=array(
   
   
   <tr>
-    <td><p><?php echo $this->renderPartial('_form', array('Personasgenerales'=>$Personasgenerales)); ?></p></td>
+    <td><p><?php echo $this->renderPartial('_update', array('Personasgenerales'=>$Personasgenerales)); ?></p></td>
   </tr>
 </table>

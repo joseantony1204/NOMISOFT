@@ -38,7 +38,7 @@ class SemestralnominaController extends Controller
 		}
         return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'',''.$array[5].'',
+				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'','views',
                                  'delete','admin','create','update','search',  
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
@@ -54,10 +54,11 @@ class SemestralnominaController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	public function actionView()
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+		$this->render('viewnomina',array(
+		//$this->render('view',array(
+			//'model'=>$this->loadModel($id),
 		));
 	}
 	
@@ -85,7 +86,7 @@ class SemestralnominaController extends Controller
 		if(isset($_POST['Semestralnomina']))
 		{
 			$Semestralnomina->attributes=$_POST['Semestralnomina'];
-	        $Semestralnomina->SENO_ID = date("Y", strtotime($Semestralnomina->SENO_FECHAPROCESO)).date("m", strtotime($Semestralnomina->SENO_FECHAPROCESO))."02"; 
+	        $Semestralnomina->SENO_ID = date("Y", strtotime($Semestralnomina->SENO_FECHAPROCESO)).date("m", strtotime($Semestralnomina->SENO_FECHAPROCESO))."11"; 
 	        $Semestralnomina->SENO_ANIO = date("Y",strtotime($Semestralnomina->SENO_FECHAPROCESO));
 			$Semestralnomina->SENO_PERIODO = 'PRIMA SEMESTRAL '.$Semestralnomina->SENO_ANIO;         
 			$Semestralnomina->SENO_ESTADO = 0; 			

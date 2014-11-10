@@ -110,6 +110,8 @@ class PersonasgeneralesController extends Controller
 			$Personasgenerales->attributes=$_POST['Personasgenerales'];
 			$Personasgenerales->PEGE_FECHACAMBIO =  date('Y-m-d H:i:s');
 			$Personasgenerales->PEGE_REGISTRADOPOR = Yii::app()->user->id;
+			if($Personasgenerales->PEGE_FECHANACIMIENTO=="0000-00-00"){$Personasgenerales->PEGE_FECHANACIMIENTO="1900-01-01";}
+			if($Personasgenerales->PEGE_FECHAEXPEDIDENTIDAD=="0000-00-00"){$Personasgenerales->PEGE_FECHAEXPEDIDENTIDAD="1900-01-01";}
 			if($Personasgenerales->save())
 				$this->redirect(array('admin','id'=>$Personasgenerales->PEGE_ID));
 		}

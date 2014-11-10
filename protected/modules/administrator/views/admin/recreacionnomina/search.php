@@ -103,7 +103,7 @@ function validar(form){
 		var unidad = $("#Informes_INFO_UNIDAD").val();
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		
-		window.location=("/Dropbox/NOMINA/administrator/admin/recreacionnominaliquidaciones/detalles/recreacionNomina/"+anioInicial+mesInicial+"06/recreacionNomina2/"+anioFinal+mesFinal+"06/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
+		window.location=("/NOMINA/administrator/admin/recreacionnominaliquidaciones/detalles/recreacionNomina/"+anioInicial+mesInicial+"51/recreacionNomina2/"+anioFinal+mesFinal+"51/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
 	  }
 	}
 	
@@ -118,7 +118,7 @@ function validar(form){
 		var unidad = $("#Informes_INFO_UNIDAD").val();
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		
-		window.location=("/Dropbox/NOMINA/administrator/admin/recreacionnominaliquidaciones/resumen/recreacionNomina/"+anioInicial+mesInicial+"06/recreacionNomina2/"+anioFinal+mesFinal+"06/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
+		window.location=("/NOMINA/administrator/admin/recreacionnominaliquidaciones/resumen/recreacionNomina/"+anioInicial+mesInicial+"51/recreacionNomina2/"+anioFinal+mesFinal+"51/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
 	  }
 	}
 	
@@ -132,7 +132,7 @@ function validar(form){
 		var unidad = $("#Informes_INFO_UNIDAD").val();
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		
-		window.location=("/Dropbox/NOMINA/administrator/admin/recreacionnominaliquidaciones/mail/recreacionNomina/"+anioInicial+mesInicial+"06/recreacionNomina2/"+anioFinal+mesFinal+"06/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
+		window.location=("/NOMINA/administrator/admin/recreacionnominaliquidaciones/mail/recreacionNomina/"+anioInicial+mesInicial+"51/recreacionNomina2/"+anioFinal+mesFinal+"51/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
 	  }
 	}
 </script>

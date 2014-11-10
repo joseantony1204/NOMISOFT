@@ -6069,3 +6069,6 @@ DETAIL:  La llave (PEAC_ID)=(201402) no está presente en la tabla «TBL_CATPERI
 in /var/www/NOMINA/protected/modules/catedraticos/models/Catedras.php (572)
 in /var/www/NOMINA/protected/modules/catedraticos/controllers/admin/CatedrasController.php (181)
 in /var/www/NOMINA/index.php (13)
+2014/11/05 16:06:55 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[22008]: Datetime field overflow: 7 ERROR:  el valor de hora/fecha está fuera de rango: «0000-00-00». The SQL statement executed was: UPDATE "TBL_CATPERSONASGENERALES" SET "PEGE_ID"=:yp0, "PEGE_IDENTIFICACION"=:yp1, "PEGE_PRIMERNOMBRE"=:yp2, "PEGE_SEGUNDONOMBRE"=:yp3, "PEGE_PRIMERAPELLIDO"=:yp4, "PEGE_SEGUNDOAPELLIDOS"=:yp5, "PEGE_FECHAINGRESO"=:yp6, "PEGE_DIRECCION"=:yp7, "PEGE_TELEFONOFIJO"=:yp8, "PEGE_TELEFONOMOVIL"=:yp9, "PEGE_EMAIL"=:yp10, "PEGE_NUMEROCUENTA"=:yp11, "PEGE_FECHANACIMIENTO"=:yp12, "PEGE_LUGAREXPEDIDENTIDAD"=:yp13, "PEGE_FECHAEXPEDIDENTIDAD"=:yp14, "TIID_ID"=:yp15, "SALU_ID"=:yp16, "PENS_ID"=:yp17, "SIND_ID"=:yp18, "SEXO_ID"=:yp19, "CATE_ID"=:yp20, "PEGE_FECHACAMBIO"=:yp21, "PEGE_REGISTRADOPOR"=:yp22 WHERE "TBL_CATPERSONASGENERALES"."PEGE_ID"=11900.
+in /var/www/NOMINA/protected/modules/catedraticos/controllers/admin/PersonasgeneralesController.php (113)
+in /var/www/NOMINA/index.php (13)

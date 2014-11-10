@@ -1,7 +1,7 @@
 <?php
 Yii::app()->homeUrl = array('/administrator/');
 $this->breadcrumbs=array(
-	'Nomina Recreacion'=>array('admin/recreacionnomina/search'),
+	'Nomina Cesantias'=>array('admin/recreacionnomina/search'),
 	'Busqueda Avanzada',
 );
 
@@ -11,7 +11,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('recreacionnomina-grid', {
+	$.fn.yiiGridView.update('cesantiasnomina-grid', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -103,7 +103,7 @@ function validar(form){
 		var unidad = $("#Informes_INFO_UNIDAD").val();
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		
-		window.location=("/Dropbox/NOMINA/administrator/admin/recreacionnominaliquidaciones/detalles/recreacionNomina/"+anioInicial+mesInicial+"06/recreacionNomina2/"+anioFinal+mesFinal+"06/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
+		window.location=("/NOMINA/administrator/admin/cesantiasnominaliquidaciones/detalles/cesantiasNomina/"+anioInicial+mesInicial+"71/cesantiasNomina2/"+anioFinal+mesFinal+"71/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
 	  }
 	}
 	
@@ -118,7 +118,7 @@ function validar(form){
 		var unidad = $("#Informes_INFO_UNIDAD").val();
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		
-		window.location=("/Dropbox/NOMINA/administrator/admin/recreacionnominaliquidaciones/resumen/recreacionNomina/"+anioInicial+mesInicial+"06/recreacionNomina2/"+anioFinal+mesFinal+"06/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
+		window.location=("/NOMINA/administrator/admin/cesantiasnominaliquidaciones/resumen/cesantiasNomina/"+anioInicial+mesInicial+"71/cesantiasNomina2/"+anioFinal+mesFinal+"71/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
 	  }
 	}
 	
@@ -132,7 +132,7 @@ function validar(form){
 		var unidad = $("#Informes_INFO_UNIDAD").val();
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		
-		window.location=("/Dropbox/NOMINA/administrator/admin/recreacionnominaliquidaciones/mail/recreacionNomina/"+anioInicial+mesInicial+"06/recreacionNomina2/"+anioFinal+mesFinal+"06/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
+		window.location=("/NOMINA/administrator/admin/cesantiasnominaliquidaciones/mail/cesantiasNomina/"+anioInicial+mesInicial+"71/cesantiasNomina/"+anioFinal+mesFinal+"71/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
 	  }
 	}
 </script>

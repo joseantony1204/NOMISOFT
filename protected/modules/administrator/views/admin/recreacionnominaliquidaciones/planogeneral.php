@@ -3,7 +3,7 @@
  $columnas = count($Recreacionnominaliquidaciones->liquidacion[1]);
  $parafisales = count($Recreacionnominaliquidaciones->parafiscales[0]);
 
- $path = ("reportes\\planogeneral\\");
+ $path = ("reportes/planogeneral/");
  $file = ("comprobante");
  $realPath = $path.$file; 
  $modo="w";

@@ -13,7 +13,7 @@ foreach($unidades as $unidad){
  $columnas = count($Recreacionnominaliquidaciones->liquidacion[1]);
  $parafisales = count($Recreacionnominaliquidaciones->parafiscales[0]);
 
- $path = ("reportes\\planoporunidades\\");
+ $path = ("reportes/planoporunidades/");
  $file = ($Unidades->UNID_ID);
  $realPath = $path.$file; 
  $modo="w";

@@ -103,7 +103,7 @@ function validar(form){
 		var unidad = $("#Informes_INFO_UNIDAD").val();
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		
-		window.location=("/Dropbox/NOMINA/administrator/admin/vacacionesnominaliquidaciones/detalles/vacacionesNomina/"+anioInicial+mesInicial+"05/vacacionesNomina2/"+anioFinal+mesFinal+"05/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
+		window.location=("/NOMINA/administrator/admin/vacacionesnominaliquidaciones/detalles/vacacionesNomina/"+anioInicial+mesInicial+"41/vacacionesNomina2/"+anioFinal+mesFinal+"41/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
 	  }
 	}
 	
@@ -118,7 +118,7 @@ function validar(form){
 		var unidad = $("#Informes_INFO_UNIDAD").val();
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		
-		window.location=("/Dropbox/NOMINA/administrator/admin/vacacionesnominaliquidaciones/resumen/vacacionesNomina/"+anioInicial+mesInicial+"05/vacacionesNomina2/"+anioFinal+mesFinal+"05/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
+		window.location=("/NOMINA/administrator/admin/vacacionesnominaliquidaciones/resumen/vacacionesNomina/"+anioInicial+mesInicial+"41/vacacionesNomina2/"+anioFinal+mesFinal+"41/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
 	  }
 	}
 	
@@ -132,7 +132,7 @@ function validar(form){
 		var unidad = $("#Informes_INFO_UNIDAD").val();
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		
-		window.location=("/Dropbox/NOMINA/administrator/admin/vacacionesnominaliquidaciones/mail/vacacionesNomina/"+anioInicial+mesInicial+"05/vacacionesNomina2/"+anioFinal+mesFinal+"05/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
+		window.location=("/NOMINA/administrator/admin/vacacionesnominaliquidaciones/mail/vacacionesNomina/"+anioInicial+mesInicial+"41/vacacionesNomina2/"+anioFinal+mesFinal+"41/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
 	  }
 	}
 		
@@ -150,7 +150,7 @@ function validar(form){
 		 if((idDescuento)==null){
           alert('Debe seleccionar algun descuento de la lista..!');
 		 }else{
-		      window.location=("/Dropbox/NOMINA/administrator/admin/vacacionesnominaliquidaciones/descuento/vacacionesNomina/"+anioInicial+mesInicial+"05/vacacionesNomina2/"+anioFinal+mesFinal+"05/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado+"/idDescuento/"+idDescuento);
+		      window.location=("/NOMINA/administrator/admin/vacacionesnominaliquidaciones/descuento/vacacionesNomina/"+anioInicial+mesInicial+"41/vacacionesNomina2/"+anioFinal+mesFinal+"41/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado+"/idDescuento/"+idDescuento);
 	         }		 
 		}
 	 }
@@ -162,7 +162,7 @@ function validar(form){
 		var anioFinal = $("#Informes_INFO_ANIOFINAL").val();
 		var mesInicial = $("#Informes_INFO_MESINICIO").val();
 		var mesFinal = $("#Informes_INFO_MESFINAL").val();		
-		window.location=("/Dropbox/NOMINA/administrator/admin/vacacionesnominaliquidaciones/retefuente/vacacionesNomina/"+anioInicial+mesInicial+"05/vacacionesNomina2/"+anioFinal+mesFinal+"05");
+		window.location=("/NOMINA/administrator/admin/vacacionesnominaliquidaciones/retefuente/vacacionesNomina/"+anioInicial+mesInicial+"41/vacacionesNomina2/"+anioFinal+mesFinal+"41");
 	  }
 	}
 </script>

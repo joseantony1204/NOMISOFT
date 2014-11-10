@@ -38,7 +38,7 @@ class CesantiasnominaController extends Controller
 		}
         return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'','search',
+				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'','views','search',
                                  'delete','admin','create','update', 'setEstado',  
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
@@ -54,10 +54,10 @@ class CesantiasnominaController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	public function actionView()
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+		$this->render('viewnomina',array(
+			//'model'=>$this->loadModel($id),
 		));
 	}
 	
@@ -85,7 +85,7 @@ class CesantiasnominaController extends Controller
 		{
 			$Cesantiasnomina->attributes=$_POST['Cesantiasnomina'];
 			$Cesantiasnomina->CENO_ANIO = date("Y",strtotime($Cesantiasnomina->CENO_FECHAPROCESO)); 
-	        $Cesantiasnomina->CENO_ID = date("Y", strtotime($Cesantiasnomina->CENO_FECHAPROCESO)).date("m", strtotime($Cesantiasnomina->CENO_FECHAPROCESO))."07"; 
+	        $Cesantiasnomina->CENO_ID = date("Y", strtotime($Cesantiasnomina->CENO_FECHAPROCESO)).date("m", strtotime($Cesantiasnomina->CENO_FECHAPROCESO))."71"; 
 	        $Cesantiasnomina->CENO_PERIODO = 'LIQUIDACION CESANTIAS DEL '.$Cesantiasnomina->CENO_ANIO;         
 			$Cesantiasnomina->CENO_ESTADO = 0; 						
 			$Cesantiasnomina->CENO_FECHACAMBIO =  date('Y-m-d H:i:s');
