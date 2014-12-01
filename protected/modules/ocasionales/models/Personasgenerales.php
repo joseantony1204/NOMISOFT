@@ -250,7 +250,7 @@ class Personasgenerales extends CActiveRecord
 		$criteria=new CDbCriteria;
         
 		$criteria->select = '* FROM (SELECT t.* , (SELECT eep."ESEM_ID"
-									 FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+									 FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
 									 WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = t."PEGE_ID"
 									 ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
 									 LIMIT 1 
@@ -263,7 +263,7 @@ class Personasgenerales extends CActiveRecord
 		$criteria->join = ' 
 		                   INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON t."PEGE_ID" = ep."PEGE_ID"  						  
 						  '; 
-		$criteria->group = 't."PEGE_ID") s WHERE "ESEM_ID" = 1';
+		$criteria->group = 't."PEGE_ID", ep."EMPL_ID") s WHERE "ESEM_ID" = 1';
 		
 		$criteria->compare('"PEGE_ID"',$this->PEGE_ID);
 		$criteria->compare('"PEGE_IDENTIFICACION"',$this->PEGE_IDENTIFICACION,true);

@@ -461,8 +461,8 @@ class Liqcesantias extends CActiveRecord
 		  ';    		  
      $rows = $connection->createCommand($sql)->queryAll(); 
 	 
-	 $array = array('ID LIQUIDACION','DIAS','PUNTOS','SUELDO','Sueldo','Prima Antigüedad','Subsidio Transporte','Subsidio Alimentacion',
-	                'Prima Tecnica','Gastos Representacion','Bon. de Servicios','Prima de Servicios','Prima de Vacaciones','Prima de Navidad','ID NOMINA','ID EMPLEO','TOTAL PRIMA VACACIONES');
+	 $array = array('ID LIQUIDACION','DIAS','PUNTOS','SUELDO','SUELDO','PRIMA ANTIGUEDAD','AUX. TRASNPORTE','AUX. ALIMENTACION',
+	                'PRIMA TECNICA','GASTOS REPRESENTACION','1/12 BON. DE SERVICIOS','1/12 P. DE SERVICIOS','1/12 P. DE VACACIONES','1/12 P. NAVIDAD','ID NOMINA','ID EMPLEO','TOTAL PRIMA VACACIONES');
 	 $j=0; $i=0;
 	 foreach ($array as $values=>$value) {	
 	  $this->liquidacion[$j][$i] = $value;

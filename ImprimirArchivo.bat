@@ -17,7 +17,7 @@ if %menup%==2 goto Salir
 
 :printFile
 
-print reportes\planogeneral\comprobante.dat
+print reportes\terceros\cesantias.dat
 
 :Salir
 

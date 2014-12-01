@@ -443,7 +443,7 @@ class Mensualnomina extends CActiveRecord
 	 $Parametrosglobales = new Parametrosglobales; 	 
      $this->valorestablecidos = $Parametrosglobales->getParametrosglobales(date("Y", strtotime($objet->MENO_FECHAPROCESO)));
 	 
-	 $sql = 'SELECT  ep."EMPL_ID" FROM "TBL_NOMEMPLEOSPLANTA" ep WHERE ep."PEGE_ID" = '.$id.' ORDER BY  ep."EMPL_FECHAINGRESO" ASC';
+	 $sql = 'SELECT  ep."EMPL_ID" FROM "TBL_NOMEMPLEOSPLANTA" ep WHERE ep."PEGE_ID" = '.$id.' ORDER BY  ep."EMPL_FECHAINGRESO" DESC';
 	 $query = $connection->createCommand($sql)->queryAll();
 	 $iterador = 1;
 	 $this->codigo = 1;
@@ -458,7 +458,9 @@ class Mensualnomina extends CActiveRecord
 	   if(((date("Y", strtotime($this->Estadoempleoplanta->ESEP_FECHAREGISTRO)))==(date("Y", strtotime($objet->MENO_FECHAPROCESO)))) &
 	     ((date("m", strtotime($this->Estadoempleoplanta->ESEP_FECHAREGISTRO)))==(date("m", strtotime($objet->MENO_FECHAPROCESO))))){
 	     $sw = 0; 			 
-	   }
+	   }elseif($this->Estadoempleoplanta->ESEM_ID==5){
+			$sw = 1;
+			}
 	  }
 	 
 	  /*si todo esta bn se procede a calcular la nomina para la persona*/

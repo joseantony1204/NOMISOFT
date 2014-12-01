@@ -331,7 +331,7 @@ class Primavacacionesnomina extends CActiveRecord
 						  ';
 				  $bonificacion = $connection->createCommand($sql)->queryScalar();
 				  if($bonificacion!=0){
-				   return round($bonificacion/30*$this->diasvacaciones);
+				   return round($bonificacion);
 				  }else{	
 				        //En caso de que no halla cumplido anio de servicio aun se le calcula//
 				        //como el limite establecido es diferente del profesor al administrativo,//
@@ -342,11 +342,14 @@ class Primavacacionesnomina extends CActiveRecord
 						 	  $bon=$this->valorestablecidos[7][3];
 						     }
 							 
-						if(($Personasgenerales->Empleoplanta->EMPL_SUELDO)+($this->getPrimaTecnica($Personasgenerales,$Primavacacionesnomina))+($this->getGastosRepresentacion($Personasgenerales,$Primavacacionesnomina))+$prantiguedad[0]>$bon){
-						 return ((($Personasgenerales->Empleoplanta->EMPL_SUELDO)+($this->getPrimaTecnica($Personasgenerales,$Primavacacionesnomina))+($this->getGastosRepresentacion($Personasgenerales,$Primavacacionesnomina))+round($prantiguedad[0]))*($this->valorestablecidos[8][3]/100)/12)*$this->diasvacaciones/30;
-						}else{ 
-							  return ((($Personasgenerales->Empleoplanta->EMPL_SUELDO)+($this->getPrimaTecnica($Personasgenerales,$Primavacacionesnomina))+($this->getGastosRepresentacion($Personasgenerales,$Primavacacionesnomina))+round($prantiguedad[0]))*($this->valorestablecidos[9][3]/100)/12)*$this->diasvacaciones/30;
+						$anioIngreso = date("Y", strtotime($Personasgenerales->Personageneral->PEGE_FECHAINGRESO));	 
+					    if(($Primavacacionesnomina->PVNO_ANIO)!=($anioIngreso)){
+						 if(($Personasgenerales->Empleoplanta->EMPL_SUELDO)+($this->getPrimaTecnica($Personasgenerales,$Primavacacionesnomina))+($this->getGastosRepresentacion($Personasgenerales,$Primavacacionesnomina))+$prantiguedad[0]>$bon){
+						  return ((($Personasgenerales->Empleoplanta->EMPL_SUELDO)+($this->getPrimaTecnica($Personasgenerales,$Primavacacionesnomina))+($this->getGastosRepresentacion($Personasgenerales,$Primavacacionesnomina))+round($prantiguedad[0]))*($this->valorestablecidos[8][3]/100)/12)*$this->diasvacaciones/30;
+						 }else{ 
+							   return ((($Personasgenerales->Empleoplanta->EMPL_SUELDO)+($this->getPrimaTecnica($Personasgenerales,$Primavacacionesnomina))+($this->getGastosRepresentacion($Personasgenerales,$Primavacacionesnomina))+round($prantiguedad[0]))*($this->valorestablecidos[9][3]/100)/12)*$this->diasvacaciones/30;
 					          }
+					    }
 					   }
 	           }
 	     }else{

@@ -217,14 +217,18 @@ class NovedadesmensualesController extends Controller
 			$PEGE_SEGUNDONOMBRE = $Novedadesmensuales->attributes=$_GET['Novedadesmensuales']['PEGE_SEGUNDONOMBRE']; 	$PEGE_PRIMERAPELLIDO = $Novedadesmensuales->attributes=$_GET['Novedadesmensuales']['PEGE_PRIMERAPELLIDO'];
 			$PEGE_SEGUNDOAPELLIDOS = $Novedadesmensuales->attributes=$_GET['Novedadesmensuales']['PEGE_SEGUNDOAPELLIDOS'];
 			if(($PEGE_IDENTIFICACION!=NULL) OR ($PEGE_PRIMERNOMBRE!=NULL) OR ($PEGE_SEGUNDONOMBRE!=NULL) OR ($PEGE_PRIMERAPELLIDO!=NULL) OR ($PEGE_SEGUNDOAPELLIDOS!=NULL)){
-			 $Novedadesmensuales->attributes=$_GET['Novedadesmensuales'];			
+			 $Novedadesmensuales->attributes=$_GET['Novedadesmensuales'];
+			 /*if($PEGE_IDENTIFICACION!=NULL){	
+			  //$Personasgenerales = Personasgenerales::model()->findByPk($Novedadesmensuales->PEGE_ID);
+              Yii::app()->user->setFlash('success','<strong>Valores de descuentos mensuales actualizados correctamente :)</strong>'); 			  
+		     }*/	
 		    }else{	
 			      $Novedadesmensuales->PEGE_ID = '0';		     
 			     }  
 		}else{	
 			 $Novedadesmensuales->PEGE_ID = '0';		     
 			 }
-		
+		//Yii::app()->user->setFlash('success','<strong>Valores de descuentos mensuales actualizados correctamente :)</strong>'); 
 		$this->render('admin',array(
 								   'Novedadesmensuales'=>$Novedadesmensuales,
 		                           )

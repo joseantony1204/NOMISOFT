@@ -19,6 +19,7 @@ $('.search-form form').submit(function(){
 });
 ");
 ?>
+
 <table width="100%" border="0" align="center">
   <tr>
    <td>
@@ -35,7 +36,7 @@ $('.search-form form').submit(function(){
 					  ?>         
 					               
              </td>
-             <td width="74%"><strong><span><em>ACTUALIZAR UNIDADES PARA LIQUIDCION DE NOMINAS</em></span></strong></td>
+             <td width="74%"><strong><span><em>ACTUALIZAR UNIDADES PARA LIQUIDACION DE NOMINAS</em></span></strong></td>
 			 <td width="10%" align="center">
 					 <?php
 
@@ -66,72 +67,94 @@ $('.search-form form').submit(function(){
   
   <tr>
     <td>
-        <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-	    'id'=>'aumentodocen-form',
-	    'enableAjaxValidation'=>false,
-	    'type'=>'vertical',
-	    'htmlOptions'=>array('class'=>'well'),
-	    'enableClientValidation'=>true,
-	    'clientOptions'=>array(
-		'validateOnSubmit'=>true,),
-        )); 
-		?>
+      
       <table width="100%" border="0">
-       <tr>
+       
+	 
+      <tr>
+       <td>
+       <?php $this->widget('bootstrap.widgets.TbTabs', array(
+       'type'=>'tabs',
+       'placement'=>'above', // 'above', 'right', 'below' or 'left'
+       'tabs'=>array(
+        array('label'=>'NOMINA MENSUAL', 'content'=> $this->renderPartial("_diasnominamensual",array(
+		                                                                                 'Empleosplanta'=>$Empleosplanta,
+								                                                         'Cform'=>$Cform,
+																						),
+																		   true
+																		  ), 
+																		  'active'=>true
+			 ),
+	    array('label'=>'PRIMA SEMESTRAL', 'content'=> $this->renderPartial("_diasnominasemestral",array(
+		                                                                                 'Empleosplanta'=>$Empleosplanta,
+								                                                         'Cform'=>$Cform,		
+																						),
+																		   true
+																		  ), 
+			 ),
+		array('label'=>'PRIMA VACACIONES', 'content'=> $this->renderPartial("_diasnominapvacaciones",array(
+		                                                                                 'Empleosplanta'=>$Empleosplanta,
+								                                                         'Cform'=>$Cform,		
+																						),
+																		   true
+																		  ), 
+			 ),
+		array('label'=>'PRIMA DE NAVIDAD', 'content'=> $this->renderPartial("_diasnominapnavidad",array(
+		                                                                                 'Empleosplanta'=>$Empleosplanta,
+								                                                         'Cform'=>$Cform,		
+																						),
+																		   true
+																		  ), 
+			 ),
+		array('label'=>'VACACIONES', 'content'=> $this->renderPartial("_diasnominavacaciones",array(
+		                                                                                 'Empleosplanta'=>$Empleosplanta,
+								                                                         'Cform'=>$Cform,		
+																						),
+																		   true
+																		  ), 
+			 ),
+		array('label'=>'RETROACTIVOS', 'content'=> $this->renderPartial("_diasmestroactivos",array(
+		                                                                                 'Empleosplanta'=>$Empleosplanta,
+								                                                         'Cform'=>$Cform,		
+																						),
+																		   true
+																		  ), 
+			 ),
         
-		<td width="40%" align="center">
-	    <?php echo $form->labelEx($Cform,'NOVE_TIPONOMINA'); ?>
-	    <?php $data = array('01'=>'MENSUAL','02'=>'SEMESTRAL','03'=>'PRIMA VACACIONES', '04'=>'PRIMA NAVIDAD', '05'=>'VACACIONES', '06'=>'CESANTIAS'); ?>
-        <?php echo $form->dropDownList($Cform,'NOVE_TIPONOMINA',$data, 
-			                                array(
-											      'ajax' => array(
-                                                                  'type' => 'POST',
-                                                                  'url' => CController::createUrl('admin/empleosplanta/diasnominas'),                                                                  
-                                                                  ),
-												  'class'=>'span4', 'prompt'=>'Elige...',
-												  )
-											     ); 
-	    ?>
-        <?php echo $form->error($Cform,'NOVE_TIPONOMINA'); ?>      
-        </td>
-		
-		<td width="25%" align="center">
-		<?php echo $form->labelEx($Cform,'NOVE_TIPOCARGO'); ?>
-	     <?php $data = CHtml::listData(Tiposcargos::model()->findAll(),'TICA_ID','TICA_NOMBRE'); ?>
-        <?php echo $form->dropDownList($Cform,'NOVE_TIPOCARGO',$data, 
-			                                array(
-											      'ajax' => array(
-                                                                  'type' => 'POST',
-                                                                  'url' => CController::createUrl('admin/empleosplanta/selecttipo'),                                                                  
-                                                                  ),
-												  'class'=>'span3', 'prompt'=>'Elige...',
-												  )
-											     ); 
-	    ?>
-        <?php echo $form->error($Cform,'NOVE_TIPOCARGO'); ?>      
-        </td>
-		
-		<td width="20%" align="center">
-		<?php echo $form->textFieldRow($Cform,'NOVE_UNIDADES',array('class'=>'span1')); ?>       
-        </td>
-    
+    ),
+)); ?>
+<?php $this->beginWidget('bootstrap.widgets.TbModal', array(
+        'id'=>'myModal',      
+     )); ?>
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">&times;</a>
+            <h4>CONTRASEÑA DE SEGURIDAD</h4>
+        </div>
+         
+        <div class="modal-body">
+          <?php
+            $this->renderPartial('_pass', array('Cform'=>$Cform)); 
+		  ?>
+         	
+        </div>
         
-        <td width="15%" align="center">
-        <div class="form-actionsv">
-		<?php $this->widget('bootstrap.widgets.TbButton', array(
-			'buttonType'=>'submit',
-			'icon'=>'ok white',
-			'type'=>'success',
-			'size'=>'small',
-			'label'=>'Guardar',
-		)); ?>
-	    </div>
-        </td>
-		
-       </tr>
-      </table>
-      <?php $this->endWidget(); ?>
+        <div class="modal-footer">
+            <?php $this->widget('bootstrap.widgets.TbButton', array(
+                'label'=>'Cerrar ventana',
+                'url'=>'#',
+                'htmlOptions'=>array('data-dismiss'=>'modal'),
+            )); ?>
+        </div>    
+<?php $this->endWidget(); ?>
+	   </td>
+      </tr>
+	  
+	  
+      </table>    
 
     </td>
+    
   </tr>
 </table>
+
+    

@@ -39,7 +39,7 @@ class DescuentosmensualesController extends Controller
         return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'',''.$array[5].'',
-                                 'download','admin','create','update','reset', 
+                                 'download','admin','create','update','reset','delete',
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
 			),			
@@ -79,7 +79,7 @@ class DescuentosmensualesController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Descuentosmensuales;
+		$Descuentosmensuales = new Descuentosmensuales;
 		
 		
 		// Uncomment the following line if AJAX validation is needed
@@ -87,15 +87,17 @@ class DescuentosmensualesController extends Controller
 
 		if(isset($_POST['Descuentosmensuales']))
 		{
-			$model->attributes=$_POST['Descuentosmensuales'];
-	        $model->DEME_FECHACAMBIO =  date('Y-m-d H:i:s');
-			$model->DEME_REGISTRADOPOR = Yii::app()->user->id;			 
-			if($model->save())
-				$this->redirect(array('admin','id'=>$model->DEME_ID));
+			$Descuentosmensuales->attributes=$_POST['Descuentosmensuales'];
+	        $Descuentosmensuales->DEME_FECHACAMBIO =  date('Y-m-d H:i:s');
+			$Descuentosmensuales->DEME_REGISTRADOPOR = Yii::app()->user->id;			 
+			if($Descuentosmensuales->save()){
+				$Descuentosmensuales->defaultDescuentosMensuales($Descuentosmensuales->DEME_ID);
+				$this->redirect(array('admin',));
+			}
 		}
 
 		$this->render('create',array(
-			'model'=>$model,
+			'model'=>$Descuentosmensuales,
 		));
 	}
 

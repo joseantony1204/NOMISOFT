@@ -171,7 +171,7 @@ class Novedadesmensuales extends CActiveRecord
 		 
 	    $criteria->join = 'INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON ep."EMPL_ID" = t."EMPL_ID"
 		                   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON p."PEGE_ID" = ep."PEGE_ID"';
-		$criteria->group = 'p."PEGE_ID", ep."EMPL_ID") s WHERE "ESEM_ID" = 1';
+		$criteria->group = 'p."PEGE_ID", ep."EMPL_ID") s WHERE ("ESEM_ID" = 1 OR "ESEM_ID" = 5)';
 		
 		$criteria->compare('"NOME_ID"',$this->NOME_ID);
 		$criteria->compare('"NOME_VALOR"',$this->NOME_VALOR,true);

@@ -227,4 +227,22 @@ class Descuentosmensuales extends CActiveRecord
 	       return FALSE;
 		  }	
     }
+	
+	public function defaultDescuentosMensuales($descuentoMensual)
+	{
+     $criteria = new CDbCriteria();
+	 $criteria->select = 't."EMPL_ID"';
+	 $criteria->order = 't."EMPL_ID"';
+	 $Empleosplanta = Empleosplanta::model()->findAll($criteria);	 
+	 
+	 foreach($Empleosplanta as  $Empleoplanta){
+	    $Novedadesmensuales = new Novedadesmensuales;
+		$Novedadesmensuales->NOME_VALOR = 0;
+		$Novedadesmensuales->DEME_ID = $descuentoMensual;
+		$Novedadesmensuales->EMPL_ID = $Empleoplanta->EMPL_ID;
+		$Novedadesmensuales->NOME_FECHACAMBIO = date('Y-m-d H:i:s');
+		$Novedadesmensuales->NOME_REGISTRADOPOR = Yii::app()->user->id;
+		$Novedadesmensuales->save(); 
+	  }
+	}
 }

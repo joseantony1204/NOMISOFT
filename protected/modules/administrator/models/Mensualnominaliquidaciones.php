@@ -469,7 +469,7 @@ class Mensualnominaliquidaciones extends CActiveRecord
 		  ';    		  
      $rows = $connection->createCommand($sql)->queryAll();
 	 
-     $array = array('ID PARAFISCAL','IDSALUD','SALUD','IDPENSION','PENSION','IDSINDICATO','SINDICATO','FONDO SOL PPENSIONAL','SUBSISTENCIA',
+     $array = array('ID PARAFISCAL','IDSALUD','SALUD','IDPENSION','PENSION','IDSINDICATO','SINDICATO','FONDO SOL PENSIONAL','SUBSISTENCIA',
 	               'ESTAMPILLA','RETEFUENTE', 'ID LIQUIDACION','FECHA LIQUIDADO','USUARIO','TOTAL PARAFISCAL');
 				   
 	 $j=0; $i=0;

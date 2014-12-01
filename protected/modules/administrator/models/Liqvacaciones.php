@@ -469,8 +469,8 @@ class Liqvacaciones extends CActiveRecord
 		  ';    		  
      $rows = $connection->createCommand($sql)->queryAll(); 
 	 
-	 $array = array('ID LIQUIDACION','MESES','PUNTOS','SUELDO','Sueldo','Prima Antigüedad','Subsidio Transporte','Subsidio Alimentacion',
-	                'Prima Tecnica','Gastos Representacion','Bon. de Servicios','Prima de Servicios','ID NOMINA','ID EMPLEO','TOTAL VACACIONES');
+	 $array = array('ID LIQUIDACION','DIAS','PUNTOS','SUELDO','SUELDO','PRIMA ANTIGUEDAD','AUX. TRASNPORTE','AUX. ALIMENTACION',
+	                'PRIMA TECNICA','GASTOS REPRESENTACION','1/12 BON. DE SERVICIOS','1/12 P. DE SERVICIOS','ID NOMINA','ID EMPLEO','TOTAL PRIMA VACACIONES');
 	 $j=0; $i=0;
 	 foreach ($array as $values=>$value) {	
 	  $this->liquidacion[$j][$i] = $value;

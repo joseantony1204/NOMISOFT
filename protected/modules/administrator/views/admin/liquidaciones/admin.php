@@ -101,8 +101,8 @@ $('.search-form form').submit(function(){
 		'PEGE_PRIMERNOMBRE',
 		'PEGE_PRIMERAPELLIDO',
 		'PEGE_SEGUNDOAPELLIDOS',
-		'LIQU_FECHAPROCESO',		
-		'LIQU_ANIO',
+        array('name'=>'LIQU_FECHAPROCESO', 'value'=>'$data->LIQU_FECHAPROCESO', 'htmlOptions'=>array('width'=>'90'),),		
+        array('name'=>'LIQU_ANIO', 'value'=>'$data->LIQU_ANIO', 'htmlOptions'=>array('width'=>'50'),),		
 		
 		array(
 		 'class'=>'CLinkColumn',
@@ -124,6 +124,32 @@ $('.search-form form').submit(function(){
 			                       'style'=>'text-align: center','width'=>'25',
 								   'title' => 'Descargar',
 								   'alt' => 'Descargar'
+								  ), 
+			  ),
+		
+		array( 
+			  'name'=>'DOWNLOAD',
+			  'type'=>'html',
+			  'filter'=>false,
+			  'value'=> 'CHtml::link(CHtml::image(Yii::app()->baseurl."/images/icon_text.png"),
+			             array("admin/liquidaciones/planogeneral","id"=>$data[LIQU_ID],))',
+			  'htmlOptions'=>array(
+			                       'style'=>'text-align: center','width'=>'25',
+								   'title' => 'Descargar archivo plano',
+								   'alt' => 'Descargar archivo plano'
+								  ), 
+			  ),
+	    
+		array( 
+			  'name'=>'DOWNLOAD',
+			  'type'=>'html',
+			  'filter'=>false,
+			  'value'=> 'CHtml::link(CHtml::image(Yii::app()->baseurl."/images/email_go.png"),
+			             array("admin/liquidaciones/email","id"=>$data[LIQU_ID],))',
+			  'htmlOptions'=>array(
+			                       'style'=>'text-align: center','width'=>'25',
+								   'title' => 'Enviar por correo',
+								   'alt' => 'Enviar por correo'
 								  ), 
 			  ),
 			  

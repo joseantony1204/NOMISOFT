@@ -39,7 +39,7 @@ class EstadosempleosController extends Controller
         return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'',''.$array[5].'',
-                                 ''.$array[6].'','admin','create','update',  
+                                 'delete','admin','create','update',  
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
 			),			

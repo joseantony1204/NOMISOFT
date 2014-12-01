@@ -419,12 +419,20 @@ class Liqprimanavidad extends CActiveRecord
 	 //echo 'retirando el: '.$mesretiro.' - navidad inicial el: '.$mesinicioprimanavidad.'<br>';
      
 	 /**
+	 *si el empleado entro antes de la ultima fecha de liquidacion 
+	 *se le tendra cuenta el mes de enero completo
+	 */
+	 $mesEnero = 0;	 
+	 if($fechainicioprimanavidad>$Personasgeneral->Personageneral->PEGE_FECHAINGRESO){
+	 $mesEnero = 1;
+	 }
+	 /**
 	 *calculando los meses de liquidacion de la prima de navidad
 	 */
 	 $meses  = 0;
 	  //echo '<br>'.$anioretiro.' > '.$anioultimaliquidacion.' - ciclo (1.0)<br>';
 	 if($anioretiro>$anioultimaliquidacion){
-	   $meses = $mesretiro-$mesinicioprimanavidad-1;
+	   $meses = $mesretiro-$mesinicioprimanavidad+$mesEnero-1;
 	   //echo '<br>'.$diaretiro.' == '.$ultimodiamesretiro.' o '.$diaretiro.' == '.($ultimodiamesretiro-1).' - ciclo (1.1)<br>';
 	  if(($diaretiro==$ultimodiamesretiro) or ($diaretiro==($ultimodiamesretiro-1))){
 	    $this->mesesnavidad = $meses+1;       	   
@@ -434,7 +442,7 @@ class Liqprimanavidad extends CActiveRecord
 	 }else{
 	      // echo '<br>'.$anioretiro.' == '.$anioultimaliquidacion.' - ciclo (2.0)<br>';
 	       if($anioretiro==$anioultimaliquidacion){
-		      $meses = $mesretiro-$mesinicioprimanavidad-1;
+		      $meses = $mesretiro-$mesinicioprimanavidad+$mesEnero-1;
 			  //echo '<br>'.$diaretiro.' == '.$ultimodiamesretiro.' o '.$diaretiro.' == '.($ultimodiamesretiro-1).' - ciclo (2.1)<br>';
 			 if(($diaretiro==$ultimodiamesretiro) or ($diaretiro==($ultimodiamesretiro-1))){
 	          $this->mesesnavidad = $mesretiro-$mesinicioprimanavidad+1;	 
@@ -490,8 +498,8 @@ class Liqprimanavidad extends CActiveRecord
 		  ';    		  
      $rows = $connection->createCommand($sql)->queryAll(); 
 	 
-	 $array = array('ID LIQUIDACION','MESES','PUNTOS','SUELDO','Sueldo','Prima Antigüedad','Subsidio Transporte','Subsidio Alimentacion',
-	                'Prima Tecnica','Gastos Representacion','Bon. de Servicios','Prima de Servicios','Prima de Vacaciones','ID NOMINA','ID EMPLEO','TOTAL PRIMA VACACIONES');
+	  $array = array('ID LIQUIDACION','DIAS','PUNTOS','SUELDO','SUELDO','PRIMA ANTIGUEDAD','AUX. TRASNPORTE','AUX. ALIMENTACION',
+	                'PRIMA TECNICA','GASTOS REPRESENTACION','1/12 BON. DE SERVICIOS','1/12 P. DE SERVICIOS','1/12 P. DE VACACIONES','ID NOMINA','ID EMPLEO','TOTAL PRIMA VACACIONES');
 	 $j=0; $i=0;
 	 foreach ($array as $values=>$value) {	
 	  $this->liquidacion[$j][$i] = $value;

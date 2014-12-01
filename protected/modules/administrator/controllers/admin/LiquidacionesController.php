@@ -38,8 +38,8 @@ class LiquidacionesController extends Controller
 		}
         return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'',''.$array[5].'',
-                                 'delete','admin','create','update','download',  
+				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'','planogeneral',
+                                 'delete','admin','create','update','download', 'email' 
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
 			),			
@@ -58,6 +58,70 @@ class LiquidacionesController extends Controller
 	{
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
+		));
+	}
+	
+	public function actionPlanoGeneral($id=NULL,$sw=NULL)
+	{
+		$Liqprimasemestral = new Liqprimasemestral;
+		$Liqvacaciones = new Liqvacaciones;
+		$Liqprimavacaciones = new Liqprimavacaciones;
+		$Liqprimanavidad = new Liqprimanavidad;
+		$Liqcesantias = new Liqcesantias;
+		
+		
+		$Liquidaciones = Liquidaciones::model()->findByPk($id);		
+		/**
+		 *obtener las liquidaciones de cada una de las prestaciones
+		 */
+		$Liqprimasemestral->mostrarLiquidacion($Liquidaciones->LIQU_ID);
+		$Liqvacaciones->mostrarLiquidacion($Liquidaciones->LIQU_ID);
+		$Liqprimavacaciones->mostrarLiquidacion($Liquidaciones->LIQU_ID);
+		$Liqprimanavidad->mostrarLiquidacion($Liquidaciones->LIQU_ID);
+		$Liqcesantias->mostrarLiquidacion($Liquidaciones->LIQU_ID);
+		
+		
+		$this->render('planogeneral',array(
+			'Liquidaciones'=>$Liquidaciones,
+			'Liqprimasemestral'=>$Liqprimasemestral,
+			'Liqvacaciones'=>$Liqvacaciones,
+			'Liqprimavacaciones'=>$Liqprimavacaciones,
+			'Liqprimanavidad'=>$Liqprimanavidad,
+			'Liqcesantias'=>$Liqcesantias,
+			'sw'=>$sw,
+		));
+	}
+	
+	public function actionEmail($id=NULL,$sw=NULL)
+	{
+		$Liqprimasemestral = new Liqprimasemestral;
+		$Liqvacaciones = new Liqvacaciones;
+		$Liqprimavacaciones = new Liqprimavacaciones;
+		$Liqprimanavidad = new Liqprimanavidad;
+		$Liqcesantias = new Liqcesantias;
+		
+		
+		$Liquidaciones = Liquidaciones::model()->findByPk($id);		
+		$Personasgeneral = Personasgenerales::model()->findByPk($Liquidaciones->PEGE_ID);		
+		/**
+		 *obtener las liquidaciones de cada una de las prestaciones
+		 */
+		$Liqprimasemestral->mostrarLiquidacion($Liquidaciones->LIQU_ID);
+		$Liqvacaciones->mostrarLiquidacion($Liquidaciones->LIQU_ID);
+		$Liqprimavacaciones->mostrarLiquidacion($Liquidaciones->LIQU_ID);
+		$Liqprimanavidad->mostrarLiquidacion($Liquidaciones->LIQU_ID);
+		$Liqcesantias->mostrarLiquidacion($Liquidaciones->LIQU_ID);
+		
+		
+		$this->render('email',array(
+			'Liquidaciones'=>$Liquidaciones,
+			'Liqprimasemestral'=>$Liqprimasemestral,
+			'Liqvacaciones'=>$Liqvacaciones,
+			'Liqprimavacaciones'=>$Liqprimavacaciones,
+			'Liqprimanavidad'=>$Liqprimanavidad,
+			'Liqcesantias'=>$Liqcesantias,
+			'Personasgeneral'=>$Personasgeneral,
+			'sw'=>$sw,
 		));
 	}
 

@@ -214,7 +214,7 @@ class Retroactivosnominaliquidaciones extends CActiveRecord
 				'desc'=>'p."PEGE_SEGUNDOAPELLIDOS" desc',
 			),
 		);	
-		$criteria->select = 'p.*, ep.*, SUM("RANL_DIAS") AS "RANL_DIAS",
+		$criteria->select = 't.*, p.*, ep.*, SUM("RANL_DIAS") AS "RANL_DIAS",
 		                    SUM("RANL_SALARIO"+"RANL_PRIMAANTIGUEDAD"+"RANL_TRANSPORTE"+"RANL_ALIMENTACION"+"RANL_HEDTOTAL"+"RANL_HENTOTAL"+
 							"RANL_HEDFTOTAL"+"RANL_HENFTOTAL"+"RANL_DYFTOTAL"+"RANL_RENTOTAL"+"RANL_RENDYFTOTAL"+"RANL_PRIMATECNICA"+
 							"RANL_GASTOSRP"+"RANL_BONIFICACION"+"RANL_PRIMAVACACIONES") AS "RANL_DEVENGADO",							 
@@ -225,7 +225,7 @@ class Retroactivosnominaliquidaciones extends CActiveRecord
 							 "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMPERSONASGENERALES" pg
 							 WHERE
 							 pg."PEGE_ID" = ep."PEGE_ID" AND ep."EMPL_ID" = mnl."EMPL_ID" AND mnl."MENL_ID" = rnl."MENL_ID"
-							 AND rnl."RANL_ID" = rnd."RANL_ID" AND pg."PEGE_ID" = p."PEGE_ID"
+							 AND rnl."RANL_ID" = rnd."RANL_ID"  AND t."RANL_ID" = rnd."RANL_ID"
 							 ) AS "RANL_DESCUENTOS"							
 							';							
 		$criteria->join = '
@@ -233,7 +233,7 @@ class Retroactivosnominaliquidaciones extends CActiveRecord
 		                   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON ep."EMPL_ID" = mnl."EMPL_ID"
 						   INNER JOIN "TBL_NOMUNIDADES" "u" ON u."UNID_ID" = ep."UNID_ID"
 		                   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"';					
-        $criteria->group = 'ep."EMPL_ID", p."PEGE_ID"';
+        $criteria->group = 'ep."EMPL_ID", p."PEGE_ID", t."RANL_ID"';
 		
 		$criteria->compare('"RANL_ID"',$this->RANL_ID,true);
 		$criteria->compare('"RANL_CODIGO"',$this->RANL_CODIGO,true);

@@ -43,6 +43,8 @@ class Empleosplanta extends CActiveRecord
 	public $VINCULO, $CARGOS, $PEGE_IDENTIFICACION, $PEGE_PRIMERNOMBRE, $PEGE_SEGUNDONOMBRE, $PEGE_PRIMERAPELLIDO, $PEGE_SEGUNDOAPELLIDOS; 
 	public $ESEM_NOMBRE, $ESEP_FECHAREGISTRO; 
 	public $aumentoDataProvider, $nominaDataProvider;
+	public $unidadespvacacionesDataProvider, $unidadesvacacionesDataProvider, $unidadespnavidadDataProvider;
+	public $unidadesmensualesDataProvider, $unidadespsemestralDataProvider, $unidadesretroactivosDataProvider;
 	
 	public static function model($className=__CLASS__)
 	{
@@ -671,6 +673,308 @@ class Empleosplanta extends CActiveRecord
 	}
 	
 	/**
+	*establecer dias mensuales
+	*/
+	public function previewdiasmensual($Cform)
+	{
+	 $connection = Yii::app()->db; 
+	 $sql=' 
+	 SELECT "EMPL_ID", "PEGE_ID", "PEGE_IDENTIFICACION", "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE", "EMPL_DIASAPAGAR"
+     FROM (SELECT pg.*, ep."EMPL_ID", ep."EMPL_DIASAPAGAR", (SELECT eep."ESEM_ID"
+		     FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+		     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+		     ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+		     LIMIT 1 
+		    ) AS "ESEM_ID", 
+		    (SELECT  ep."TICA_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                    ) AS "TICA_ID", 
+                    (SELECT  ep."UNID_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                     ) AS "UNID_ID" 
+      FROM "TBL_NOMPERSONASGENERALES" "pg"  
+      INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON pg."PEGE_ID" = ep."PEGE_ID" 						  
+      GROUP BY pg."PEGE_ID", ep."EMPL_ID" ) s  
+     WHERE "ESEM_ID" = 1
+     ORDER BY "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE" 
+		  ';
+	
+	 $this->unidadesmensualesDataProvider = NULL;
+	 $count=Yii::app()->db->createCommand('SELECT COUNT(*) FROM ('.$sql.') AS q')->queryScalar();	  
+	 $this->unidadesmensualesDataProvider = $dataProvider=new CSqlDataProvider($sql, array(
+      'totalItemCount'=>$count,
+      'sort'=>array(
+        'attributes'=>array(
+             'PEGE_ID', 'PEGE_IDENTIFICACION', 'PEGE_PRIMERAPELLIDO','PEGE_SEGUNDOAPELLIDOS','PEGE_PRIMERNOMBRE','PEGE_SEGUNDONOMBRE','EMPL_DIASAPAGAR',
+        ),
+      ),
+      'pagination'=>array(
+                          'pageSize'=>1000,
+                         ),
+      )
+	 );
+	}
+	
+	/**
+	*establecer unidades de prima semestral
+	*/
+	public function previewdiasprimasemestral($Cform)
+	{
+	 $connection = Yii::app()->db; 
+	 $sql=' 
+	 SELECT "NOPS_ID", "PEGE_ID", "PEGE_IDENTIFICACION", "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE", "NOPS_MESES"
+     FROM (SELECT pg.*, nps."NOPS_ID", nps."NOPS_MESES", (SELECT eep."ESEM_ID"
+		     FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+		     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+		     ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+		     LIMIT 1 
+		    ) AS "ESEM_ID", 
+		    (SELECT  ep."TICA_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                    ) AS "TICA_ID", 
+                    (SELECT  ep."UNID_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                     ) AS "UNID_ID" 
+      FROM "TBL_NOMPERSONASGENERALES" "pg"  
+      INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON pg."PEGE_ID" = ep."PEGE_ID"
+      INNER JOIN "TBL_NOMNOVEDADESPRIMASEMESTRAL" nps ON pg."PEGE_ID" = nps."PEGE_ID"  						  
+      GROUP BY pg."PEGE_ID", ep."EMPL_ID", nps."NOPS_ID" ) s  
+     WHERE "ESEM_ID" = 1
+     ORDER BY "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE" 
+		  ';
+	
+	 $this->unidadespsemestralDataProvider = NULL;
+	 $count=Yii::app()->db->createCommand('SELECT COUNT(*) FROM ('.$sql.') AS q')->queryScalar();	  
+	 $this->unidadespsemestralDataProvider = $dataProvider=new CSqlDataProvider($sql, array(
+      'totalItemCount'=>$count,
+      'sort'=>array(
+        'attributes'=>array(
+             'PEGE_ID', 'PEGE_IDENTIFICACION', 'PEGE_PRIMERAPELLIDO','PEGE_SEGUNDOAPELLIDOS','PEGE_PRIMERNOMBRE','PEGE_SEGUNDONOMBRE','NOPS_MESES',
+        ),
+      ),
+      'pagination'=>array(
+                          'pageSize'=>1000,
+                         ),
+      )
+	 );
+	}
+	
+	/**
+	*establecer unidades de prima de vacaciones
+	*/
+	public function previewdiasprimavacaciones($Cform)
+	{
+	 $connection = Yii::app()->db; 
+	 $sql=' 
+	 SELECT "NOPV_ID", "PEGE_ID", "PEGE_IDENTIFICACION", "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE", "NOPV_DIAS"
+     FROM (SELECT pg.*, npv."NOPV_ID", npv."NOPV_DIAS", (SELECT eep."ESEM_ID"
+		     FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+		     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+		     ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+		     LIMIT 1 
+		    ) AS "ESEM_ID", 
+		    (SELECT  ep."TICA_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                    ) AS "TICA_ID", 
+                    (SELECT  ep."UNID_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                     ) AS "UNID_ID" 
+      FROM "TBL_NOMPERSONASGENERALES" "pg"  
+      INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON pg."PEGE_ID" = ep."PEGE_ID"
+      INNER JOIN "TBL_NOMNOVEDADESPRIMAVACACIONES" npv ON pg."PEGE_ID" = npv."PEGE_ID"  						  
+      GROUP BY pg."PEGE_ID", ep."EMPL_ID", npv."NOPV_ID" ) s  
+     WHERE "ESEM_ID" = 1 AND "TICA_ID" = 2
+     ORDER BY "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE" 
+		  ';
+	
+	 $this->unidadespvacacionesDataProvider = NULL;
+	 $count=Yii::app()->db->createCommand('SELECT COUNT(*) FROM ('.$sql.') AS q')->queryScalar();	  
+	 $this->unidadespvacacionesDataProvider = $dataProvider=new CSqlDataProvider($sql, array(
+      'totalItemCount'=>$count,
+      'sort'=>array(
+        'attributes'=>array(
+             'PEGE_ID', 'PEGE_IDENTIFICACION', 'PEGE_PRIMERAPELLIDO','PEGE_SEGUNDOAPELLIDOS','PEGE_PRIMERNOMBRE','PEGE_SEGUNDONOMBRE','NOPV_DIAS',
+        ),
+      ),
+      'pagination'=>array(
+                          'pageSize'=>1000,
+                         ),
+      )
+	 );
+	}
+	
+	/**
+	*establecer unidades de prima de navidad
+	*/
+	public function previewdiasprimanavidad($Cform)
+	{
+	 $connection = Yii::app()->db;
+	 $sql = ' ';
+     if($Cform->NOVE_TIPOCARGO!=''){ $sql = ' AND "TICA_ID" = '.$Cform->NOVE_TIPOCARGO;}	 
+	 $sql=' 
+	 SELECT "NOPN_ID", "PEGE_ID", "PEGE_IDENTIFICACION", "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE", "NOPN_MESES"
+     FROM (SELECT pg.*, npn."NOPN_ID", npn."NOPN_MESES", (SELECT eep."ESEM_ID"
+		     FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+		     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+		     ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+		     LIMIT 1 
+		    ) AS "ESEM_ID", 
+		    (SELECT  ep."TICA_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                    ) AS "TICA_ID", 
+                    (SELECT  ep."UNID_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                     ) AS "UNID_ID" 
+      FROM "TBL_NOMPERSONASGENERALES" "pg"  
+      INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON pg."PEGE_ID" = ep."PEGE_ID"
+      INNER JOIN "TBL_NOMNOVEDADESPRIMANAVIDAD" npn ON pg."PEGE_ID" = npn."PEGE_ID"  						  
+      GROUP BY pg."PEGE_ID", ep."EMPL_ID", npn."NOPN_ID" ) s  
+     WHERE "ESEM_ID" = 1 
+     ORDER BY "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE" 
+		  ';
+	
+	 $this->unidadespnavidadDataProvider = NULL;
+	 $count=Yii::app()->db->createCommand('SELECT COUNT(*) FROM ('.$sql.') AS q')->queryScalar();	  
+	 $this->unidadespnavidadDataProvider = $dataProvider=new CSqlDataProvider($sql, array(
+      'totalItemCount'=>$count,
+      'sort'=>array(
+        'attributes'=>array(
+             'PEGE_ID', 'PEGE_IDENTIFICACION', 'PEGE_PRIMERAPELLIDO','PEGE_SEGUNDOAPELLIDOS','PEGE_PRIMERNOMBRE','PEGE_SEGUNDONOMBRE','NOPN_MESES',
+        ),
+      ),
+      'pagination'=>array(
+                          'pageSize'=>1000,
+                         ),
+      )
+	 );
+	}
+	
+	/**
+	*establecer unidades de vacaciones
+	*/
+	public function previewdiasvacaciones($Cform)
+	{
+	 $connection = Yii::app()->db; 
+	 $sql=' 
+	 SELECT "NOVA_ID", "PEGE_ID", "PEGE_IDENTIFICACION", "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE", "NOVA_DIAS"
+     FROM (SELECT pg.*, nv."NOVA_ID", nv."NOVA_DIAS", (SELECT eep."ESEM_ID"
+		     FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+		     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+		     ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+		     LIMIT 1 
+		    ) AS "ESEM_ID", 
+		    (SELECT  ep."TICA_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                    ) AS "TICA_ID", 
+                    (SELECT  ep."UNID_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                     ) AS "UNID_ID" 
+      FROM "TBL_NOMPERSONASGENERALES" "pg"  
+      INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON pg."PEGE_ID" = ep."PEGE_ID"
+      INNER JOIN "TBL_NOMNOVEDADESVACACIONES" nv ON pg."PEGE_ID" = nv."PEGE_ID"  						  
+      GROUP BY pg."PEGE_ID", ep."EMPL_ID", nv."NOVA_ID" ) s  
+     WHERE "ESEM_ID" = 1 
+     ORDER BY "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE" 
+		  ';
+	
+	 $this->unidadesvacacionesDataProvider = NULL;
+	 $count=Yii::app()->db->createCommand('SELECT COUNT(*) FROM ('.$sql.') AS q')->queryScalar();	  
+	 $this->unidadesvacacionesDataProvider = $dataProvider=new CSqlDataProvider($sql, array(
+      'totalItemCount'=>$count,
+      'sort'=>array(
+        'attributes'=>array(
+             'PEGE_ID', 'PEGE_IDENTIFICACION', 'PEGE_PRIMERAPELLIDO','PEGE_SEGUNDOAPELLIDOS','PEGE_PRIMERNOMBRE','PEGE_SEGUNDONOMBRE','NOVA_DIAS',
+        ),
+      ),
+      'pagination'=>array(
+                          'pageSize'=>1000,
+                         ),
+      )
+	 );
+	}
+	
+	/**
+	*establecer dias de retroacivos
+	*/
+	public function previewdiasretroactivos($Cform)
+	{
+	 $connection = Yii::app()->db; 
+	 $sql=' 
+	 SELECT "NORE_ID", "PEGE_ID", "PEGE_IDENTIFICACION", "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE", "NORE_DIAS"
+     FROM (SELECT pg.*, nra."NORE_ID", nra."NORE_DIAS", (SELECT eep."ESEM_ID"
+		     FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+		     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+		     ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+		     LIMIT 1 
+		    ) AS "ESEM_ID", 
+		    (SELECT  ep."TICA_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                    ) AS "TICA_ID", 
+                    (SELECT  ep."UNID_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                     ) AS "UNID_ID" 
+      FROM "TBL_NOMPERSONASGENERALES" "pg"  
+      INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON pg."PEGE_ID" = ep."PEGE_ID"
+      INNER JOIN "TBL_NOMNOVEDADESRETROACTIVO" nra ON pg."PEGE_ID" = nra."PEGE_ID"  						  
+      GROUP BY pg."PEGE_ID", ep."EMPL_ID", nra."NORE_ID" ) s  
+     WHERE "ESEM_ID" = 1
+     ORDER BY "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE" 
+		  ';
+	
+	 $this->unidadesretroactivosDataProvider = NULL;
+	 $count=Yii::app()->db->createCommand('SELECT COUNT(*) FROM ('.$sql.') AS q')->queryScalar();	  
+	 $this->unidadesretroactivosDataProvider = $dataProvider=new CSqlDataProvider($sql, array(
+      'totalItemCount'=>$count,
+      'sort'=>array(
+        'attributes'=>array(
+             'PEGE_ID', 'PEGE_IDENTIFICACION', 'PEGE_PRIMERAPELLIDO','PEGE_SEGUNDOAPELLIDOS','PEGE_PRIMERNOMBRE','PEGE_SEGUNDONOMBRE','NORE_DIAS',
+        ),
+      ),
+      'pagination'=>array(
+                          'pageSize'=>1000,
+                         ),
+      )
+	 );
+	}
+	
+	
+	/**
 	*establecer dias para pago de nominas
 	*/
 	public function setUnidadesNomina($Cform)
@@ -681,30 +985,242 @@ class Empleosplanta extends CActiveRecord
 	 *dias para nomina mensual
 	 */
 	 if($Cform->NOVE_TIPONOMINA==01){
+	 $str = '';
+	 if($Cform->NOVE_TIPOCARGO!=''){ $str = ' AND "TICA_ID" = '.$Cform->NOVE_TIPOCARGO;}
 	 $sql=' UPDATE 	"TBL_NOMEMPLEOSPLANTA" "ep"
             SET "EMPL_DIASAPAGAR" = '.$Cform->NOVE_UNIDADES.'             
 			FROM
             (
-	        SELECT t.*
-			FROM (
-				  SELECT * 
-				  FROM ( 
-						SELECT * 
-						FROM (
-							  SELECT pg."PEGE_ID", ep."EMPL_ID", pg."PEGE_IDENTIFICACION", pg."PEGE_PRIMERNOMBRE", pg."PEGE_SEGUNDONOMBRE", pg."PEGE_PRIMERAPELLIDO", 
-							  pg."PEGE_SEGUNDOAPELLIDOS", ep."EMPL_CARGO", ep."EMPL_PUNTOS", ep."EMPL_SUELDO", eep."ESEM_ID"
-							  FROM "TBL_NOMPERSONASGENERALES" pg, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
-							  WHERE pg."PEGE_ID" = ep."PEGE_ID" AND ep."EMPL_ID" = eep."EMPL_ID" AND ep."TICA_ID" = '.$Cform->NOVE_TIPOCARGO.'
-							  ORDER BY ep."EMPL_FECHAINGRESO" DESC
-							 ) g
-						GROUP BY "PEGE_ID", "EMPL_ID", "PEGE_IDENTIFICACION", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE", "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "EMPL_CARGO", "EMPL_SUELDO", "EMPL_PUNTOS", "ESEM_ID"
-					   ) e
-				  WHERE "ESEM_ID" <>3
-				) t
-			ORDER BY  "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS"			
+	 SELECT "EMPL_ID", "PEGE_ID", "PEGE_IDENTIFICACION", "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE", "EMPL_DIASAPAGAR"
+     FROM (SELECT pg.*, ep."EMPL_ID", ep."EMPL_DIASAPAGAR", (SELECT eep."ESEM_ID"
+		     FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+		     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+		     ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+		     LIMIT 1 
+		    ) AS "ESEM_ID", 
+		    (SELECT  ep."TICA_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                    ) AS "TICA_ID", 
+                    (SELECT  ep."UNID_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                     ) AS "UNID_ID" 
+      FROM "TBL_NOMPERSONASGENERALES" "pg"  
+      INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON pg."PEGE_ID" = ep."PEGE_ID" 						  
+      GROUP BY pg."PEGE_ID", ep."EMPL_ID" ) s  
+     WHERE "ESEM_ID" = 1 '.$str.'
+     ORDER BY "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE"			
 			) ta
 			
             WHERE ep."EMPL_ID" = ta."EMPL_ID"
+		  ';
+	 }
+	 
+	 /**
+	 *meses para prima semestral
+	 */
+	 if($Cform->NOVE_TIPONOMINA==02){
+	 $str = '';
+	 if($Cform->NOVE_TIPOCARGO!=''){ $str = ' AND "TICA_ID" = '.$Cform->NOVE_TIPOCARGO;}
+	 $sql=' UPDATE 	"TBL_NOMNOVEDADESPRIMASEMESTRAL" "nps"
+            SET "NOPS_MESES" = '.$Cform->NOVE_UNIDADES.'             
+			FROM
+            (
+	 SELECT "NOPS_ID", "PEGE_ID", "PEGE_IDENTIFICACION", "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE", "NOPS_MESES"
+     FROM (SELECT pg.*, nps."NOPS_ID", nps."NOPS_MESES", (SELECT eep."ESEM_ID"
+		     FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+		     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+		     ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+		     LIMIT 1 
+		    ) AS "ESEM_ID", 
+		    (SELECT  ep."TICA_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                    ) AS "TICA_ID", 
+                    (SELECT  ep."UNID_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                     ) AS "UNID_ID" 
+      FROM "TBL_NOMPERSONASGENERALES" "pg"  
+      INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON pg."PEGE_ID" = ep."PEGE_ID"
+      INNER JOIN "TBL_NOMNOVEDADESPRIMASEMESTRAL" nps ON pg."PEGE_ID" = nps."PEGE_ID"  						  
+      GROUP BY pg."PEGE_ID", ep."EMPL_ID", nps."NOPS_ID" ) s  
+     WHERE "ESEM_ID" = 1 '.$str.'
+     ORDER BY "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE"			
+			) ta
+			
+            WHERE nps."NOPS_ID" = ta."NOPS_ID"
+		  ';
+	 }
+	 
+	 /**
+	 *dias para prima de vacaciones
+	 */
+	 if($Cform->NOVE_TIPONOMINA==03){
+	 $sql=' UPDATE 	"TBL_NOMNOVEDADESPRIMAVACACIONES" "npv"
+            SET "NOPV_DIAS" = '.$Cform->NOVE_UNIDADES.'             
+			FROM
+            (
+	 SELECT "NOPV_ID", "PEGE_ID", "PEGE_IDENTIFICACION", "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE", "NOPV_DIAS"
+     FROM (SELECT pg.*, npv."NOPV_ID", npv."NOPV_DIAS", (SELECT eep."ESEM_ID"
+		     FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+		     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+		     ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+		     LIMIT 1 
+		    ) AS "ESEM_ID", 
+		    (SELECT  ep."TICA_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                    ) AS "TICA_ID", 
+                    (SELECT  ep."UNID_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                     ) AS "UNID_ID" 
+      FROM "TBL_NOMPERSONASGENERALES" "pg"  
+      INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON pg."PEGE_ID" = ep."PEGE_ID"
+      INNER JOIN "TBL_NOMNOVEDADESPRIMAVACACIONES" npv ON pg."PEGE_ID" = npv."PEGE_ID"  						  
+      GROUP BY pg."PEGE_ID", ep."EMPL_ID", npv."NOPV_ID" ) s  
+      WHERE "ESEM_ID" = 1 AND "TICA_ID" = 2
+      ORDER BY "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE"			
+			) ta
+			
+            WHERE npv."NOPV_ID" = ta."NOPV_ID"
+		  ';
+	 }
+	 
+	 /**
+	 *meses para prima de navidad
+	 */
+	 if($Cform->NOVE_TIPONOMINA==04){
+	 $str = ' ';
+     if($Cform->NOVE_TIPOCARGO!=''){ $str = ' AND "TICA_ID" = '.$Cform->NOVE_TIPOCARGO;}
+	 $sql=' UPDATE 	"TBL_NOMNOVEDADESPRIMANAVIDAD" "npn"
+            SET "NOPN_MESES" = '.$Cform->NOVE_UNIDADES.'             
+			FROM
+            (
+	 SELECT "NOPN_ID", "PEGE_ID", "PEGE_IDENTIFICACION", "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE", "NOPN_MESES"
+     FROM (SELECT pg.*, npn."NOPN_ID", npn."NOPN_MESES", (SELECT eep."ESEM_ID"
+		     FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+		     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+		     ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+		     LIMIT 1 
+		    ) AS "ESEM_ID", 
+		    (SELECT  ep."TICA_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                    ) AS "TICA_ID", 
+                    (SELECT  ep."UNID_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                     ) AS "UNID_ID" 
+      FROM "TBL_NOMPERSONASGENERALES" "pg"  
+      INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON pg."PEGE_ID" = ep."PEGE_ID"
+      INNER JOIN "TBL_NOMNOVEDADESPRIMANAVIDAD" npn ON pg."PEGE_ID" = npn."PEGE_ID"  						  
+      GROUP BY pg."PEGE_ID", ep."EMPL_ID", npn."NOPN_ID" ) s  
+     WHERE "ESEM_ID" = 1 '.$str.'
+     ORDER BY "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE"			
+			) ta
+			
+            WHERE npn."NOPN_ID" = ta."NOPN_ID"
+		  ';
+	 }
+	 
+	 /**
+	 *dias para prima de navidad
+	 */
+	 if($Cform->NOVE_TIPONOMINA==05){
+	 $str = ' ';
+     if($Cform->NOVE_TIPOCARGO!=''){ $str = ' AND "TICA_ID" = '.$Cform->NOVE_TIPOCARGO;}
+	 $sql=' UPDATE 	"TBL_NOMNOVEDADESVACACIONES" "nv"
+            SET "NOVA_DIAS" = '.$Cform->NOVE_UNIDADES.'             
+			FROM
+            (
+	 SELECT "NOVA_ID", "PEGE_ID", "PEGE_IDENTIFICACION", "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE", "NOVA_DIAS"
+     FROM (SELECT pg.*, nv."NOVA_ID", nv."NOVA_DIAS", (SELECT eep."ESEM_ID"
+		     FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+		     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+		     ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+		     LIMIT 1 
+		    ) AS "ESEM_ID", 
+		    (SELECT  ep."TICA_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                    ) AS "TICA_ID", 
+                    (SELECT  ep."UNID_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                     ) AS "UNID_ID" 
+      FROM "TBL_NOMPERSONASGENERALES" "pg"  
+      INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON pg."PEGE_ID" = ep."PEGE_ID"
+      INNER JOIN "TBL_NOMNOVEDADESVACACIONES" nv ON pg."PEGE_ID" = nv."PEGE_ID"  						  
+      GROUP BY pg."PEGE_ID", ep."EMPL_ID", nv."NOVA_ID" ) s  
+     WHERE "ESEM_ID" = 1 '.$str.'
+     ORDER BY "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE"			
+			) ta
+			
+            WHERE nv."NOVA_ID" = ta."NOVA_ID"
+		  ';
+	 }
+	 
+	 /**
+	 *dias para retroactivos
+	 */
+	 if($Cform->NOVE_TIPONOMINA==06){
+	 $str = ' ';
+     if($Cform->NOVE_TIPOCARGO!=''){ $str = ' AND "TICA_ID" = '.$Cform->NOVE_TIPOCARGO;}
+	 $sql=' UPDATE 	"TBL_NOMNOVEDADESRETROACTIVO" "nra"
+            SET "NORE_DIAS" = '.$Cform->NOVE_UNIDADES.'             
+			FROM
+            (
+	 SELECT "NORE_ID", "PEGE_ID", "PEGE_IDENTIFICACION", "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE", "NORE_DIAS"
+     FROM (SELECT pg.*, nra."NORE_ID", nra."NORE_DIAS", (SELECT eep."ESEM_ID"
+		     FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+		     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+		     ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+		     LIMIT 1 
+		    ) AS "ESEM_ID", 
+		    (SELECT  ep."TICA_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                    ) AS "TICA_ID", 
+                    (SELECT  ep."UNID_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                     ) AS "UNID_ID" 
+      FROM "TBL_NOMPERSONASGENERALES" "pg"  
+      INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON pg."PEGE_ID" = ep."PEGE_ID"
+      INNER JOIN "TBL_NOMNOVEDADESRETROACTIVO" nra ON pg."PEGE_ID" = nra."PEGE_ID"  						  
+      GROUP BY pg."PEGE_ID", ep."EMPL_ID", nra."NORE_ID" ) s  
+     WHERE "ESEM_ID" = 1 '.$str.'
+     ORDER BY "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE" 		
+			) ta
+			
+            WHERE nra."NORE_ID" = ta."NORE_ID"
 		  ';
 	 }
 	 

@@ -434,8 +434,8 @@ class Liqprimasemestral extends CActiveRecord
 		  ';    		  
      $rows = $connection->createCommand($sql)->queryAll(); 
 	 
-	 $array = array('ID LIQUIDACION','MESES','PUNTOS','SUELDO','Sueldo','Prima Antigüedad','Subsidio Transporte','Subsidio Alimentacion',
-	                'Prima Tecnica','Gastos Representacion','Bon. de Servicios','ID NOMINA','ID EMPLEO','TOTAL PRIMA SEMESTRAL');
+	 $array = array('ID LIQUIDACION','DIAS','PUNTOS','SUELDO','SUELDO','PRIMA ANTIGUEDAD','AUX. TRASNPORTE','AUX. ALIMENTACION',
+	                'PRIMA TECNICA','GASTOS REPRESENTACION','1/12 BON. DE SERVICIOS','ID NOMINA','ID EMPLEO','TOTAL PRIMA SEMESTRAL');
 	 $j=0; $i=0;
 	 foreach ($array as $values=>$value) {	
 	  $this->liquidacion[$j][$i] = $value;

@@ -328,7 +328,9 @@ class Mensualnomina extends CActiveRecord
 	   if(((date("Y", strtotime($this->Estadoempleoplanta->ESEP_FECHAREGISTRO)))==(date("Y", strtotime($objet->MENO_FECHAPROCESO)))) &
 	     ((date("m", strtotime($this->Estadoempleoplanta->ESEP_FECHAREGISTRO)))==(date("m", strtotime($objet->MENO_FECHAPROCESO))))){
 	     $sw = 0; 			 
-	   }
+	   }elseif($this->Estadoempleoplanta->ESEM_ID==5){
+	        $sw = 1;
+			}
 	  }
 	 
 	  /*si todo esta bn se procede a calcular la nomina para la persona*/
@@ -442,7 +444,9 @@ class Mensualnomina extends CActiveRecord
 	   if(((date("Y", strtotime($this->Estadoempleoplanta->ESEP_FECHAREGISTRO)))==(date("Y", strtotime($objet->MENO_FECHAPROCESO)))) &
 	     ((date("m", strtotime($this->Estadoempleoplanta->ESEP_FECHAREGISTRO)))==(date("m", strtotime($objet->MENO_FECHAPROCESO))))){
 	     $sw = 0; 			 
-	   }
+	   }elseif($this->Estadoempleoplanta->ESEM_ID==5){
+			$sw = 1;
+			}
 	  }
 	 
 	  /*si todo esta bn se procede a calcular la nomina para la persona*/

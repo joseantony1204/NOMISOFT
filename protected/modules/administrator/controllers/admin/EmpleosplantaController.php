@@ -40,6 +40,7 @@ class EmpleosplantaController extends Controller
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'','delete',
                                  'search','admin','create','update','aumentoadmin','aumentodocen','diasnominas', 'aumentopuntos',
+								 'diasmensual','diaspsemestral','diaspvacaciones','diaspnavidad','diasvacaciones', 'diasretroactivos', 'checkpass',
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
 			),			
@@ -343,20 +344,187 @@ class EmpleosplantaController extends Controller
 		              );
 	}
 	
+	public function actionCheckpass()
+	{
+	 if(isset($_POST['info']))
+	 {
+		$pass = $_POST['info'];
+		$Usuario = Usuarios::model()->findByPk(Yii::app()->user->id);
+			
+		if($Usuario==NULL){
+		echo 'false';		
+		}else{
+		      if(!$Usuario->validatePassword($pass)){
+			   echo 'false';	
+		      }else{
+			        echo 'true';
+		           }
+		      }
+	 }else{
+		   echo "";
+	      }
+	}
+	
+	
+	public function actionDiasmensual()
+	{
+	 $Empleosplanta = new Empleosplanta;
+	 $Cform = new Cform;
+	 if(isset($_POST['Cform'])){
+	  $Cform->attributes=$_POST['Cform'];
+	  $Cform->NOVE_TIPOCARGO = $_POST["Cform_NOVE_TIPOCARGO"];
+	  $Cform->NOVE_TIPONOMINA = $_POST["Cform_NOVE_TIPONOMINA"];
+	  $Cform->NOVE_UNIDADES = $Cform->attributes=$_POST['Cform']["NOVE_UNIDADES"];
+	   if($Cform->NOVE_UNIDADES!=''){
+	    $Empleosplanta->setUnidadesNomina($Cform);
+	   }
+	 }
+	}
+	
+	public function actionDiaspsemestral()
+	{
+	 $Empleosplanta = new Empleosplanta;
+	 $Cform = new Cform;
+	 if(isset($_POST['Cform'])){
+	  $Cform->attributes=$_POST['Cform'];
+	  $Cform->NOVE_TIPOCARGO = $_POST["Cform_NOVE_TIPOCARGO"];
+	  $Cform->NOVE_TIPONOMINA = $_POST["Cform_NOVE_TIPONOMINA"];
+	  $Cform->NOVE_UNIDADES = $Cform->attributes=$_POST['Cform']["NOVE_UNIDADES"];
+	   if($Cform->NOVE_UNIDADES!=''){
+	    $Empleosplanta->setUnidadesNomina($Cform);
+	   }
+	 }
+	}
+	
+	public function actionDiaspvacaciones()
+	{
+	 $Empleosplanta = new Empleosplanta;
+	 $Cform = new Cform;
+	 if(isset($_POST['Cform'])){
+	  $Cform->attributes=$_POST['Cform'];
+	  $Cform->NOVE_TIPOCARGO = $_POST["Cform_NOVE_TIPOCARGO"];
+	  $Cform->NOVE_TIPONOMINA = $_POST["Cform_NOVE_TIPONOMINA"];
+	  $Cform->NOVE_UNIDADES = $Cform->attributes=$_POST['Cform']["NOVE_UNIDADES"];
+	   if($Cform->NOVE_UNIDADES!=''){
+	    $Empleosplanta->setUnidadesNomina($Cform);
+	   }
+	 }
+	}
+	
+	public function actionDiasvacaciones()
+	{
+	 $Empleosplanta = new Empleosplanta;
+	 $Cform = new Cform;
+	 if(isset($_POST['Cform'])){
+	  $Cform->attributes=$_POST['Cform'];
+	  $Cform->NOVE_TIPOCARGO = $_POST["Cform_NOVE_TIPOCARGO"];
+	  $Cform->NOVE_TIPONOMINA = $_POST["Cform_NOVE_TIPONOMINA"];
+	  $Cform->NOVE_UNIDADES = $Cform->attributes=$_POST['Cform']["NOVE_UNIDADES"];
+	   if($Cform->NOVE_UNIDADES!=''){
+	    $Empleosplanta->setUnidadesNomina($Cform);
+	   }
+	 }
+	}
+	
+	public function actionDiaspnavidad()
+	{
+	 $Empleosplanta = new Empleosplanta;
+	 $Cform = new Cform;
+	 
+	 if(isset($_POST['Cform'])){
+	  $Cform->attributes=$_POST['Cform'];
+	  $Cform->NOVE_TIPOCARGO = $_POST["Cform_NOVE_TIPOCARGO"];
+	  $Cform->NOVE_TIPONOMINA = $_POST["Cform_NOVE_TIPONOMINA"];
+	  $Cform->NOVE_UNIDADES = $Cform->attributes=$_POST['Cform']["NOVE_UNIDADES"];
+	  $Empleosplanta->setUnidadesNomina($Cform);
+	 }
+	}
+	
+	public function actionDiasretroactivos()
+	{
+	 $Empleosplanta = new Empleosplanta;
+	 $Cform = new Cform;
+	 
+	 if(isset($_POST['Cform'])){
+	  $Cform->attributes=$_POST['Cform'];
+	  $Cform->NOVE_TIPOCARGO = $_POST["Cform_NOVE_TIPOCARGO"];
+	  $Cform->NOVE_TIPONOMINA = $_POST["Cform_NOVE_TIPONOMINA"];
+	  $Cform->NOVE_UNIDADES = $Cform->attributes=$_POST['Cform']["NOVE_UNIDADES"];
+	  $Empleosplanta->setUnidadesNomina($Cform);
+	 }
+	}
+	
 	public function actionDiasnominas()
 	{
 		$Empleosplanta = new Empleosplanta;
 		$Cform = new Cform;
 		
-		if((isset($_POST['yt0'])) & (isset($_POST['Cform']))){
-         $Cform->attributes=$_POST['Cform'];
-		 if(($Empleosplanta->setUnidadesNomina($Cform))=='true'){		 
-		  Yii::app()->user->setFlash('success','<strong> Unidades actualizadas correctamente :)</strong>');
-		 }else{
-		       Yii::app()->user->setFlash('error','<strong>Oppss!. </strong> Ha ocurrido algun error al tratar de usar esta funcionalidad! :(');
-			  }
+		if((isset($_POST['yt1'])) && (isset($_POST['numDiasMensual']))){
+         Yii::app()->user->setFlash('success','<strong> Dias en nomina mensual actualizadas correctamente :)</strong>');
+		 foreach($_POST['numDiasMensual'] as $diasm=>$diam)
+		 {	
+		  $Empleosplanta = Empleosplanta::model()->findByPk($diasm);			
+		  $Empleosplanta->EMPL_DIASAPAGAR = $diam;
+		  $Empleosplanta->save();
+		 }     				 
 		}
 		
+		if((isset($_POST['yt3'])) && (isset($_POST['numDiaspSemestral']))){
+         Yii::app()->user->setFlash('success','<strong> Dias prima semestral actualizadas correctamente :)</strong>');
+		 foreach($_POST['numDiaspSemestral'] as $diasps=>$diaps)
+		 {	
+		  $Novedadesprimasemestral = Novedadesprimasemestral::model()->findByPk($diasps);			
+		  $Novedadesprimasemestral->NOPS_MESES = $diaps;
+		  $Novedadesprimasemestral->save();
+		 }     				 
+		}
+		
+		if((isset($_POST['yt5'])) && (isset($_POST['numDiaspVacaciones']))){
+         Yii::app()->user->setFlash('success','<strong> Dias prima de vacaciones actualizadas correctamente :)</strong>');
+		 foreach($_POST['numDiaspVacaciones'] as $dias=>$dia)
+		 {	
+		  $Novedadesprimavacaciones = Novedadesprimavacaciones::model()->findByPk($dias);			
+		  $Novedadesprimavacaciones->NOPV_DIAS = $dia;
+		  $Novedadesprimavacaciones->save();
+		 }     				 
+		}
+		
+		if((isset($_POST['yt7'])) && (isset($_POST['numDiaspNavidad']))){
+         Yii::app()->user->setFlash('success','<strong> Dias prima de navidad actualizadas correctamente :)</strong>');
+		 foreach($_POST['numDiaspNavidad'] as $diasn=>$dian)
+		 {	
+		  $Novedadesprimanavidad = Novedadesprimanavidad::model()->findByPk($diasn);			
+		  $Novedadesprimanavidad->NOPN_MESES = $dian;
+		  $Novedadesprimanavidad->save();
+		 }     				 
+		}
+		
+		if((isset($_POST['yt9'])) && (isset($_POST['numDiasVacaciones']))){
+         Yii::app()->user->setFlash('success','<strong> Dias de vacaciones actualizadas correctamente :)</strong>');
+		 foreach($_POST['numDiasVacaciones'] as $diasv=>$diav)
+		 {	
+		  $Novedadesvacaciones = Novedadesvacaciones::model()->findByPk($diasv);			
+		  $Novedadesvacaciones->NOVA_DIAS = $diav;
+		  $Novedadesvacaciones->save();
+		 }     				 
+		}
+		
+		if((isset($_POST['yt11'])) && (isset($_POST['numDiasRetroactivos']))){
+         Yii::app()->user->setFlash('success','<strong> Dias de retroactivos actualizadas correctamente :)</strong>');
+		 foreach($_POST['numDiasRetroactivos'] as $diasr=>$diar)
+		 {	
+		  $Novedadesretroactivo = Novedadesretroactivo::model()->findByPk($diasr);			
+		  $Novedadesretroactivo->NORE_DIAS = $diar;
+		  $Novedadesretroactivo->save();
+		 }     				 
+		}
+	
+		$Empleosplanta->previewdiasmensual($Cform);
+		$Empleosplanta->previewdiasprimasemestral($Cform);
+		$Empleosplanta->previewdiasprimavacaciones($Cform);
+		$Empleosplanta->previewdiasprimanavidad($Cform);
+		$Empleosplanta->previewdiasvacaciones($Cform);
+		$Empleosplanta->previewdiasretroactivos($Cform);
 		$this->render('diasnominas',array(
 								   'Empleosplanta'=>$Empleosplanta,
 								   'Cform'=>$Cform,

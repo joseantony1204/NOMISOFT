@@ -67,7 +67,7 @@ foreach($unidades as $unidad){
 	
 	//*************************INCICIA LA CAPTURA DE LOS PAGOS ************************************************************//
 	$pago=NULL;
-	$pago[0]=$arc->izquierda("SUELDO (".number_format((($Mensualnominaliquidaciones->liquidacion[$i][4])/($Mensualnominaliquidaciones->liquidacion[$i][2]))*30).")",$c3).chr(179).$arc->centro($Mensualnominaliquidaciones->liquidacion[$i][2],$c4).chr(179).$arc->derecha(number_format($Mensualnominaliquidaciones->liquidacion[$i][4]),$c5).chr(179).$arc->espacio($c6).chr(179).$arc->espacio($c7);
+	$pago[0]=$arc->izquierda("SUELDO (".@number_format((($Mensualnominaliquidaciones->liquidacion[$i][4])/($Mensualnominaliquidaciones->liquidacion[$i][2]))*30).")",$c3).chr(179).$arc->centro($Mensualnominaliquidaciones->liquidacion[$i][2],$c4).chr(179).$arc->derecha(number_format($Mensualnominaliquidaciones->liquidacion[$i][4]),$c5).chr(179).$arc->espacio($c6).chr(179).$arc->espacio($c7);
 	$lineapago=1;
 	
 	    /* antiguedad, transporte y alimentacion*/
