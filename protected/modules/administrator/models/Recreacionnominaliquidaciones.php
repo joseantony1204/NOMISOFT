@@ -263,8 +263,8 @@ class Recreacionnominaliquidaciones extends CActiveRecord
 		   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"		  
 		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"   
 		   WHERE '.$parametros.'
-		   GROUP BY rnl."RENL_ID", p."PEGE_ID", rnl."RENO_ID"
-           ORDER BY rnl."RENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS" ASC
+		   GROUP BY rnl."RENL_ID", p."PEGE_ID", rn."RENO_ID"
+           ORDER BY rn."RENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, rnl."RENL_ID" DESC		   
 		  ';    		  
      $rows = $connection->createCommand($sql)->queryAll(); 
 	 
@@ -312,7 +312,7 @@ class Recreacionnominaliquidaciones extends CActiveRecord
 		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID" 
 		   WHERE '.$parametros.'
 		   GROUP BY rnl."RENL_ID", p."PEGE_ID",  rn."RENO_ID"
-           ORDER BY rn."RENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS" ASC
+		   ORDER BY rn."RENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, rnl."RENL_ID" DESC
 		  ';    		  
      $rows = $connection->createCommand($sql)->queryAll(); 
 	 

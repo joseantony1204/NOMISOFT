@@ -332,7 +332,7 @@ class Navidadnominaliquidaciones extends CActiveRecord
 		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID" 
 		   WHERE '.$parametros.'
 		   GROUP BY nnl."NANL_ID", p."PEGE_ID",  nn."NANO_ID"
-           ORDER BY nn."NANO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS" ASC
+           ORDER BY nn."NANO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, nnl."NANL_ID" DESC
 		  ';    		  
      $rows = $connection->createCommand($sql)->queryAll(); 
 	 
@@ -385,7 +385,7 @@ class Navidadnominaliquidaciones extends CActiveRecord
 		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID" 
 		   WHERE '.$parametros.'
 		   GROUP BY nnl."NANL_ID", p."PEGE_ID",  nn."NANO_ID"
-           ORDER BY nn."NANO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS" ASC
+		   ORDER BY nn."NANO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, nnl."NANL_ID" DESC
 		  ';    		  
      $rows = $connection->createCommand($sql)->queryAll(); 
 	 
@@ -439,7 +439,7 @@ class Navidadnominaliquidaciones extends CActiveRecord
 			   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"
 	           WHERE '.$parametros.'
                GROUP BY nn."NANO_ID", nnl."NANL_ID", nnd."NAND_ID", p."PEGE_ID"
-               ORDER BY nnd."DEPR_ID", nn."NANO_ID", p."PEGE_PRIMERAPELLIDO", nnl."NANL_ID" ASC';
+               ORDER BY nnd."DEPR_ID", nn."NANO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, nnl."NANL_ID" DESC';
 		   
      $rows1 = $connection->createCommand($string1)->queryAll();
 	 
@@ -453,7 +453,7 @@ class Navidadnominaliquidaciones extends CActiveRecord
 			   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"
 	           WHERE '.$parametros.'
 			   GROUP BY nn."NANO_ID", nnl."NANL_ID", p."PEGE_ID"
-               ORDER BY nn."NANO_ID", p."PEGE_PRIMERAPELLIDO", nnl."NANL_ID" ASC
+               ORDER BY nn."NANO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, nnl."NANL_ID" DESC
                ';
 		   
      $rows2 = $connection->createCommand($string2)->queryAll();

@@ -309,8 +309,8 @@ class Cesantiasnominaliquidaciones extends CActiveRecord
 		   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"		  
 		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"   
 		   WHERE '.$parametros.'
-		   GROUP BY cnl."CENL_ID", p."PEGE_ID", cnl."CENO_ID"
-           ORDER BY cnl."CENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS" ASC
+		   GROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID"
+		   ORDER BY cn."CENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, cnl."CENL_ID" DESC
 		  ';    		  
      $rows = $connection->createCommand($sql)->queryAll(); 
 	 

@@ -319,7 +319,7 @@ class Semestralnominaliquidaciones extends CActiveRecord
 		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID" 
 		   WHERE '.$parametros.'
 		   GROUP BY snl."SENL_ID", p."PEGE_ID",  sn."SENO_ID"
-           ORDER BY sn."SENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS" ASC
+		   ORDER BY sn."SENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, snl."SENL_ID" DESC
 		  ';    		  
      $rows = $connection->createCommand($sql)->queryAll(); 
 	 
@@ -371,7 +371,7 @@ class Semestralnominaliquidaciones extends CActiveRecord
 		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID" 
 		   WHERE '.$parametros.'
 		   GROUP BY snl."SENL_ID", p."PEGE_ID",  sn."SENO_ID"
-           ORDER BY sn."SENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS" ASC
+           ORDER BY sn."SENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, snl."SENL_ID" DESC
 		  ';    		  
      $rows = $connection->createCommand($sql)->queryAll(); 
 	 
@@ -425,7 +425,8 @@ class Semestralnominaliquidaciones extends CActiveRecord
 			   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"
 	           WHERE '.$parametros.'
                GROUP BY sn."SENO_ID", snl."SENL_ID", snd."SEND_ID", p."PEGE_ID"
-               ORDER BY snd."DEPR_ID", sn."SENO_ID", p."PEGE_PRIMERAPELLIDO", snl."SENL_ID" ASC';
+               ORDER BY snd."DEPR_ID", sn."SENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, snl."SENL_ID" DESC
+			   ';
 		   
      $rows1 = $connection->createCommand($string1)->queryAll();
 	 
@@ -439,7 +440,7 @@ class Semestralnominaliquidaciones extends CActiveRecord
 			   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"
 	           WHERE '.$parametros.'
 			   GROUP BY sn."SENO_ID", snl."SENL_ID", p."PEGE_ID"
-               ORDER BY sn."SENO_ID", p."PEGE_PRIMERAPELLIDO", snl."SENL_ID" ASC
+               ORDER BY sn."SENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, snl."SENL_ID" DESC
                ';
 		   
      $rows2 = $connection->createCommand($string2)->queryAll();

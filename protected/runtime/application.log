@@ -6304,3 +6304,24 @@ LINE 10:     WHERE  pvn."PVNO_ID" = 20141231  AND nnl."NANL_RETEFUENT...
 in /var/www/NOMINA/protected/modules/administrator/models/Primavacacionesnominaliquidaciones.php (719)
 in /var/www/NOMINA/protected/modules/administrator/controllers/admin/PrimavacacionesnominaliquidacionesController.php (379)
 in /var/www/NOMINA/index.php (13)
+2014/12/09 16:55:46 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42803]: Grouping error: 7 ERROR:  la columna «vn.VANO_ID» debe aparecer en la cláusula GROUP BY o ser usada en una función de agregación
+LINE 15:      ORDER BY vn."VANO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE...
+                       ^. The SQL statement executed was: SELECT vnl."VANL_ID", vnl."VANL_CODIGO", vnl."VANL_DIAS", vnl."VANL_PUNTOS", vnl."VANL_SUELDO", vnl."VANL_SALARIO", vnl."VANL_PRIMAANTIGUEDAD", vnl."VANL_TRANSPORTE",
+	              vnl."VANL_ALIMENTACION", vnl."VANL_PRIMATECNICA", vnl."VANL_GASTOSRP", vnl."VANL_BONIFICACION", vnl."VANL_SEMESTRAL", 
+				 vnl."VANO_ID", vnl."EMPL_ID",  
+                  SUM(vnl."VANL_SALARIO"+vnl."VANL_PRIMAANTIGUEDAD"+vnl."VANL_TRANSPORTE"+vnl."VANL_ALIMENTACION"+vnl."VANL_PRIMATECNICA"
+					  +vnl."VANL_GASTOSRP"+vnl."VANL_BONIFICACION"+vnl."VANL_SEMESTRAL"
+					  ) AS "VANL_DEVENGADO"
+		   FROM "TBL_NOMVACACIONESNOMINALIQUIDACIONES" "vnl"
+		   INNER JOIN "TBL_NOMVACACIONESNOMINA" "vn" ON vnl."VANO_ID" = vn."VANO_ID"
+		   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON vnl."EMPL_ID" = ep."EMPL_ID"
+		   INNER JOIN "TBL_NOMUNIDADES" "u" ON ep."UNID_ID" = u."UNID_ID"
+		   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"		  
+		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID" 
+		   WHERE   vn."VANO_ID" = 20131241  AND p."PEGE_IDENTIFICACION" =  '40918469'
+		   GROUP BY vnl."VANL_ID", p."PEGE_ID", vnl."VANO_ID"
+		   ORDER BY vn."VANO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, vnl."VANL_ID" DESC
+		  .
+in /var/www/NOMINA/protected/modules/administrator/models/Vacacionesnominaliquidaciones.php (332)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/VacacionesnominaliquidacionesController.php (228)
+in /var/www/NOMINA/index.php (13)

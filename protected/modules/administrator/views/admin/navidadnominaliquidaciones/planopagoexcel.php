@@ -41,7 +41,7 @@ for ($i=1;$i<$filas-1;$i++)
 	$neto=(($Navidadnominaliquidaciones->liquidacion[$i][$columnas-1])-(($Navidadnominaliquidaciones->parafiscales[$i][$parafisales-1])+($tblD[$i][$columnasTblD-1])));
 	//echo $Mensualnomina->Personageneral->PEGE_PRIMERAPELLIDO.' - '.$Mensualnominaliquidaciones->liquidacion[$i][$columnas-1].' - '.$Mensualnominaliquidaciones->parafiscales[$i][$parafisales-1].' - '.$tblD[$i][$columnasTblD-1].' - '.$neto.'<br>';
 	
-	if($neto>0 AND ($Mensualnomina->Unidad->TIUN_ID==1 OR $Mensualnomina->Unidad->TIUN_ID==2)){
+	if($neto>0 AND ($Mensualnomina->Unidad->TIUN_ID==1 OR $Mensualnomina->Unidad->TIUN_ID==2)){		
 		$nombre = trim($Mensualnomina->Personageneral->PEGE_PRIMERAPELLIDO).' '.trim($Mensualnomina->Personageneral->PEGE_SEGUNDOAPELLIDOS).' '.trim($Mensualnomina->Personageneral->PEGE_PRIMERNOMBRE).' '.trim($Mensualnomina->Personageneral->PEGE_SEGUNDONOMBRE);
 		$objPHPExcel->getActiveSheet()->setCellValue('A'.$fxls, trim($Mensualnomina->Personageneral->PEGE_IDENTIFICACION));
 		$objPHPExcel->getActiveSheet()->setCellValue('B'.$fxls, round($neto));

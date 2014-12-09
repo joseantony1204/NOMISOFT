@@ -326,8 +326,8 @@ class Vacacionesnominaliquidaciones extends CActiveRecord
 		   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"		  
 		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID" 
 		   WHERE '.$parametros.'
-		   GROUP BY vnl."VANL_ID", p."PEGE_ID", vnl."VANO_ID"
-           ORDER BY vnl."VANO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS" ASC
+		   GROUP BY vnl."VANL_ID", p."PEGE_ID", vn."VANO_ID"
+		   ORDER BY vn."VANO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, vnl."VANL_ID" DESC
 		  ';    		  
      $rows = $connection->createCommand($sql)->queryAll(); 
 	 
@@ -380,7 +380,7 @@ class Vacacionesnominaliquidaciones extends CActiveRecord
 		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID" 
 		   WHERE '.$parametros.'
 		   GROUP BY vnl."VANL_ID", p."PEGE_ID",  vn."VANO_ID"
-           ORDER BY vn."VANO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS" ASC
+		   ORDER BY vn."VANO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, vnl."VANL_ID" DESC
 		  ';    		  
      $rows = $connection->createCommand($sql)->queryAll(); 
 	 
@@ -434,7 +434,8 @@ class Vacacionesnominaliquidaciones extends CActiveRecord
 			   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"
 	           WHERE '.$parametros.'
                GROUP BY vn."VANO_ID", vnl."VANL_ID", vnd."VAND_ID", p."PEGE_ID"
-               ORDER BY vnd."DEPR_ID", vn."VANO_ID", p."PEGE_PRIMERAPELLIDO", vnl."VANL_ID" ASC';
+			   ORDER BY vnd."DEPR_ID", vn."VANO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, vnl."VANL_ID" DESC
+			   ';
 		   
      $rows1 = $connection->createCommand($string1)->queryAll();
 	 
@@ -448,7 +449,7 @@ class Vacacionesnominaliquidaciones extends CActiveRecord
 			   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"
 	           WHERE '.$parametros.'
 			   GROUP BY vn."VANO_ID", vnl."VANL_ID", p."PEGE_ID"
-               ORDER BY vn."VANO_ID", p."PEGE_PRIMERAPELLIDO", vnl."VANL_ID" ASC
+               ORDER BY vn."VANO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, vnl."VANL_ID" DESC
                ';
 		   
      $rows2 = $connection->createCommand($string2)->queryAll();
