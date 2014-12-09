@@ -38,7 +38,7 @@ class VacacionesnominaliquidacionesController extends Controller
 		}
         return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'',''.$array[5].'',
+				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'','preview',
                                  ''.$array[6].'','admin','create','update','totales','detalles','resumen','planopagoexcel',
 								 'planoporunidades','planogeneral','planoresumen','descuento','downdescuento',
 								 'retefuente','downretefuente','mail', 
@@ -185,6 +185,25 @@ class VacacionesnominaliquidacionesController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+	
+	public function actionPreview($personaGeneral,$id)
+	{
+		$Vacacionesnominaliquidaciones = new Vacacionesnomina;
+		$Vacacionesnominaliquidaciones->VANO_FECHAPROCESO = date("Y-m-d");
+		$Vacacionesnominaliquidaciones->VANO_ID = date("Y", strtotime($Vacacionesnominaliquidaciones->VANO_FECHAPROCESO)).date("m", strtotime($Vacacionesnominaliquidaciones->VANO_FECHAPROCESO))."41";          
+		$Vacacionesnominaliquidaciones->VANO_ESTADO = "f"; 			
+		$Vacacionesnominaliquidaciones->VANO_ANIO = date("Y",strtotime($Vacacionesnominaliquidaciones->VANO_FECHAPROCESO)); 			
+		$Vacacionesnominaliquidaciones->VANO_PERIODO = 'VACACIONES '.$Vacacionesnominaliquidaciones->VANO_ANIO;
+		$Vacacionesnominaliquidaciones->VANO_FECHACAMBIO =  date('Y-m-d H:i:s');
+		$Vacacionesnominaliquidaciones->VANO_REGISTRADOPOR = Yii::app()->user->id;
+		$Vacacionesnominaliquidaciones->previewLiquidation($Vacacionesnominaliquidaciones,$personaGeneral);
+
+		$this->render('preview',array(
+			'Vacacionesnominaliquidaciones'=>$Vacacionesnominaliquidaciones,			
+			'personaGeneral'=>$personaGeneral,
+			'id'=>$id,
+		));
 	}
 	
 	public function actionTotales($vacacionesNomina=NULL,$vacacionesNomina2=NULL,$personaGral=NULL,$unidad=NULL,$tipoEmpleo=NULL)

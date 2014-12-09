@@ -93,14 +93,27 @@ class NovedadesprestacionesController extends Controller
 			  $Novedadesprestaciones->NOPR_REGISTRADOPOR = Yii::app()->user->id;
 			  $Novedadesprestaciones->save();			  			  		 
 			 }
-			Yii::app()->user->setFlash('success','<strong>Valores de descuentos de prestaciones actualizados correctamente :)</strong>');
+			Yii::app()->user->setFlash('success','<strong>Valores en descuentos de prestaciones actualizados correctamente :)</strong>');
 		    $data = $Novedadesprestaciones->getNovedadesprestaciones($Novedadesprestaciones->PEGE_ID,$id);
 			$this->redirect(array('create','personaGeneral'=>$Personasgenerales->PEGE_ID,'id'=>$id));
 		}
 		
+		$url = '';
+		if($id==1){ 
+		 $url = 'semestralnominaliquidaciones';
+		}elseif($id==2){ 
+		  $url = 'navidadnominaliquidaciones'; 
+		}elseif($id==3){ 
+		  $url = 'primavacacionesnominaliquidaciones'; 
+		}elseif($id==4){ 
+		  $url = 'vacacionesnominaliquidaciones'; 
+		}elseif($id==5){ 
+		  $url = 'retroactivosnominaliquidaciones'; 
+		}
+		 
 		if(isset($_POST['yt1']))
 		{  
-		 $this->redirect(array('admin/navidadnominaliquidaciones/preview','personaGeneral'=>$Personasgenerales->PEGE_ID, 'id'=>$id));
+		 $this->redirect(array('admin/'.$url.'/preview','personaGeneral'=>$Personasgenerales->PEGE_ID, 'id'=>$id));
 		}
 
 		$this->render('create',array(

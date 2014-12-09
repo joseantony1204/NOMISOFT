@@ -1,7 +1,7 @@
 <?php
 Yii::app()->homeUrl = array('/administrator/');
 $this->breadcrumbs=array(
-	'Prima de Navidad'=>Yii::app()->request->urlReferrer,
+	'Vacaciones'=>Yii::app()->request->urlReferrer,
 	'Detalles'
 );
 
@@ -71,7 +71,7 @@ border-right: none;
 			 ?>	               
              </td>
              
-			 <td width="80%"><strong><span><em>DETALLES DE LIQUIDACION PRIMA DE NAVIDAD ( <?php echo $Navidadnominaliquidaciones->NANO_PERIODO; ?> )<br><?php echo $tercero; ?></em></span></strong></td>
+			 <td width="80%"><strong><span><em>DETALLES LIQUIDACION DE VACACIONES ( <?php echo $Vacacionesnominaliquidaciones->VANO_PERIODO; ?> )<br><?php echo $tercero; ?></em></span></strong></td>
 			 
 			 <td width="10%" align="center">
 			 <?php	 
@@ -92,11 +92,11 @@ border-right: none;
   <tr>
     <td>
 <?php 
-$filas = count($Navidadnominaliquidaciones->liquidacion);
-$columnas = count($Navidadnominaliquidaciones->liquidacion[1]);
-$parafisales = count($Navidadnominaliquidaciones->parafiscales[0]);
+$filas = count($Vacacionesnominaliquidaciones->liquidacion);
+$columnas = count($Vacacionesnominaliquidaciones->liquidacion[1]);
+$parafisales = count($Vacacionesnominaliquidaciones->parafiscales[0]);
 
-$tblD = $Navidadnominaliquidaciones->descuentos;
+$tblD = $Vacacionesnominaliquidaciones->descuentos;
 $filasTblD = count($tblD);
 $columnasTblD = count($tblD[0]);	
   
@@ -110,20 +110,20 @@ for($i=1;$i<$filas;$i++){
  }
  */
 //echo $Mensualnominaliquidaciones->liquidacion[$i][27];
-$anio=substr($Navidadnominaliquidaciones->liquidacion[$i][15],0,4);    
+$anio=substr($Vacacionesnominaliquidaciones->liquidacion[$i][14],0,4);    
 $Parametrosglobales = new Parametrosglobales; 	 
 $Parametrosglobales = $Parametrosglobales->getParametrosglobales($anio);
 $valorPunto = $Parametrosglobales[1][3];
-$Navidadnomina = new Navidadnomina;
-$Navidadnomina->NANO_PERIODO = $Navidadnominaliquidaciones->NANO_PERIODO;
+$Vacacionesnomina = new Vacacionesnomina;
+$Vacacionesnomina->VANO_PERIODO = $Vacacionesnominaliquidaciones->VANO_PERIODO;
 $Mensualnomina = new Mensualnomina;
 
-$Mensualnomina->cargarEmpleoPlanta($Navidadnominaliquidaciones->liquidacion[$i][16]);
+$Mensualnomina->cargarEmpleoPlanta($Vacacionesnominaliquidaciones->liquidacion[$i][15]);
 
 ?>
 	<table width="100%" border="1" align="center" class="tabla2" >
         <tr>
-         <th colspan="2" align="center">PRIMA DE NAVIDAD DE EMPLEADOS UNIVERSIDAD DE LA GUAJIRA</th>
+         <th colspan="2" align="center">VACACIONES DE EMPLEADOS UNIVERSIDAD DE LA GUAJIRA</th>
         </tr>
         <tr>
          <th align="center" style="border:1px solid;padding:3px 3px; border-color:#000">INFORMACION BASICA</th>
@@ -137,12 +137,12 @@ $Mensualnomina->cargarEmpleoPlanta($Navidadnominaliquidaciones->liquidacion[$i][
               
 			  <tr>
                 <td width="87">Comprobante No.</td>
-                <td width="181"><?php echo $Navidadnominaliquidaciones->liquidacion[$i][15]; ?> - <?php echo $Navidadnominaliquidaciones->liquidacion[$i][1]; ?></td>
+                <td width="181"><?php echo $Vacacionesnominaliquidaciones->liquidacion[$i][15]; ?> - <?php echo $Vacacionesnominaliquidaciones->liquidacion[$i][1]; ?></td>
               </tr>
              
 			 <tr>
                 <td width="87">Periodo Liquidación</td>
-                <td width="181"><?php echo $Navidadnomina->NANO_PERIODO; ?></td>
+                <td width="181"><?php echo $Vacacionesnomina->VANO_PERIODO; ?></td>
               </tr>
              
 			 <tr>
@@ -200,25 +200,25 @@ $Mensualnomina->cargarEmpleoPlanta($Navidadnominaliquidaciones->liquidacion[$i][
               </tr>
               <tr>
 	           <td>SUELDO(<?php  echo number_format($Mensualnomina->Empleoplanta->EMPL_SUELDO); ?>)</td>
-			   <td align='center'><?php echo $Navidadnominaliquidaciones->liquidacion[$i][2]; ?></td>
-			   <td align='right'><?php echo number_format($Navidadnominaliquidaciones->liquidacion[$i][5]); ?></td>
+			   <td align='center'><?php echo $Vacacionesnominaliquidaciones->liquidacion[$i][2]; ?></td>
+			   <td align='right'><?php echo number_format($Vacacionesnominaliquidaciones->liquidacion[$i][5]); ?></td>
 	           <td>&nbsp;</td>
 		       <td>&nbsp;</td>
 		      </tr>
 			 <?php
 			  /* antiguedad, transporte y alimentacion*/
-			  for ($ln=6;$ln<14;$ln++){
-			   if($Navidadnominaliquidaciones->liquidacion[$i][$ln]!=0){
+			  for ($ln=6;$ln<13;$ln++){
+			   if($Vacacionesnominaliquidaciones->liquidacion[$i][$ln]!=0){
 			  if ($ln==6){
-		  		$antig = $Mensualnomina->Personageneral->getAntiguedad($Navidadnominaliquidaciones->liquidacion[$i][15])." A";
+		  		$antig = $Mensualnomina->Personageneral->getAntiguedad($Vacacionesnominaliquidaciones->liquidacion[$i][14])." A";
 		  		}else{
 					  $antig = "&nbsp;";
 			         }
 			  ?>
 	          <tr>
-		       <td><?php echo $Navidadnominaliquidaciones->liquidacion[0][$ln];?> </td>
+		       <td><?php echo $Vacacionesnominaliquidaciones->liquidacion[0][$ln];?> </td>
 		       <td align='center'><?php echo $antig; ?></td>
-		       <td align='right'><?php echo number_format($Navidadnominaliquidaciones->liquidacion[$i][$ln]); ?></td>
+		       <td align='right'><?php echo number_format($Vacacionesnominaliquidaciones->liquidacion[$i][$ln]); ?></td>
 		       <td>&nbsp;</td>
 		       <td>&nbsp;</td>
 		      </tr>
@@ -230,13 +230,13 @@ $Mensualnomina->cargarEmpleoPlanta($Navidadnominaliquidaciones->liquidacion[$i][
 			 <?php
 			  /*parafiscales parte 2*/
 			  for ($ln=1;$ln<2;$ln++){
-			   if($Navidadnominaliquidaciones->parafiscales[$i][$ln]!=0){
+			   if($Vacacionesnominaliquidaciones->parafiscales[$i][$ln]!=0){
 			  ?>
 			  <tr>
-		       <td><?php echo $Navidadnominaliquidaciones->parafiscales[0][$ln];?></td>
+		       <td><?php echo $Vacacionesnominaliquidaciones->parafiscales[0][$ln];?></td>
 		       <td>&nbsp;</td>
 		       <td>&nbsp;</td>
-		       <td align='right'><?php echo number_format($Navidadnominaliquidaciones->parafiscales[$i][$ln]); ?></td>
+		       <td align='right'><?php echo number_format($Vacacionesnominaliquidaciones->parafiscales[$i][$ln]); ?></td>
 		       <td>&nbsp;</td>
 		      </tr>
 			  <?php
@@ -261,9 +261,9 @@ $Mensualnomina->cargarEmpleoPlanta($Navidadnominaliquidaciones->liquidacion[$i][
 			  ?>		
 	          <tr>
 	           <td colspan='2' style='border-top:1px solid;padding:3px 3px;border-color:#000'>TOTALES</td>
-	           <td align='right' style='border-top:1px solid;padding:3px 3px;border-color:#000'><?php echo number_format($Navidadnominaliquidaciones->liquidacion[$i][$columnas-2]); ?></td>
-	           <td align='right' style='border-top:1px solid;padding:3px 3px;border-color:#000'><?php echo number_format(($Navidadnominaliquidaciones->parafiscales[$i][$parafisales-1])+($tblD[$i][$columnasTblD-1])); ?></td>
-	           <td align='right' style='border-top:1px solid;padding:3px 3px;border-color:#000'><?php echo number_format(($Navidadnominaliquidaciones->liquidacion[$i][$columnas-2])-(($Navidadnominaliquidaciones->parafiscales[$i][$parafisales-1])+($tblD[$i][$columnasTblD-1]))); ?></td>
+	           <td align='right' style='border-top:1px solid;padding:3px 3px;border-color:#000'><?php echo number_format($Vacacionesnominaliquidaciones->liquidacion[$i][$columnas-2]); ?></td>
+	           <td align='right' style='border-top:1px solid;padding:3px 3px;border-color:#000'><?php echo number_format(($Vacacionesnominaliquidaciones->parafiscales[$i][$parafisales-1])+($tblD[$i][$columnasTblD-1])); ?></td>
+	           <td align='right' style='border-top:1px solid;padding:3px 3px;border-color:#000'><?php echo number_format(($Vacacionesnominaliquidaciones->liquidacion[$i][$columnas-2])-(($Vacacionesnominaliquidaciones->parafiscales[$i][$parafisales-1])+($tblD[$i][$columnasTblD-1]))); ?></td>
 	          </tr>
 			  
             </table>
