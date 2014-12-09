@@ -19,8 +19,8 @@
 	  <div class="form-actions" align="right">
 	  <table border="0" width="100%">
 	  <tr>
-	   <td width="75%" colspan="4" align="center"><strong><?php echo $Personasgenerales->PEGE_PRIMERNOMBRE." ".$Personasgenerales->PEGE_PRIMERAPELLIDO; ?></strong></td>
-	   <td width="25%" align="center">
+	   <td width="60%" align="center"><strong><?php echo $Personasgenerales->PEGE_PRIMERNOMBRE." ".$Personasgenerales->PEGE_PRIMERAPELLIDO; ?></strong></td>
+	   <td width="20%" align="center">
 	   
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
 			'buttonType'=>'submit',
@@ -31,6 +31,19 @@
 		)); ?>
 	    
 	   </td>
+	   
+	   <td width="20%" align="center">
+	   
+		<?php $this->widget('bootstrap.widgets.TbButton', array(
+			'buttonType'=>'submit',
+			'icon'=>'list white',
+			'type'=>'success',
+			'size'=>'small',
+			'label'=>'VER LIQUIDACION PRELIMINAR',
+		)); ?>
+	    
+	   </td>
+	   
 	  </tr>
 	  </table>
 	   </div>

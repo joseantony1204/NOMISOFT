@@ -143,6 +143,18 @@ echo "<h4><font color='#009900'><div align='center'><strong>Se enviaran un total
      <th width="37%">OBSERVACIONES</th>
     </tr>
 	<tr>';
+	
+	 /**
+	*obetenemos las notas de correo para esta nomina
+	*/
+	 $filascorreos = $Email->getsNotasemails(4);
+	if(count($filascorreos)>0){
+	 $tablacorreos = '<table width="100%" border="1" CELLSPACING="0" align="center" class="tabla1" >';
+     for($r=0;$r<count($filascorreos);$r++){
+		$tablacorreos.='<tr><td>'.$filascorreos[$r]["EMAI_DESCRIPCION"].'</td> </tr>';
+	 }
+  	 $tablacorreos.='</table>';
+	}
 
 for($i=1;$i<$filas-1;$i++){
   
@@ -342,7 +354,7 @@ $Mensualnomina->cargarEmpleoPlanta($Primavacacionesnominaliquidaciones->liquidac
       <head>
        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	 
       </head>
-       <body> '. $tabla1.'</body>
+       <body> '. $tabla1.'<div><hr></hr></div>'.$tablacorreos.'</body>
       </html>';
    
 	  $mail = new PHPMailer();
@@ -381,7 +393,7 @@ $Mensualnomina->cargarEmpleoPlanta($Primavacacionesnominaliquidaciones->liquidac
 	}
     $tabla2.='</tr>';    
 
-	//echo $tabla1.'<div><hr></hr></div>';     
+	//echo $tabla1.'<div><hr></hr></div>'.$tablacorreos;     
 }
 $tabla2.='</table>';
 echo $tabla2;	

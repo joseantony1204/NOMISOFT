@@ -30,6 +30,8 @@ class Mensualnomina extends CActiveRecord
 	public $MENO_DETALLES;
 	public $success, $warning, $flag;
 	public $s, $w, $f;
+	public $devengados, $parafiscal;
+	public $liquidacion, $parafiscales, $descuentos;
 	
 	public static function model($className=__CLASS__)
 	{
@@ -245,6 +247,219 @@ class Mensualnomina extends CActiveRecord
 				';
 	 $query = $connection->createCommand($string)->execute();
 	
+	}
+	
+	public function previewLiquidation($Mensualnomina,$id){	
+	 $connection = Yii::app()->db3; 
+	 $this->success = NULL; $this->warning = NULL; $this->flag = NULL;
+	 $this->s = 0; $this->w = 0; $this->f = 0;
+	 
+	 $secuencia = 'nextval('."'".'"TBL_CATMENSUALNOMINADESCUENTOS_MEND_ID_seq"'."'".'::regclass)';
+	 $sql = 'SELECT '.$secuencia.' AS "MENL_ID", 
+	                   c."CATE_ID" AS "MENL_CODIGO", c."CATE_NUMHORAS", "CATE_VALORHORA", ROUND(("CATE_NUMHORAS"*"CATE_VALORHORA")) AS "MENL_DEVENGADO",
+                       '.$Mensualnomina->MENO_ID.' AS "MENO_ID", c."CATE_ID",  
+                       ROUND(("CATE_NUMHORAS"*"CATE_VALORHORA")) AS "TOTAL_DEVENGADO"
+				FROM "TBL_CATPERSONASGENERALES" p, "TBL_CATSINDICATOS" s, "TBL_CATCATEDRAS" c, "TBL_CATPERIODOSACADEMICOS" pa
+				WHERE p."PEGE_ID" = c."PEGE_ID" AND p."PEGE_ID" = '.$id.' AND p."SIND_ID" = s."SIND_ID" AND c."PEAC_ID" = pa."PEAC_ID" AND pa."PEAC_ESTADO" = 1
+				';
+	 $query = $connection->createCommand($sql)->queryAll();
+	 
+	 $array = array('ID LIQUIDACION','CODIGO','T. HORAS','VLR HORA','ID NOMINA','ID CATEDRA','TOTAL DEVENGADO');
+	 $j=0; $i=0;
+	 foreach ($array as $values=>$value) {	
+	  $this->liquidacion[$j][$i] = $value;
+	  $i++;  
+	 }
+	 
+	 $j=1;
+	 foreach ($query as $values) {	
+	  $i=0;
+	  foreach ($values as $value) {      	 
+	   $this->liquidacion[$j][$i] = $value;
+	  $i++;
+	  }
+     $j++;	 
+     }
+	 
+	 $string='SELECT COUNT("MENL_ID") AS "MENL_ID", COUNT("MENL_CODIGO") AS "MENL_CODIGO", SUM("CATE_NUMHORAS") AS "MENL_HORASAPAGAR", 
+	                 SUM("CATE_VALORHORA") AS "MENL_VALORHORA", SUM("MENL_DEVENGADO") AS "MENL_DEVENGADO",
+					 COUNT("MENO_ID") AS "MENO_ID", COUNT("CATE_ID") AS "CATE_ID", SUM("TOTAL_DEVENGADO") AS "TOTAL_DEVENGADO"
+              FROM ('.$sql.') d
+		     ';
+	$rows = $connection->createCommand($string)->queryAll();	 
+	 $j=$j;
+	 foreach ($rows as $values) {	
+	   $i=0;
+	   foreach ($values as $value) {      	 
+	    $this->liquidacion[$j][$i] = $value;
+	    $i++;
+	   }
+       $j++;	 
+     }
+     
+	 //echo "<br><br><br>".
+	 $sql = 'SELECT '.$secuencia.' AS "MENL_ID", p."SALU_ID", 0 AS "MENL_SALUDTOTAL", p."PENS_ID", 0 AS "MENL_PENSIONTOTAL",
+	                   p."SIND_ID", ROUND(("SIND_PORCENTAJE"/100*("CATE_NUMHORAS"*"CATE_VALORHORA")),2) AS "MENL_SINDICATOTOTAL",
+                       (("CATE_NUMHORAS"*"CATE_VALORHORA")*0.01) AS "MENL_ESTAMPILLA", 0 AS "MENL_RETEFUENTE", 
+                       '.$Mensualnomina->MENO_ID.' AS "MENO_ID", c."CATE_ID",
+					   (0+0+ROUND(("SIND_PORCENTAJE"/100*("CATE_NUMHORAS"*"CATE_VALORHORA")),2)+(("CATE_NUMHORAS"*"CATE_VALORHORA")*0.01)+0) AS "MENL_PARAFISCALES"
+				FROM "TBL_CATPERSONASGENERALES" p, "TBL_CATSINDICATOS" s, "TBL_CATCATEDRAS" c, "TBL_CATPERIODOSACADEMICOS" pa
+				WHERE p."PEGE_ID" = c."PEGE_ID" AND p."PEGE_ID" = '.$id.' AND p."SIND_ID" = s."SIND_ID" AND c."PEAC_ID" = pa."PEAC_ID" AND pa."PEAC_ESTADO" = 1
+				';
+	 $query = $connection->createCommand($sql)->queryAll();
+
+     $array = array('ID PARAFISCAL','IDSALUD','SALUD','IDPENSION','PENSION','IDSINDICATO','SINDICATO',
+	               'ESTAMPILLA','RETEFUENTE', 'ID NOMINA','IDCATEDRA','TOTAL PARAFISCAL');
+				   
+	 $j=0; $i=0;
+	 foreach ($array as $values=>$value) {	
+	  $this->parafiscales[$j][$i] = $value;
+	  $i++;  
+	 }
+
+     $j=1;
+	 foreach ($query as $values) {	
+	   $i=0;
+	   foreach ($values as $value) {      	 
+	    $this->parafiscales[$j][$i] = $value;
+	    $i++;
+	   }
+       $j++;	 
+     }
+
+     //echo "<br><br><br>".
+	 $string='SELECT COUNT("MENL_ID") AS "MENL_ID", COUNT("SALU_ID") AS "SALU_ID", SUM("MENL_SALUDTOTAL") AS "MENL_SALUDTOTAL", COUNT("PENS_ID") AS "PENS_ID", 
+                     SUM("MENL_PENSIONTOTAL") AS "MENL_PENSIONTOTAL", COUNT("SIND_ID") AS "SIND_ID", 
+                     SUM("MENL_SINDICATOTOTAL") AS "MENL_SINDICATOTOTAL", SUM("MENL_ESTAMPILLA") AS "MENL_ESTAMPILLA", 
+                     SUM("MENL_RETEFUENTE") AS "MENL_RETEFUENTE", COUNT("MENO_ID") AS "MENO_ID",COUNT("CATE_ID") AS "CATE_ID", 
+                     SUM("MENL_PARAFISCALES") AS "MENL_PARAFISCALES"
+              FROM ('.$sql.') d
+		      ';	 
+	 $rows = $connection->createCommand($string)->queryAll();	 
+	 $j=$j;
+	 foreach ($rows as $values) {	
+	   $i=0;
+	   foreach ($values as $value) {      	 
+	    $this->parafiscales[$j][$i] = $value;
+	    $i++;
+	   }
+       $j++;	 
+     }
+	 
+	 $this->getDescuentosPreview($Mensualnomina,$id);
+	}
+	
+	public function getDescuentosPreview($Mensualnomina,$id)
+	{
+	 $connection = Yii::app()->db3;
+	 
+	 $this->descuentos = NULL;
+	 //echo "<br><br><br>".
+	 $string1 = 'SELECT c."CATE_ID" AS  "MENL_ID",  nm."DEME_ID", nm."NOME_VALOR", '.$Mensualnomina->MENO_ID.' AS "MENO_ID"
+				 FROM "TBL_CATDESCUENTOSMENSUALES" dm, "TBL_CATNOVEDADESMENSUALES" nm, "TBL_CATCATEDRAS" c, "TBL_CATPERIODOSACADEMICOS" pa
+				 WHERE dm."DEME_ID" = nm."DEME_ID" AND nm."CATE_ID" = c."CATE_ID" AND c."PEGE_ID" = '.$id.'
+				 AND c."PEAC_ID" = pa."PEAC_ID" AND pa."PEAC_ESTADO" = 1 
+				 ORDER BY dm."DEME_ID", c."CATE_ID" ASC';
+		   
+     $rows1 = $connection->createCommand($string1)->queryAll();
+	 
+	 $string2 = 'SELECT c."CATE_ID" AS  "MENL_ID", '.$Mensualnomina->MENO_ID.' AS "MENO_ID"
+				  FROM "TBL_CATDESCUENTOSMENSUALES" dm, "TBL_CATNOVEDADESMENSUALES" nm, "TBL_CATCATEDRAS" c, "TBL_CATPERIODOSACADEMICOS" pa
+				  WHERE dm."DEME_ID" = nm."DEME_ID" AND nm."CATE_ID" = c."CATE_ID" AND c."PEGE_ID" = '.$id.'
+			      AND c."PEAC_ID" = pa."PEAC_ID" AND pa."PEAC_ESTADO" = 1 
+				  GROUP BY c."CATE_ID"
+			      ORDER BY c."CATE_ID" ASC';		   
+		   
+     $rows2 = $connection->createCommand($string2)->queryAll();
+	 $cont=1;	 
+	 foreach ($rows2 as $values) {	     	 
+	    $this->descuentos[$cont][0] = $values["MENL_ID"];
+		$filas[$cont]=$values["MENO_ID"];
+        $cont++;		
+     }
+	 $this->descuentos[$cont][0] = "Total";
+	 
+	 $string3 = 'SELECT dm."DEME_DESCRIPCION" 
+				 FROM "TBL_CATDESCUENTOSMENSUALES" dm, "TBL_CATNOVEDADESMENSUALES" nm, "TBL_CATCATEDRAS" c, "TBL_CATPERIODOSACADEMICOS" pa
+				 WHERE dm."DEME_ID" = nm."DEME_ID" AND nm."CATE_ID" = c."CATE_ID" AND c."PEGE_ID" = '.$id.'
+				 AND c."PEAC_ID" = pa."PEAC_ID" AND pa."PEAC_ESTADO" = 1 
+				 GROUP BY dm."DEME_ID"
+				 ORDER BY dm."DEME_ID"';
+		   
+     $rows3 = $connection->createCommand($string3)->queryAll();
+	 //Aqui se arman las columnas del arreglo deduccion con lo alias de cada deduccion.	 
+	 $col = 0;
+	 $this->descuentos[0][$col] = "IDENTIFICACION";
+	 $col=1;	 
+	 foreach ($rows3 as $values) {	
+	   $j=0;
+	   foreach ($values as $value) {      	 
+		$this->descuentos[$j][$col] = $value;
+	    $j++;
+	   }
+       $col++;	 
+     }
+	 $this->descuentos[0][$col] = "TOTAL";
+	 
+	 /*llenando una matriz con todos los descuentos  en $descuentos  */
+	 $m=0; $descuentos = NULL; 
+	 foreach ($rows1 as $values) {	
+	   $n=0;
+	   foreach ($values as $value) {	
+        $descuentos[$m][$n]=$value;
+	   // echo $descuentos[$m][$n]."<br>";
+		$n++;
+	   }
+	   $m++;	
+	 }
+	 
+     //echo "<br><br><br>";
+     $t = count($descuentos);	  
+     $i=1;$j=1;$suma=0;	 
+	 for($x=0;$x<$t;$x++){
+	  //echo "<br><br><br> iteracion = ".$x." cont = ".$cont." i = ".$i." j = ".$j."<br>";
+	  //echo "$descuentos [".$x."]"."[0] = ".$descuentos[$x][0]."<br>";
+	  if ($i>=$cont){
+		  //echo "descuentos [".$i."]"."[".$j."] = ".$suma."<br>";
+		  $this->descuentos[$i][$j]=$suma;
+		  $suma=0;
+		  $i=1;
+		  $j++;
+		}
+		$numero = $descuentos[$x][0]; $idnomina = $descuentos[$x][3];
+		//echo " fila ".$filas[$i]." nomina ".$idnomina." descuento ".$this->descuentos[$i][0]." numero ".$numero."<br>";
+         
+	    while(($filas[$i]!= $idnomina or $this->descuentos[$i][0]!= $numero)){
+		   if ($i>=$cont){
+			  $this->descuentos[$i][$j]=$suma;
+			  $suma=0;
+			  $i=1;
+			  $j++;
+			}			
+			$this->descuentos[$i][$j]=0;
+			$i++;
+		}
+		$valor = $descuentos[$x][2];
+		//echo "descuentos [".$i."]"."[".$j."] = ".$valor."<br>";
+		$this->descuentos[$i][$j] = $descuentos[$x][2];
+		$this->descuentos[$i][$col] = $this->descuentos[$i][$col]+$descuentos[$x][2];
+		$suma=$suma+$descuentos[$x][2];
+		$i++;
+		
+	 }	
+	   //Despues de salir del ciclo verifica si aun falta valores con el sgte siclo
+		while(($filas[$i]!=$idnomina or $this->descuentos[$i][0]!=$numero)){
+			if ($i>=$cont){
+				$this->descuentos[$i][$j]=$suma;
+				$suma=0;
+				$j++;
+				if (($j)<=($col-1))
+					$i=1;
+			}
+			if ($j>($col-1)){$j--;break;}
+			$this->descuentos[$i][$j]=0;
+			$i++;
+		}
 	}
 	
 	public function cargarEmpleoPlanta($catedraId){

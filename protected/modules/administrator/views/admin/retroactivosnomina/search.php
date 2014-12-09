@@ -103,7 +103,7 @@ function validar(form){
 		var unidad = $("#Informes_INFO_UNIDAD").val();
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		
-		window.location=("/Dropbox/NOMINA/administrator/admin/retroactivosnominaliquidaciones/detalles/retroactivoNomina/"+anioInicial+"/retroactivoNomina2/"+anioFinal+"01/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
+		window.location=("/NOMINA/administrator/admin/retroactivosnominaliquidaciones/detalles/retroactivoNomina/"+anioInicial+"/retroactivoNomina2/"+anioFinal+"01/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
 	  }
 	}
 	
@@ -119,7 +119,7 @@ function validar(form){
 		var unidad = $("#Informes_INFO_UNIDAD").val();
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		
-		window.location=("/Dropbox/NOMINA/administrator/admin/retroactivosnominaliquidaciones/mail/retroactivoNomina/"+anioInicial+"/retroactivoNomina2/"+anioFinal+"/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
+		window.location=("/NOMINA/administrator/admin/retroactivosnominaliquidaciones/mail/retroactivoNomina/"+anioInicial+"/retroactivoNomina2/"+anioFinal+"/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
 	  }
 	}
 	
@@ -140,7 +140,7 @@ function validar(form){
 		 if((idDescuento)==null){
           alert('Debe seleccionar algun descuento de la lista..!');
 		 }else{
-		      window.location=("/Dropbox/NOMINA/administrator/admin/retroactivosnominaliquidaciones/descuento/retroactivoNomina/"+anioInicial+"/retroactivoNomina2/"+anioFinal+"/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado+"/idDescuento/"+idDescuento);
+		      window.location=("/NOMINA/administrator/admin/retroactivosnominaliquidaciones/descuento/retroactivoNomina/"+anioInicial+"/retroactivoNomina2/"+anioFinal+"/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado+"/idDescuento/"+idDescuento);
 	         }		 
 		}
 	 }

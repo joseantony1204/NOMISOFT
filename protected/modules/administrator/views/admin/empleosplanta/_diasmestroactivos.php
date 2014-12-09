@@ -216,7 +216,7 @@ btnModal.on("click",function()
 		{
 			if(data != "")
 			{
-				if(data != "nook")
+				if(data != "false")
 				{
 					updateGridr();
 					$("#myModal").modal("hide");

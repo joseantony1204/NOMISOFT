@@ -237,6 +237,7 @@ class CatedrasController extends Controller
             {
 				$Catedras=$this->loadModel($cateId);
                 $Catedras->CATE_NUMHORAS = $numHoras;
+                $Catedras->CATE_ARCHIVO = 'FALSE';
                 $Catedras->save();
             }
          }

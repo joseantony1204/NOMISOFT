@@ -90,14 +90,15 @@ class MensualnominaliquidacionesController extends Controller
 		));
 	}
 	
-	public function actionPreview($id,$empleoPlanta)
+	public function actionPreview($id,$catedraId)
 	{
 		$Mensualnominaliquidaciones = new Mensualnomina;
 		$Mensualnominaliquidaciones->MENO_FECHAPROCESO = date("Y-m-d");
-		$Mensualnominaliquidaciones->MENO_ID = date("Y", strtotime($Mensualnominaliquidaciones->MENO_FECHAPROCESO)).date("m", strtotime($Mensualnominaliquidaciones->MENO_FECHAPROCESO))."01"; 
-	    $Mensualnominaliquidaciones->MENO_PERIODO = $Mensualnominaliquidaciones->periodoNomina($Mensualnominaliquidaciones->MENO_FECHAPROCESO);         
-		$Mensualnominaliquidaciones->MENO_ESTADO = "f"; 			
-		$Mensualnominaliquidaciones->MENO_ANIO = date("Y",strtotime($Mensualnominaliquidaciones->MENO_FECHAPROCESO)); 			
+		$Mensualnominaliquidaciones->MENO_ANIO = date("Y",strtotime($Mensualnominaliquidaciones->MENO_FECHAPROCESO));
+		$codigo = $Mensualnominaliquidaciones->MENO_ANIO.'0101';
+		$Mensualnominaliquidaciones->MENO_ID = $codigo; 
+	    $Mensualnominaliquidaciones->MENO_PERIODO = $Mensualnominaliquidaciones->periodoNomina($Mensualnominaliquidaciones->MENO_ID);         
+		$Mensualnominaliquidaciones->MENO_ESTADO = "f"; 	 			
 		$Mensualnominaliquidaciones->MENO_FECHACAMBIO =  date('Y-m-d H:i:s');
 		$Mensualnominaliquidaciones->MENO_REGISTRADOPOR = Yii::app()->user->id;
 		$Mensualnominaliquidaciones->previewLiquidation($Mensualnominaliquidaciones,$id);
@@ -105,7 +106,7 @@ class MensualnominaliquidacionesController extends Controller
 		$this->render('preview',array(
 			'Mensualnominaliquidaciones'=>$Mensualnominaliquidaciones,
 			'id'=>$id,
-			'empleoPlanta'=>$empleoPlanta,
+			'catedraId'=>$catedraId,
 		));
 	}
 

@@ -435,7 +435,7 @@ class Empleosplanta extends CActiveRecord
 	       ORDER BY ep."EMPL_FECHAINGRESO" DESC LIMIT 1';		
      $row = $connection->createCommand($sql)->queryRow();
 	 
-	 if($row>0){
+	 if(count($row)>0){
 	  $model = Empleosplanta::model()->findByPk($row["EMPL_ID"]);
 	  $model->EMPL_DIASAPAGAR = 30-$Empleosplanta->EMPL_DIASAPAGAR;
 	  $model->save();

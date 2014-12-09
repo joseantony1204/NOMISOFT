@@ -204,6 +204,21 @@ class Primavacacionesnomina extends CActiveRecord
 	   }
 	  }
 	  
+	  $anioIngreso = date("Y", strtotime($Personasgenerales->Personageneral->PEGE_FECHAINGRESO));	 
+	  if(($Primavacacionesnomina->PVNO_ANIO)!=($anioIngreso)){
+	   $sql ='SELECT SUM("MENL_PRIMAVACACIONES") AS "PVACACIONES" 
+			  FROM  "TBL_NOMPERSONASGENERALES" pg, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMMENSUALNOMINALIQUIDACIONES" mnl, "TBL_NOMMENSUALNOMINA" mn
+			  WHERE pg."PEGE_ID" = ep."PEGE_ID" AND ep."EMPL_ID" = mnl."EMPL_ID" AND mn."MENO_ID" = mnl."MENO_ID" 
+			  AND pg."PEGE_ID" = '.$Personasgenerales->Personageneral->PEGE_ID.'
+			  AND mn."MENO_ID" >= '.$Primavacacionesnomina->PVNO_ANIO.'0101 AND mn."MENO_ID" <= '.$Primavacacionesnomina->PVNO_ANIO.'1201
+							  
+			 ';
+			$pvacaciones = $connection->createCommand($sql)->queryScalar();
+            if($pvacaciones>0){
+			$sw = 1;
+			}			
+	  }
+	  
 	  /*si todo esta bn se procede a calcular la nomina para la persona*/
 	  if(($sw==0) & ($Personasgenerales->Tipocargo->TICA_ID==2)){
 	   $this->getnovedades($Personasgenerales); 

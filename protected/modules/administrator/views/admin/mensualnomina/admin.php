@@ -25,6 +25,31 @@ $('.search-form form').submit(function(){
 });
 ");
 ?>
+
+<?php $this->beginWidget('bootstrap.widgets.TbModal', array(
+        'id'=>'myModal',      
+     )); ?>
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">&times;</a>
+            <h4>CONTRASEÑA DE SEGURIDAD</h4>
+        </div>
+         
+        <div class="modal-body">
+          <?php
+            $this->renderPartial('_pass', array('Cform'=>$Cform)); 
+		  ?>
+         	
+        </div>
+        
+        <div class="modal-footer">
+            <?php $this->widget('bootstrap.widgets.TbButton', array(
+                'label'=>'Cerrar ventana',
+                'url'=>'#',
+                'htmlOptions'=>array('data-dismiss'=>'modal'),
+            )); ?>
+        </div>    
+<?php $this->endWidget(); ?>
+
 <table width="100%" border="0" align="center">
   <tr>
    <td>
@@ -124,19 +149,97 @@ $('.search-form form').submit(function(){
         
         array(
               'class'=>'bootstrap.widgets.TbButtonColumn',
-              'template'=>'{delete}',
+              'template'=>'{suprimir}',
               'buttons'=>array(       
-			   'delete' => array(
-			    'url'=>'Yii::app()->controller->createUrl("admin/mensualnomina/delete", array("id"=>$data[MENO_ID],"command"=>"delete"))',
-				'visible'=>'$data->MENO_ESTADO==0',
+			   
+			   'suprimir' => array(
+				'label' => Yii::t('int', 'Elinimar este registro'),
+				'url'=>'Yii::app()->controller->createUrl("admin/mensualnomina/delete", array("id"=>$data[MENO_ID],"command"=>"delete"))',
+                'imageUrl'=>Yii::app()->request->baseUrl.'/images/crosse.png',
+                'visible'=>'$data->MENO_ESTADO==0',				
+				'click'=>"function(){
+				                     var urlattr = $(this).attr('href');
+									 $.fn.yiiGridView.update('mensualnomina-grid', {                                                                               										
+                                        beforeSend:function(){
+										 if(confirm('Esta seguro que qdesea eliminar el elemento? '))
+										  {										  
+										  $('#pass-form')[0].reset();
+										  $('#Cform_NOVE_URL').val(urlattr);
+										  $('#myModal').modal('show');										  		
+										  }																  
+									    },
+										success:function(data){                                            
+                                        }
+                                    })
+                                    return false;									 
+									}",
 				),
-			  ),
-              'deleteButtonImageUrl'=>Yii::app()->request->baseUrl.'/images/crosse.png',
-			  'deleteConfirmation'=>'Seguro que quiere eliminar el elemento?',
-			  'afterDelete'=>'function(link,success,data){ if(success) alert("Elemento borrado exitosamente..."); }',			  
+			  ),			  
 			),
 	),
 )); ?>
     </td>
   </tr>
 </table>
+
+<?php
+Yii::app()->clientScript->registerScript('delete','
+var btnModal = $("#confirmarform");
+
+
+var updateGridView = function(url)
+{
+	$.ajax({	
+			url: url,
+			type:"POST",			
+			success:function(data){
+								   $("#mensualnomina-grid").yiiGridView("update",{});
+								   alert("El registro ha sido eliminado correctamente...");						
+							      },	
+			});
+}	
+
+// CARGAR MODAL
+$("#bntdelete").on("click",function(){
+		if(confirm(" Esta seguro de eliminar el elemento? "))
+        {
+		 $("#pass-form")[0].reset();
+		 $("#myModal").modal("show");										  		
+        }
+});	
+
+
+// ENVIAR MODAL
+btnModal.on("click",function()
+{
+	var passModal = $("#Cform_NOVE_PASS").val();
+    var urldelete = $("#Cform_NOVE_URL").val();
+	var url = "'.CHtml::normalizeUrl(Yii::app()->controller->createUrl("admin/mensualnomina/checkpass")).'";
+    $.ajax(
+	{
+		url: url,
+		type:"POST",
+		data: {info : passModal},		
+		success:function(data)
+		{
+			if(data != "")
+			{
+				if(data != "false")
+				{
+					updateGridView(urldelete);
+					$("#myModal").modal("hide");
+				}
+				else
+				{
+					alert("La contrasena es incorrecta");
+				}																
+			}
+			else
+			{
+				alert("Hubo un error conectando al servidor");
+			}
+		},                                  
+    });	// fin Ajax
+});
+');
+?>

@@ -220,7 +220,7 @@ btnModal.on("click",function()
 		{
 			if(data != "")
 			{
-				if(data != "nook")
+				if(data != "false")
 				{
 					updateGridpv();
 					$("#myModal").modal("hide");

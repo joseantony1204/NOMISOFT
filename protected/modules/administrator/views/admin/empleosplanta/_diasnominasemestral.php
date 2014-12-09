@@ -221,7 +221,7 @@ btnModal.on("click",function()
 		{
 			if(data != "")
 			{
-				if(data != "nook")
+				if(data != "false")
 				{
 					updateGridps();
 					$("#myModal").modal("hide");

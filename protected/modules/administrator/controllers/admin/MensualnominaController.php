@@ -38,7 +38,7 @@ class MensualnominaController extends Controller
 		}
         return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'','search',
+				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'','checkpass','search',
                                  'delete','admin','create','update', 'setEstado', 'postcreate',  
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
@@ -318,18 +318,41 @@ class MensualnominaController extends Controller
 		));
 	}
 
+	public function actionCheckpass()
+	{
+	 if(isset($_POST['info']))
+	 {
+		$pass = $_POST['info'];
+		$Usuario = Usuarios::model()->findByPk(Yii::app()->user->id);
+			
+		if($Usuario==NULL){
+		echo 'false';		
+		}else{
+		      if(!$Usuario->validatePassword($pass)){
+			   echo 'false';	
+		      }else{
+			        echo 'true';
+		           }
+		      }
+	 }else{
+		   echo "";
+	      }
+	}
+
 	/**
 	 * Manages all models.
 	 */
 	public function actionAdmin()
 	{
-		$model=new Mensualnomina('search');
+		$model = new Mensualnomina('search');
+		$Cform = new Cform;
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Mensualnomina']))
 			$model->attributes=$_GET['Mensualnomina'];
 
 		$this->render('admin',array(
 			'model'=>$model,
+			'Cform'=>$Cform,
 		));
 	}
 	

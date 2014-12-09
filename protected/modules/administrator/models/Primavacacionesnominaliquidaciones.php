@@ -709,7 +709,7 @@ class Primavacacionesnominaliquidaciones extends CActiveRecord
 	   INNER JOIN "TBL_NOMUNIDADES" "u" ON ep."UNID_ID" = u."UNID_ID" 
 	   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID" 
 	   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"
-	   WHERE '.$parametros.' AND nnl."NANL_RETEFUENTE"!=0
+	   WHERE '.$parametros.' AND pvnl."PVNL_RETEFUENTE"!=0
 	   GROUP BY pvnl."PVNL_ID", p."PEGE_ID", pvn."PVNO_ID"
 	   ORDER BY pvn."PVNO_ID", p."PEGE_PRIMERAPELLIDO" ASC
 		  ';  

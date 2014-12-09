@@ -7,7 +7,7 @@
  */
 class Cform extends CFormModel
 {
-	public $AUAD_PORCENTAJE, $NOVE_TIPONOMINA, $NOVE_TIPOCARGO, $NOVE_UNIDADES, $NOVE_PASS;
+	public $AUAD_PORCENTAJE, $NOVE_TIPONOMINA, $NOVE_TIPOCARGO, $NOVE_UNIDADES, $NOVE_URL, $NOVE_PASS;
 
 	/**
 	 * Declares the validation rules.
@@ -33,6 +33,7 @@ class Cform extends CFormModel
 			'NOVE_TIPOCARGO'=>'TIPO CARGO',
 			'NOVE_UNIDADES'=>'UNIDADES',
 			'NOVE_PASS'=>'CONTRASEÑA',
+			'NOVE_URL'=>'URL',
 		);
 	}
 }

@@ -38,7 +38,7 @@ class NavidadnominaliquidacionesController extends Controller
 		}
         return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'',''.$array[5].'',
+				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'','preview',
                                  ''.$array[6].'','admin','create','update','totales','detalles','resumen','planopagoexcel',
 								 'planoporunidades','planogeneral','planoresumen','descuento','downdescuento',
 								 'retefuente','downretefuente','mail',
@@ -185,6 +185,25 @@ class NavidadnominaliquidacionesController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+	
+	public function actionPreview($personaGeneral,$id)
+	{
+		$Navidadnominaliquidaciones = new Navidadnomina;
+		$Navidadnominaliquidaciones->NANO_FECHAPROCESO = date("Y-m-d");
+		$Navidadnominaliquidaciones->NANO_ID = date("Y", strtotime($Navidadnominaliquidaciones->NANO_FECHAPROCESO)).date("m", strtotime($Navidadnominaliquidaciones->NANO_FECHAPROCESO))."21";          
+		$Navidadnominaliquidaciones->NANO_ESTADO = "f"; 			
+		$Navidadnominaliquidaciones->NANO_ANIO = date("Y",strtotime($Navidadnominaliquidaciones->NANO_FECHAPROCESO)); 			
+		$Navidadnominaliquidaciones->NANO_PERIODO = 'PRIMA DE NAVIDAD '.$Navidadnominaliquidaciones->NANO_ANIO;
+		$Navidadnominaliquidaciones->NANO_FECHACAMBIO =  date('Y-m-d H:i:s');
+		$Navidadnominaliquidaciones->NANO_REGISTRADOPOR = Yii::app()->user->id;
+		$Navidadnominaliquidaciones->previewLiquidation($Navidadnominaliquidaciones,$personaGeneral);
+
+		$this->render('preview',array(
+			'Navidadnominaliquidaciones'=>$Navidadnominaliquidaciones,			
+			'personaGeneral'=>$personaGeneral,
+			'id'=>$id,
+		));
 	}
 	
 	public function actionTotales($navidadNomina=NULL,$navidadNomina2=NULL,$personaGral=NULL,$unidad=NULL,$tipoEmpleo=NULL)
@@ -408,10 +427,12 @@ class NavidadnominaliquidacionesController extends Controller
 	{
 		$Navidadnominaliquidaciones = new Navidadnominaliquidaciones;
 		$lista = $this->setParametros($navidadNomina,$navidadNomina2,$personaGral,$unidad,$tipoEmpleo);
-		 	
+		$Email = new Email;
+		
 		$Navidadnominaliquidaciones->mostrarLiquidacion($lista['sql']);		
 		$this->render('mail',array(
 			'Navidadnominaliquidaciones'=>$Navidadnominaliquidaciones,
+			'Email'=>$Email,
 			'Periodo'=>$lista['Periodo'],
 			'tercero'=>$lista['tercero'],
 			'navidadNomina'=>$navidadNomina,
