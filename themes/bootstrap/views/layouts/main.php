@@ -279,7 +279,8 @@
 				*/
 				array('label'=>'NÓMINAS', 'icon'=>'list-alt', 'url'=>array('#',), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->getState('module')==1, 'items'=>array(
                     array('label'=>'Mensual',  'url'=>array('/administrator/admin/mensualnomina/admin',), 'visible'=>!Yii::app()->user->isGuest,),
-                    array('label'=>'Retroactivos',  'url'=>array('/administrator/admin/retroactivosnomina/admin',), 'visible'=>!Yii::app()->user->isGuest,),
+                    array('label'=>'Retroactivo Salarial',  'url'=>array('/administrator/admin/retroactivosnomina/admin',), 'visible'=>!Yii::app()->user->isGuest,),
+                    array('label'=>'Retroactivo Puntos',  'url'=>array('/administrator',), 'visible'=>!Yii::app()->user->isGuest,),
                     array('label'=>'Prima Semestral',  'url'=>array('/administrator/admin/semestralnomina/admin',), 'visible'=>!Yii::app()->user->isGuest,),
                     array('label'=>'Prima Vacaciones',  'url'=>array('/administrator/admin/primavacacionesnomina/admin',), 'visible'=>!Yii::app()->user->isGuest,),
 					array('label'=>'Prima Navidad',  'url'=>array('/administrator/admin/navidadnomina/admin',), 'visible'=>!Yii::app()->user->isGuest,),                    

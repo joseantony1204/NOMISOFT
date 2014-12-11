@@ -41,7 +41,7 @@ class NavidadnominaliquidacionesController extends Controller
 				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'','preview',
                                  ''.$array[6].'','admin','create','update','totales','detalles','resumen','planopagoexcel',
 								 'planoporunidades','planogeneral','planoresumen','descuento','downdescuento',
-								 'retefuente','downretefuente','mail',
+								 'retefuente','downretefuente','mail','planocesantias',
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
 			),			
@@ -327,6 +327,26 @@ class NavidadnominaliquidacionesController extends Controller
 			'unidad'=>$unidad,
 			'tipoEmpleo'=>$tipoEmpleo,
 		));
+	}
+	
+	public function actionPlanocesantias($navidadNomina=NULL)
+	{
+		$Navidadnominaliquidaciones = new Navidadnominaliquidaciones;
+		if($navidadNomina!=NULL){
+		 $sql = ' nn."NANO_ID" = '.$navidadNomina.' ';
+		 $model=Navidadnomina::model()->findByPk($navidadNomina);
+		 $Periodo = trim($model->NANO_PERIODO);
+		}
+		
+        
+		$Navidadnominaliquidaciones->mostrarLiquidacion($sql);
+		
+		$this->render('planocesantias',array(
+			'Navidadnominaliquidaciones'=>$Navidadnominaliquidaciones,			
+			'navidadNomina'=>$navidadNomina,
+            'Periodo'=>$Periodo,			
+		));
+		
 	}
 	
 	public function actionDescuento($navidadNomina=NULL,$navidadNomina2=NULL,$personaGral=NULL,$unidad=NULL,$tipoEmpleo=NULL, $idDescuento=NULL)

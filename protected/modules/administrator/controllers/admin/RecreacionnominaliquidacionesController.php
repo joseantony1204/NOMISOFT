@@ -40,7 +40,7 @@ class RecreacionnominaliquidacionesController extends Controller
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'',''.$array[5].'',
                                  ''.$array[6].'','admin','create','update','totales','detalles','resumen','planopagoexcel',
-								 'planoporunidades','planogeneral','planoresumen','mail',  
+								 'planoporunidades','planogeneral','planoresumen','mail','planocesantias',  
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
 			),			
@@ -326,6 +326,26 @@ class RecreacionnominaliquidacionesController extends Controller
 			'tipoEmpleo'=>$tipoEmpleo,
 			'sw'=>$sw,
 		));
+	}
+	
+	public function actionPlanocesantias($recreacionNomina=NULL)
+	{
+		$Recreacionnominaliquidaciones = new Recreacionnominaliquidaciones;
+		if($recreacionNomina!=NULL){
+		 $sql = ' rn."RENO_ID" = '.$recreacionNomina.' ';
+		 $model=Recreacionnomina::model()->findByPk($recreacionNomina);
+		 $Periodo = trim($model->RENO_PERIODO);
+		}
+		
+        
+		$Recreacionnominaliquidaciones->mostrarLiquidacion($sql);
+		
+		$this->render('planocesantias',array(
+			'Recreacionnominaliquidaciones'=>$Recreacionnominaliquidaciones,			
+			'recreacionNomina'=>$recreacionNomina,
+            'Periodo'=>$Periodo,			
+		));
+		
 	}
 	
 	/*funcion generica que recibe parametros de controlador y devuelve un array de posiciones para reutilizacion*/

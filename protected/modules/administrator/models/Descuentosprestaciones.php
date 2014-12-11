@@ -23,6 +23,7 @@ class Descuentosprestaciones extends CActiveRecord
 	 * @Devuelve Descuentosprestaciones la clase del modelo estàtico.
 	 */
 	public $SUMATORIA, $AFILIADOS, $RESET, $PASS, $DOWNLOAD;
+	public $deducciones;
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -118,26 +119,24 @@ class Descuentosprestaciones extends CActiveRecord
 			
 			'SUMATORIA'=>array(
 				'asc'=>'(SELECT SUM("NOPR_VALOR") 
-								  FROM "TBL_NOMNOVEDADESPRESTACIONES" "np",  "TBL_NOMESTADOSEMPLEOSPLANTA" ee, "TBL_NOMEMPLEOSPLANTA" e, "TBL_NOMPERSONASGENERALES" p
-								  WHERE t."DEPR_ID" = np."DEPR_ID" AND np."PEGE_ID" = p."PEGE_ID" AND e."EMPL_ID" = ee."EMPL_ID" AND ee."ESEM_ID" = 1
-								  AND e."PEGE_ID" = p."PEGE_ID" AND np."NOPR_VALOR">0 GROUP BY np."DEPR_ID"
+								  FROM "TBL_NOMNOVEDADESPRESTACIONES" "np"
+								  WHERE t."DEPR_ID" = np."DEPR_ID" AND np."NOPR_VALOR">0 GROUP BY np."DEPR_ID"
 								 )',
 				'desc'=>'(SELECT SUM("NOPR_VALOR") 
-								  FROM "TBL_NOMNOVEDADESPRESTACIONES" "np",  "TBL_NOMESTADOSEMPLEOSPLANTA" ee, "TBL_NOMEMPLEOSPLANTA" e, "TBL_NOMPERSONASGENERALES" p
-								  WHERE t."DEPR_ID" = np."DEPR_ID" AND np."PEGE_ID" = p."PEGE_ID" AND e."EMPL_ID" = ee."EMPL_ID" AND ee."ESEM_ID" = 1
-								  AND e."PEGE_ID" = p."PEGE_ID" AND np."NOPR_VALOR">0 GROUP BY np."DEPR_ID"
+								  FROM "TBL_NOMNOVEDADESPRESTACIONES" "np"
+								  WHERE t."DEPR_ID" = np."DEPR_ID" AND np."NOPR_VALOR">0 GROUP BY np."DEPR_ID"
 								 ) desc',
 			),	
 			
 			'AFILIADOS'=>array(
 				'asc'=>'(SELECT COUNT('."'PEGE_ID'".')
-                                   FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" e, "TBL_NOMESTADOSEMPLEOSPLANTA" ee, "TBL_NOMNOVEDADESPRESTACIONES" np
-								   WHERE t."DEPR_ID" = np."DEPR_ID" AND np."PEGE_ID" = p."PEGE_ID" AND e."EMPL_ID" = ee."EMPL_ID" AND ee."ESEM_ID" = 1
+                                   FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" e, "TBL_NOMNOVEDADESPRESTACIONES" np
+								   WHERE t."DEPR_ID" = np."DEPR_ID" AND np."PEGE_ID" = p."PEGE_ID"
 								   AND e."PEGE_ID" = p."PEGE_ID" AND np."NOPR_VALOR">0 GROUP BY np."DEPR_ID"
 								  )',
 				'desc'=>'(SELECT COUNT('."'PEGE_ID'".')
-                                   FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" e, "TBL_NOMESTADOSEMPLEOSPLANTA" ee, "TBL_NOMNOVEDADESPRESTACIONES" np
-								   WHERE t."DEPR_ID" = np."DEPR_ID" AND np."PEGE_ID" = p."PEGE_ID" AND e."EMPL_ID" = ee."EMPL_ID" AND ee."ESEM_ID" = 1
+                                   FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" e, "TBL_NOMNOVEDADESPRESTACIONES" np
+								   WHERE t."DEPR_ID" = np."DEPR_ID" AND np."PEGE_ID" = p."PEGE_ID"
 								   AND e."PEGE_ID" = p."PEGE_ID" AND np."NOPR_VALOR">0 GROUP BY np."DEPR_ID"
 								  ) desc',
 			),
@@ -146,15 +145,14 @@ class Descuentosprestaciones extends CActiveRecord
 		$criteria=new CDbCriteria;
 		
 		$criteria->select = 't.*, (SELECT COUNT('."'PEGE_ID'".')
-                                   FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" e, "TBL_NOMESTADOSEMPLEOSPLANTA" ee, "TBL_NOMNOVEDADESPRESTACIONES" np
-								   WHERE t."DEPR_ID" = np."DEPR_ID" AND np."PEGE_ID" = p."PEGE_ID" AND e."EMPL_ID" = ee."EMPL_ID" AND ee."ESEM_ID" = 1
+                                   FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" e, "TBL_NOMNOVEDADESPRESTACIONES" np
+								   WHERE t."DEPR_ID" = np."DEPR_ID" AND np."PEGE_ID" = p."PEGE_ID"
 								   AND e."PEGE_ID" = p."PEGE_ID" AND np."NOPR_VALOR">0 GROUP BY np."DEPR_ID"
 								  )  "AFILIADOS",
 								  
 								 (SELECT SUM("NOPR_VALOR") 
-								  FROM "TBL_NOMNOVEDADESPRESTACIONES" "np",  "TBL_NOMESTADOSEMPLEOSPLANTA" ee, "TBL_NOMEMPLEOSPLANTA" e, "TBL_NOMPERSONASGENERALES" p
-								  WHERE t."DEPR_ID" = np."DEPR_ID" AND np."PEGE_ID" = p."PEGE_ID" AND e."EMPL_ID" = ee."EMPL_ID" AND ee."ESEM_ID" = 1
-								  AND e."PEGE_ID" = p."PEGE_ID" AND np."NOPR_VALOR">0 GROUP BY np."DEPR_ID"
+								  FROM "TBL_NOMNOVEDADESPRESTACIONES" "np"
+								  WHERE t."DEPR_ID" = np."DEPR_ID" AND np."NOPR_VALOR">0 GROUP BY np."DEPR_ID"
 								 ) "SUMATORIA"';
 
 		$criteria->compare('"DEPR_ID"',$this->DEPR_ID);
@@ -189,4 +187,39 @@ class Descuentosprestaciones extends CActiveRecord
 		$Novedadesprestaciones->save(); 
 	  }
 	}
+	
+	public function getAfiliados($descuento){
+	$connection = Yii::app()->db;
+    //echo '<br><br><br><br>'.
+	$sql = 'SELECT p."PEGE_IDENTIFICACION", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE", p."PEGE_SEGUNDONOMBRE",  dp."DEPR_NOMBRE", np."NOPR_VALOR"			 
+             FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMNOVEDADESPRESTACIONES" np, "TBL_NOMDESCUENTOSPRESTACIONES" dp
+             WHERE dp."DEPR_ID" = np."DEPR_ID" AND np."PEGE_ID" = p."PEGE_ID" AND dp."DEPR_ID" = '.$descuento.' AND np."NOPR_VALOR"!=0
+	         ORDER BY  p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC
+	        ';
+		
+	 $query = $connection->createCommand($sql)->queryAll();
+	 $this->deducciones = NULL;
+	 $array = array('IDENTIFICACION','NOMBRE','SEGUNDO NOMBRE','APELLIDO', 'SEGUNDO APELLIDO', 'DEDUCCION','TOTAL');
+	 $j=0; $i=0;
+	 foreach ($array as $values=>$value) {	
+	  $this->deducciones[$j][$i] = $value;
+	  $i++;  
+	 }
+	 
+	 $j=1;
+	 $total=0;;
+	 foreach ($query as $values) {	
+	  $i=0;
+	  foreach ($values as $value) {      	 
+	   if($i==6){
+	    $total = $total+$value; 
+	    $this->deducciones[$j][6] = $value;
+	   }else{	   
+	         $this->deducciones[$j][$i] = $value;
+	        } 
+	   $i++;
+	  }
+      $j++;	 
+     }	 
+    }
 }

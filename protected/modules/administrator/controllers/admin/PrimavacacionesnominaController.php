@@ -39,7 +39,7 @@ class PrimavacacionesnominaController extends Controller
         return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'','views',
-                                 'search','admin','create','update','delete', 
+                                 'search','admin','create','update','delete', 'setEstado', 
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
 			),			
@@ -240,6 +240,23 @@ class PrimavacacionesnominaController extends Controller
 		$this->render('admin',array(
 			'model'=>$model,
 		));
+	}
+	
+	public function actionSetEstado($id)
+	{
+		
+		$Primavacacionesnomina=$this->loadModel($id);		
+		if($Primavacacionesnomina->PVNO_ESTADO==1){
+		 Yii::app()->user->setFlash('warning','<strong>Oppss!. </strong> La Nomina de: <strong>'.$Primavacacionesnomina->PVNO_PERIODO.'</strong> se encuentra <strong>PAGADA</strong>, por lo tanto no se puede modificar el estado.');
+		}else{
+		      $Primavacacionesnomina->PVNO_ESTADO = 1;
+			  $Primavacacionesnomina->PVNO_FECHACAMBIO =  date('Y-m-d H:i:s');
+			  $Primavacacionesnomina->PVNO_REGISTRADOPOR = Yii::app()->user->id;
+		      $Primavacacionesnomina->save();
+			  Yii::app()->user->setFlash('success',' EL estado de la nomina de: <strong>'.$Primavacacionesnomina->PVNO_PERIODO.'</strong> ha sido cambiado a <strong>PAGADA</strong> exitosamente...');
+			 }
+	
+	    $this->redirect(array('admin'));
 	}
 
 	/**

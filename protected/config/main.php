@@ -21,7 +21,8 @@ return array(
 		'application.models.*',
 		'application.components.*',
 		'application.vendors.phpexcel.PHPExcel',
-		'application.extensions.*',		
+		'application.extensions.*',
+        'editable.*',		
 	),
 	
 	

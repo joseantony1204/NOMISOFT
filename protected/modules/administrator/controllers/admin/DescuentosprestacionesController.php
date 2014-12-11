@@ -39,7 +39,7 @@ class DescuentosprestacionesController extends Controller
 		}
         return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'',''.$array[5].'',
+				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'','download',
                                  'delete','admin','create','update',  
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
@@ -161,9 +161,9 @@ class DescuentosprestacionesController extends Controller
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Descuentosprestaciones'])){
 			$model->attributes=$_GET['Descuentosprestaciones'];			
-	    }else		
-        //$model=null;
-		$model->TIPR_ID = $id;		
+	    }else{		
+		$model->TIPR_ID = $id;
+        }		
 		$this->render('admin',array(
 			'model'=>$model,
 		));
@@ -193,5 +193,14 @@ class DescuentosprestacionesController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+	
+	public function actionDownload($id)
+	{
+	 $Descuentosprestaciones = new Descuentosprestaciones;
+	 $Descuentosprestaciones->getAfiliados($id);	 
+	 $this->render('download',array(
+			'Descuentosprestaciones'=>$Descuentosprestaciones,
+		));
 	}
 }

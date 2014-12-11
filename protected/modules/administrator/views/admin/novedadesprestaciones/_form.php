@@ -17,11 +17,29 @@
 	 <tr>	 
       <td width="100%" colspan="6">
 	  <div class="form-actions" align="right">
+	  
 	  <table border="0" width="100%">
-	  <tr>
-	   <td width="60%" align="center"><strong><?php echo $Personasgenerales->PEGE_PRIMERNOMBRE." ".$Personasgenerales->PEGE_PRIMERAPELLIDO; ?></strong></td>
-	   <td width="20%" align="center">
 	   
+	   <tr>
+	    <td width="30%" align="right" colspan="2">
+		<?php if($id==1){ echo '<strong>TIENE CONTINUIDAD EL EMPLEADO?</strong>';} ?></td>	    
+	    <td width="8%" align="center">
+		  <?php 
+		  if($id==1){ 
+		   echo '<strong>MESES</strong>';
+		   }elseif($id==2){ 
+		   echo '<strong>MESES</strong>';
+		   }elseif($id==3){ 
+		   echo '<strong>DIAS</strong>';
+		   }elseif($id==4){ 
+		   echo '<strong>DIAS</strong>';
+		   }elseif($id==5){ 
+		   echo '<strong>DIAS</strong>';
+		   } 
+		  ?>
+		</td>
+	    <td width="5%" align="center" rowspan="2">&nbsp;</td>
+	    <td width="20%" align="center" rowspan="2">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
 			'buttonType'=>'submit',
 			'icon'=>'edit white',
@@ -29,23 +47,50 @@
 			'size'=>'small',
 			'label'=>'ACTUALIZAR DESCUENTOS PRESTACIONES',
 		)); ?>
-	    
-	   </td>
-	   
-	   <td width="20%" align="center">
-	   
+		</td>
+	    <td width="20%" align="center" rowspan="2">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
 			'buttonType'=>'submit',
 			'icon'=>'list white',
 			'type'=>'success',
 			'size'=>'small',
-			'label'=>'VER LIQUIDACION PRELIMINAR',
+			'label'=>'VER LIQUIDACION PRELIMINAR DEL CARGO',
 		)); ?>
-	    
-	   </td>
+		</td>
+	   </tr>
 	   
-	  </tr>
+	   <tr>
+	    <td width="30%" align="center"><strong><?php echo $Personasgenerales->PEGE_PRIMERNOMBRE." ".$Personasgenerales->PEGE_PRIMERAPELLIDO." ".$Personasgenerales->PEGE_SEGUNDOAPELLIDOS; ?></strong></td>
+	    <td width="8%" align="center">
+		<?php 
+	    if($id==1){
+        $this->widget('editable.EditableField', array(
+        'type'      => 'select',
+        'model'     => $arraynp['Prestacion'],
+        'attribute' => $arraynp['atributo1'],
+        'url'       => $this->createUrl('admin/novedadesprestaciones/'.$arraynp['url']), 
+        'source'    => Editable::source(array(1 => 'SI', 0 => 'NO')),
+        'placement' => 'top', 
+        ));
+	   }
+       ?>
+		</td>	    
+	    <td width="5%" align="center">
+		<?php
+        $this->widget('editable.EditableField', array(
+         'type'      => 'text',
+         'model'     => $arraynp['Prestacion'],
+         'attribute' => $arraynp['atributo2'],
+         'url'       => $this->createUrl('admin/novedadesprestaciones/'.$arraynp['url']),  
+         'placement' => 'top', 
+         ));
+       ?>
+		
+		</td>	    
+	   </tr>
+	   
 	  </table>
+	  
 	   </div>
 	  </td> 
 	 </tr>
@@ -82,7 +127,3 @@ foreach($data as $row)
       
      </tr>
     </table>
-
-
-
-

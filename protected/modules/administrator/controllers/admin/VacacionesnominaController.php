@@ -39,7 +39,7 @@ class VacacionesnominaController extends Controller
         return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'','views',
-                                 'search','admin','create','update','delete', 
+                                 'search','admin','create','update','delete',  'setEstado',
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
 			),			
@@ -240,6 +240,23 @@ class VacacionesnominaController extends Controller
 		$this->render('admin',array(
 			'model'=>$model,
 		));
+	}
+	
+	public function actionSetEstado($id)
+	{
+		
+		$Vacacionesnomina=$this->loadModel($id);		
+		if($Vacacionesnomina->VANO_ESTADO==1){
+		 Yii::app()->user->setFlash('warning','<strong>Oppss!. </strong> La Nomina de: <strong>'.$Vacacionesnomina->VANO_PERIODO.'</strong> se encuentra <strong>PAGADA</strong>, por lo tanto no se puede modificar el estado.');
+		}else{
+		      $Vacacionesnomina->VANO_ESTADO = 1;
+			  $Vacacionesnomina->VANO_FECHACAMBIO =  date('Y-m-d H:i:s');
+			  $Vacacionesnomina->VANO_REGISTRADOPOR = Yii::app()->user->id;
+		      $Vacacionesnomina->save();
+			  Yii::app()->user->setFlash('success',' EL estado de la nomina de: <strong>'.$Vacacionesnomina->VANO_PERIODO.'</strong> ha sido cambiado a <strong>PAGADA</strong> exitosamente...');
+			 }
+	
+	    $this->redirect(array('admin'));
 	}
 
 	/**

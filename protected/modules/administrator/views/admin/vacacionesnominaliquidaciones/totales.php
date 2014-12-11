@@ -62,7 +62,7 @@ $Vacacionesnomina = Vacacionesnomina::model()->findByPk($Vacacionesnominaliquida
 					 $imageUrl = Yii::app()->request->baseUrl . '/images/icon_download_fna.png';
 					 $htmlOptions = array('class' => 'thumbnail','rel' => 'tooltip','data-title' => 'Descargar');
 					 $image = CHtml::image($imageUrl);
-					 echo CHtml::link($image, array('admin/vacacionesnominaliquidaciones/downfna','vacacionesNomina'=>$Vacacionesnominaliquidaciones->VANO_ID),$htmlOptions ); 
+					 echo CHtml::link($image, array('admin/vacacionesnominaliquidaciones/planocesantias','vacacionesNomina'=>$Vacacionesnominaliquidaciones->VANO_ID),$htmlOptions ); 
                      ?>         
 			</td>
 			<td width="10%" align="center">

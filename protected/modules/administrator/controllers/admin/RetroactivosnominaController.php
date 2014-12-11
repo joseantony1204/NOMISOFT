@@ -39,7 +39,7 @@ class RetroactivosnominaController extends Controller
         return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'',''.$array[5].'',
-                                 'view','admin','create','update', 'delete', 'search',  
+                                 'view','admin','create','update', 'delete', 'search', 'setEstado', 
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
 			),			
@@ -183,6 +183,23 @@ class RetroactivosnominaController extends Controller
 		$this->render('admin',array(
 			'model'=>$model,
 		));
+	}
+	
+	public function actionSetEstado($id)
+	{
+		
+		$Retroactivosnomina=$this->loadModel($id);		
+		if($Retroactivosnomina->RANO_ESTADO==1){
+		 Yii::app()->user->setFlash('warning','<strong>Oppss!. </strong> La Nomina de: <strong>'.$Retroactivosnomina->RANO_PERIODO.'</strong> se encuentra <strong>PAGADA</strong>, por lo tanto no se puede modificar el estado.');
+		}else{
+		      $Retroactivosnomina->RANO_ESTADO = 1;
+			  $Retroactivosnomina->RANO_FECHACAMBIO =  date('Y-m-d H:i:s');
+			  $Retroactivosnomina->RANO_REGISTRADOPOR = Yii::app()->user->id;
+		      $Retroactivosnomina->save();
+			  Yii::app()->user->setFlash('success',' EL estado de la nomina de: <strong>'.$Retroactivosnomina->RANO_PERIODO.'</strong> ha sido cambiado a <strong>PAGADA</strong> exitosamente...');
+			 }
+	
+	    $this->redirect(array('admin'));
 	}
 
 	/**

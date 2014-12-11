@@ -39,7 +39,7 @@ class NavidadnominaController extends Controller
         return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'','views',
-                                 'search','admin','create','update','delete',  
+                                 'search','admin','create','update','delete', 'setEstado',  
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
 			),			
@@ -240,6 +240,23 @@ class NavidadnominaController extends Controller
 		$this->render('admin',array(
 			'model'=>$model,
 		));
+	}
+	
+	public function actionSetEstado($id)
+	{
+		
+		$Navidadnomina=$this->loadModel($id);		
+		if($Navidadnomina->NANO_ESTADO==1){
+		 Yii::app()->user->setFlash('warning','<strong>Oppss!. </strong> La Nomina de: <strong>'.$Navidadnomina->NANO_PERIODO.'</strong> se encuentra <strong>PAGADA</strong>, por lo tanto no se puede modificar el estado.');
+		}else{
+		      $Navidadnomina->NANO_ESTADO = 1;
+			  $Navidadnomina->NANO_FECHACAMBIO =  date('Y-m-d H:i:s');
+			  $Navidadnomina->NANO_REGISTRADOPOR = Yii::app()->user->id;
+		      $Navidadnomina->save();
+			  Yii::app()->user->setFlash('success',' EL estado de la nomina de: <strong>'.$Navidadnomina->NANO_PERIODO.'</strong> ha sido cambiado a <strong>PAGADA</strong> exitosamente...');
+			 }
+	
+	    $this->redirect(array('admin'));
 	}
 
 	/**

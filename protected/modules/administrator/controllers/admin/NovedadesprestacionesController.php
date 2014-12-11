@@ -39,7 +39,8 @@ class NovedadesprestacionesController extends Controller
         return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'',''.$array[5].'',
-                                 'search','admin','create','update',  
+                                 'search','admin','create','update','updatesemestral','updatepvacaciones','updatevacaciones',
+								 'updatenavidad',  
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
 			),			
@@ -98,17 +99,27 @@ class NovedadesprestacionesController extends Controller
 			$this->redirect(array('create','personaGeneral'=>$Personasgenerales->PEGE_ID,'id'=>$id));
 		}
 		
-		$url = '';
+		$url = ''; $arraynp = NULL;
 		if($id==1){ 
+		 $Novedadesprimasemestral = Novedadesprimasemestral::model()->findByAttributes(array('PEGE_ID'=>$personaGeneral));
 		 $url = 'semestralnominaliquidaciones';
+		 $arraynp = array('Id'  =>$id, 'Prestacion'=>$Novedadesprimasemestral,'atributo1'=>'NOPS_CONTINUIDAD','atributo2'=>'NOPS_MESES','url'=>'updatesemestral', ); 
 		}elseif($id==2){ 
-		  $url = 'navidadnominaliquidaciones'; 
+		  $url = 'navidadnominaliquidaciones';
+          $Novedadesprimanavidad = Novedadesprimanavidad::model()->findByAttributes(array('PEGE_ID'=>$personaGeneral));
+		  $arraynp = array('Id'  =>$id, 'Prestacion'=>$Novedadesprimanavidad,'atributo2'=>'NOPN_MESES','url'=>'updatenavidad', );		  
 		}elseif($id==3){ 
 		  $url = 'primavacacionesnominaliquidaciones'; 
+		  $Novedadesprimavacaciones = Novedadesprimavacaciones::model()->findByAttributes(array('PEGE_ID'=>$personaGeneral));
+		  $arraynp = array('Id'  =>$id, 'Prestacion'=>$Novedadesprimavacaciones,'atributo2'=>'NOPV_DIAS','url'=>'updatepvacaciones', );
 		}elseif($id==4){ 
 		  $url = 'vacacionesnominaliquidaciones'; 
+		  $Novedadesvacaciones = Novedadesvacaciones::model()->findByAttributes(array('PEGE_ID'=>$personaGeneral));
+		  $arraynp = array('Id'  =>$id, 'Prestacion'=>$Novedadesvacaciones,'atributo2'=>'NOVA_DIAS','url'=>'updatevacaciones', );
 		}elseif($id==5){ 
-		  $url = 'retroactivosnominaliquidaciones'; 
+		  $url = 'retroactivosnominaliquidaciones';
+          $Novedadesretroactivo = Novedadesretroactivo::model()->findByAttributes(array('PEGE_ID'=>$personaGeneral));
+		  $arraynp = array('Id'  =>$id, 'Prestacion'=>$Novedadesretroactivo,'atributo2'=>'NORE_DIAS','url'=>'updateretroactivo', );		  
 		}
 		 
 		if(isset($_POST['yt1']))
@@ -120,9 +131,58 @@ class NovedadesprestacionesController extends Controller
 			'Novedadesprestaciones'=>$Novedadesprestaciones,
 			'data'=>$data,
 			'Personasgenerales'=>$Personasgenerales,
+			'arraynp'=>$arraynp,
 			'id'=>$id,
 		));
 	}
+	
+	public function actionUpdatesemestral()
+     {
+      $es = new EditableSaver('Novedadesprimasemestral');
+      try {
+           $es->update();
+          }catch(CException $e) {
+           echo CJSON::encode(array('success' => false, 'msg' => $e->getMessage()));
+           return;
+           }
+    echo CJSON::encode(array('success' => true));
+    }
+	
+	public function actionUpdatepvacaciones()
+     {
+      $es = new EditableSaver('Novedadesprimavacaciones');
+      try {
+           $es->update();
+          }catch(CException $e) {
+           echo CJSON::encode(array('success' => false, 'msg' => $e->getMessage()));
+           return;
+           }
+    echo CJSON::encode(array('success' => true));
+    }
+	
+	public function actionUpdatevacaciones()
+     {
+      $es = new EditableSaver('Novedadesvacaciones');
+      try {
+           $es->update();
+          }catch(CException $e) {
+           echo CJSON::encode(array('success' => false, 'msg' => $e->getMessage()));
+           return;
+           }
+    echo CJSON::encode(array('success' => true));
+    }
+	
+	public function actionUpdatenavidad()
+     {
+      $es = new EditableSaver('Novedadesprimanavidad');
+      try {
+           $es->update();
+          }catch(CException $e) {
+           echo CJSON::encode(array('success' => false, 'msg' => $e->getMessage()));
+           return;
+           }
+    echo CJSON::encode(array('success' => true));
+    }
 	
 	/**
 	 * Updates a particular model.

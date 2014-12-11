@@ -38,10 +38,10 @@ class PrimavacacionesnominaliquidacionesController extends Controller
 		}
         return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'',''.$array[5].'',
+				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'','preview',
                                  ''.$array[6].'','admin','create','update','totales','detalles','resumen','planopagoexcel',
 								 'planoporunidades','planogeneral','planoresumen','descuento','downdescuento',
-								 'retefuente','downretefuente','mail',  
+								 'retefuente','downretefuente','mail','planocesantias',  
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
 			),			
@@ -187,6 +187,25 @@ class PrimavacacionesnominaliquidacionesController extends Controller
 		}
 	}
 	
+	public function actionPreview($personaGeneral,$id)
+	{
+		$Primavacacionesnominaliquidaciones = new Primavacacionesnomina;
+		$Primavacacionesnominaliquidaciones->PVNO_FECHAPROCESO = date("Y-m-d");
+		$Primavacacionesnominaliquidaciones->PVNO_ID = date("Y", strtotime($Primavacacionesnominaliquidaciones->PVNO_FECHAPROCESO)).date("m", strtotime($Primavacacionesnominaliquidaciones->PVNO_FECHAPROCESO))."31";          
+		$Primavacacionesnominaliquidaciones->PVNO_ESTADO = "f"; 			
+		$Primavacacionesnominaliquidaciones->PVNO_ANIO = date("Y",strtotime($Primavacacionesnominaliquidaciones->PVNO_FECHAPROCESO)); 			
+		$Primavacacionesnominaliquidaciones->PVNO_PERIODO = 'PRIMA DE VACACIONES '.$Primavacacionesnominaliquidaciones->PVNO_ANIO;
+		$Primavacacionesnominaliquidaciones->PVNO_FECHACAMBIO =  date('Y-m-d H:i:s');
+		$Primavacacionesnominaliquidaciones->PVNO_REGISTRADOPOR = Yii::app()->user->id;
+		$Primavacacionesnominaliquidaciones->previewLiquidation($Primavacacionesnominaliquidaciones,$personaGeneral);
+
+		$this->render('preview',array(
+			'Primavacacionesnominaliquidaciones'=>$Primavacacionesnominaliquidaciones,			
+			'personaGeneral'=>$personaGeneral,
+			'id'=>$id,
+		));
+	}
+	
 	public function actionTotales($primavacacionesNomina=NULL,$primavacacionesNomina2=NULL,$personaGral=NULL,$unidad=NULL,$tipoEmpleo=NULL)
 	{
 		$Primavacacionesnominaliquidaciones = new Primavacacionesnominaliquidaciones('totales');
@@ -308,6 +327,26 @@ class PrimavacacionesnominaliquidacionesController extends Controller
 			'unidad'=>$unidad,
 			'tipoEmpleo'=>$tipoEmpleo,
 		));
+	}
+	
+	public function actionPlanocesantias($primavacacionesNomina=NULL)
+	{
+		$Primavacacionesnominaliquidaciones = new Primavacacionesnominaliquidaciones;
+		if($primavacacionesNomina!=NULL){
+		 $sql = ' pvn."PVNO_ID" = '.$primavacacionesNomina.' ';
+		 $model=Primavacacionesnomina::model()->findByPk($primavacacionesNomina);
+		 $Periodo = trim($model->PVNO_PERIODO);
+		}
+		
+        
+		$Primavacacionesnominaliquidaciones->mostrarLiquidacion($sql);
+		
+		$this->render('planocesantias',array(
+			'Primavacacionesnominaliquidaciones'=>$Primavacacionesnominaliquidaciones,			
+			'primavacacionesNomina'=>$primavacacionesNomina,
+            'Periodo'=>$Periodo,			
+		));
+		
 	}
 	
 	public function actionDescuento($primavacacionesNomina=NULL,$primavacacionesNomina2=NULL,$personaGral=NULL,$unidad=NULL,$tipoEmpleo=NULL, $idDescuento=NULL)

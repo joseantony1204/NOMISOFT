@@ -1,5 +1,5 @@
 <?php
-Yii::app()->homeUrl = array('/ocasionales/');
+Yii::app()->homeUrl = array('/administrator/');
 $this->breadcrumbs=array(
 	'Liquidaciones'=>array('admin/liquidaciones/admin'),
 	'Nuevo',

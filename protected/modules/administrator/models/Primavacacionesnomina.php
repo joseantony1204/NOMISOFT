@@ -25,7 +25,7 @@ class Primavacacionesnomina extends CActiveRecord
 	public $codigo, $error; 
 	public $PVNO_DETALLES;
 	public $liquidacion, $descuentos;
-	public $devengados;
+	public $devengados, $parafiscales, $paraficales;
 	public $success, $warning, $flag;
 	public $s, $w, $f; 
 	public $diasvacaciones, $valorestablecidos;  
@@ -168,6 +168,241 @@ class Primavacacionesnomina extends CActiveRecord
       }
      return $this->error;	  
 	}
+	
+	public function previewLiquidation($Primavacacionesnomina,$personaGeneral){
+     $connection = Yii::app()->db; 
+	 $this->success = NULL; $this->warning = NULL; $this->flag = NULL;
+	 $this->s = 0; $this->w = 0; $this->f = 0;
+	 $Personasgenerales = new Personasgenerales;
+	 $Parametrosglobales = new Parametrosglobales; 	 
+     $this->valorestablecidos = $Parametrosglobales->getParametrosglobales(date("Y", strtotime($Primavacacionesnomina->PVNO_FECHAPROCESO)));
+	 
+	 /**
+	 *consultar todos los empleados que fueron liquidados en el periodo que vienes el retroactivo
+	 **/
+	//echo '<br><br><br>'. 
+	$sql = 'SELECT pg."PEGE_ID" 
+	         FROM "TBL_NOMPERSONASGENERALES" pg, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMMENSUALNOMINALIQUIDACIONES" mnl
+             WHERE pg."PEGE_ID" = ep."PEGE_ID" AND ep."EMPL_ID" = mnl."EMPL_ID" AND pg."PEGE_ID" = '.$personaGeneral.'
+             GROUP BY pg."PEGE_ID"
+             ORDER BY pg."PEGE_ID" ASC';	
+	 $personas = $connection->createCommand($sql)->queryAll();	
+	 /**
+	 *Se empieza a recorrer el array para ir liquidando cada registro encontrado
+	 **/	 
+	 $iterador = 1;
+	 $this->codigo = 1;
+	 
+	 foreach($personas AS $persona){	  
+	  $Personasgenerales->loadPersonageneral($persona["PEGE_ID"]);
+	  $sw = 0;
+	 // echo $Personasgenerales->Estadoempleoplanta->ESEP_ID.' '.$Personasgenerales->Estadoempleoplanta->ESEM_ID.' '.$Personasgenerales->Empleoplanta->EMPL_ID."<br>";
+	  if($Personasgenerales->Estadoempleoplanta->ESEM_ID!=1){
+	   $sw = 1;
+	   if(((date("Y", strtotime($Personasgenerales->Estadoempleoplanta->ESEP_FECHAREGISTRO)))==(date("Y", strtotime($Primavacacionesnomina->PVNO_FECHAPROCESO)))) &
+	     ((date("m", strtotime($Personasgenerales->Estadoempleoplanta->ESEP_FECHAREGISTRO)))==(date("m", strtotime($Primavacacionesnomina->PVNO_FECHAPROCESO))))){
+	     $sw = 0; 			 
+	   }
+	  }
+	  
+	  $anioIngreso = date("Y", strtotime($Personasgenerales->Personageneral->PEGE_FECHAINGRESO));	 
+	  if(($Primavacacionesnomina->PVNO_ANIO)!=($anioIngreso)){
+	   $sql ='SELECT SUM("MENL_PRIMAVACACIONES") AS "PVACACIONES" 
+			  FROM  "TBL_NOMPERSONASGENERALES" pg, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMMENSUALNOMINALIQUIDACIONES" mnl, "TBL_NOMMENSUALNOMINA" mn
+			  WHERE pg."PEGE_ID" = ep."PEGE_ID" AND ep."EMPL_ID" = mnl."EMPL_ID" AND mn."MENO_ID" = mnl."MENO_ID" 
+			  AND pg."PEGE_ID" = '.$Personasgenerales->Personageneral->PEGE_ID.'
+			  AND mn."MENO_ID" >= '.$Primavacacionesnomina->PVNO_ANIO.'0101 AND mn."MENO_ID" <= '.$Primavacacionesnomina->PVNO_ANIO.'1201
+							  
+			 ';
+			$pvacaciones = $connection->createCommand($sql)->queryScalar();
+            if($pvacaciones>0){
+			$sw = 1;
+			}			
+	  }
+	  
+	  /*si todo esta bn se procede a calcular la nomina para la persona*/
+	  if(($sw==0) & ($Personasgenerales->Tipocargo->TICA_ID==2)){
+	   $this->getnovedades($Personasgenerales); 
+	   $basico = round($this->getSueldoBasico($Personasgenerales,$Primavacacionesnomina));
+	   
+	   $subTransporte = round($this->getSubTransporte($Personasgenerales,$Primavacacionesnomina));
+       $prAlimenta = round($this->getSubAlimentacion($Personasgenerales,$Primavacacionesnomina));
+       $prantiguedad = $this->getPrimaAntiguedad($Personasgenerales,$Primavacacionesnomina); 
+       //echo $prantiguedad[1]; 
+	   
+	   $primatec = round($this->getPrimaTecnica($Personasgenerales,$Primavacacionesnomina));
+	   $gastosrp = round($this->getGastosRepresentacion($Personasgenerales,$Primavacacionesnomina));	   
+	   $bonserv = round($this->getBonServiciosPrestados($Personasgenerales,$Primavacacionesnomina));
+	   $primasemestral = round($this->getPrimaSemestral($Personasgenerales,$Primavacacionesnomina));	   
+	   $tdevengado=round($basico)+round($subTransporte)+round($prAlimenta)+round($primatec)+round($gastosrp)+round($prantiguedad[1])+round($bonserv)+round($primasemestral);
+	   $retefuente = round($this->getRetefuente($Personasgenerales,$Primavacacionesnomina,$tdevengado));   
+	   
+	   $devengados = array($basico,round($prantiguedad[1]),$subTransporte,$prAlimenta,$primatec,$gastosrp,$bonserv,$primasemestral,$retefuente,$tdevengado);
+					
+	   $this->devengados[$iterador] = array($iterador, $this->codigo, $this->diasvacaciones, $Personasgenerales->Empleoplanta->EMPL_PUNTOS,
+	                                        $Personasgenerales->Empleoplanta->EMPL_SUELDO,$devengados[0],$devengados[1],
+											$devengados[2],$devengados[3],$devengados[4],$devengados[5],$devengados[6],$devengados[7],
+											$devengados[8],$Primavacacionesnomina->PVNO_ID,
+											$Personasgenerales->Empleoplanta->EMPL_ID,$devengados[9]);	   
+	   $tparafiscales = $tparafiscales+$retefuente;
+	   $paraficales = array($retefuente,$tparafiscales);		 
+	   $this->paraficales[$iterador] = array($iterador,$paraficales[0]);									
+       $this->codigo = $this->codigo+1;	   
+       $iterador = $iterador+1;
+	  }
+	 }
+	 
+	 /**
+	 *llenando los arreglos de la liquidacion previa
+	 */
+	 $this->liquidacion = NULL;
+	   
+	 $array = array('ID LIQUIDACION','CODIGO','DIAS','PUNTOS','SUELDO','SALARIO','PRIMA ATIGUEDAD','SUBSIDIO TRANSPORTE','SUBSIDIO ALIMENTACION',
+	                'PRIMA TECNICA','GASTOS REPRESENTACION','1/12 BON. DE SERVICIOS','1/12 PRIMA SEMESTRAL', 
+					'ID NOMINA','ID EMPLEO','TOTAL DEVENGADO');
+	 $j=0; $i=0;
+	 foreach ($array as $values=>$value) {	
+	  $this->liquidacion[$j][$i] = $value;
+	  $i++;  
+	 }
+	 
+	 $this->parafiscales = NULL;
+       $array = array('ID PARAFISCAL','RETEFUENTE');
+				   
+	   $j=0; $i=0;
+	   foreach ($array as $values=>$value) {	
+	    $this->parafiscales[$j][$i] = $value;
+	    $i++;  
+	   }
+
+       for($j=1;$j<=count($this->devengados);$j++) {		 
+	    for($i=0;$i<=count($this->devengados[$j]);$i++) {  
+	     $this->liquidacion[$j][$i] = $this->devengados[$j][$i];
+	    } 
+       } 
+	 
+	   for($j=1;$j<=count($this->paraficales);$j++) {		 
+	    for($i=0;$i<=count($this->paraficales[$j]);$i++) {  
+	     $this->parafiscales[$j][$i] = $this->paraficales[$j][$i];
+	    } 
+       }
+
+     $this->getDescuentosPreview($Personasgenerales->Personageneral->PEGE_ID,$Primavacacionesnomina->PVNO_ID); 
+	}
+	
+	public function getDescuentosPreview($personaGeneral,$periodo)
+	{
+	 $connection = Yii::app()->db;
+	 $this->descuentos = NULL;
+	 //echo "<br><br><br>".
+	 
+	 $string1 = 'SELECT pg."PEGE_ID" AS  "PVNL_ID",  dp."DEPR_ID", np."NOPR_VALOR", '."'".$periodo."'".' AS "PVNO_ID"
+				 FROM "TBL_NOMDESCUENTOSPRESTACIONES" dp, "TBL_NOMNOVEDADESPRESTACIONES" np, "TBL_NOMPERSONASGENERALES" pg
+				 WHERE dp."DEPR_ID" = np."DEPR_ID" AND np."PEGE_ID" = pg."PEGE_ID" AND pg."PEGE_ID" = '.$personaGeneral.' AND dp."TIPR_ID" = 3
+				 ORDER BY dp."DEPR_ID", pg."PEGE_FECHAINGRESO" DESC';
+		   
+     $rows1 = $connection->createCommand($string1)->queryAll();
+
+	 $string2 = 'SELECT pg."PEGE_ID" AS  "PVNL_ID", '."'".$periodo."'".' AS "PVNO_ID"
+				 FROM "TBL_NOMDESCUENTOSPRESTACIONES" dp, "TBL_NOMNOVEDADESPRESTACIONES" np, "TBL_NOMPERSONASGENERALES" pg
+				 WHERE dp."DEPR_ID" = np."DEPR_ID" AND np."PEGE_ID" = pg."PEGE_ID" AND pg."PEGE_ID" = '.$personaGeneral.' AND dp."TIPR_ID" = 3
+				 GROUP BY pg."PEGE_ID"
+				 ORDER BY pg."PEGE_FECHAINGRESO" DESC';		   
+		   
+     $rows2 = $connection->createCommand($string2)->queryAll();
+	 $cont=1;	 
+	 foreach ($rows2 as $values) {	     	 
+	    $this->descuentos[$cont][0] = $values["PVNL_ID"];
+		$filas[$cont]=$values["PVNO_ID"];
+        $cont++;		
+     }
+	 $this->descuentos[$cont][0] = "Total";
+	 
+	 $string3 = 'SELECT dp."DEPR_DESCRIPCION"
+				 FROM "TBL_NOMDESCUENTOSPRESTACIONES" dp, "TBL_NOMNOVEDADESPRESTACIONES" np, "TBL_NOMPERSONASGENERALES" pg
+				 WHERE dp."DEPR_ID" = np."DEPR_ID" AND np."PEGE_ID" = pg."PEGE_ID" AND pg."PEGE_ID" = '.$personaGeneral.' AND dp."TIPR_ID" = 3
+				 GROUP BY dp."DEPR_ID"
+				 ORDER BY dp."DEPR_ID"';
+		   
+     $rows3 = $connection->createCommand($string3)->queryAll();
+	 //Aqui se arman las columnas del arreglo deduccion con lo alias de cada deduccion.	 
+	 $col = 0;
+	 $this->descuentos[0][$col] = "IDENTIFICACION";
+	 $col=1;	 
+	 foreach ($rows3 as $values) {	
+	   $j=0;
+	   foreach ($values as $value) {      	 
+		$this->descuentos[$j][$col] = $value;
+	    $j++;
+	   }
+       $col++;	 
+     }
+	 $this->descuentos[0][$col] = "TOTAL";
+	 
+	 /*llenando una matriz con todos los descuentos  en $descuentos  */
+	 $m=0; $descuentos = NULL; 
+	 foreach ($rows1 as $values) {	
+	   $n=0;
+	   foreach ($values as $value) {	
+        $descuentos[$m][$n]=$value;
+	   // echo $descuentos[$m][$n]."<br>";
+		$n++;
+	   }
+	   $m++;	
+	 }
+	 
+     //echo "<br><br><br>";
+     $t = count($descuentos);	  
+     $i=1;$j=1;$suma=0;	 
+	 for($x=0;$x<$t;$x++){
+	  //echo "<br><br><br> iteracion = ".$x." cont = ".$cont." i = ".$i." j = ".$j."<br>";
+	  //echo "$descuentos [".$x."]"."[0] = ".$descuentos[$x][0]."<br>";
+	  if ($i>=$cont){
+		  //echo "descuentos [".$i."]"."[".$j."] = ".$suma."<br>";
+		  $this->descuentos[$i][$j]=$suma;
+		  $suma=0;
+		  $i=1;
+		  $j++;
+		}
+		$numero = $descuentos[$x][0]; $idnomina = $descuentos[$x][3];
+		//echo " fila ".$filas[$i]." nomina ".$idnomina." descuento ".$this->descuentos[$i][0]." numero ".$numero."<br>";
+         
+	    while(($filas[$i]!= $idnomina or $this->descuentos[$i][0]!= $numero)){
+		   if ($i>=$cont){
+			  $this->descuentos[$i][$j]=$suma;
+			  $suma=0;
+			  $i=1;
+			  $j++;
+			}			
+			$this->descuentos[$i][$j]=0;
+			$i++;
+		}
+		$valor = $descuentos[$x][2];
+		//echo "descuentos [".$i."]"."[".$j."] = ".$valor."<br>";
+		$this->descuentos[$i][$j] = $descuentos[$x][2];
+		$this->descuentos[$i][$col] = $this->descuentos[$i][$col]+$descuentos[$x][2];
+		$suma=$suma+$descuentos[$x][2];
+		$i++;
+		
+	 }	
+	   //Despues de salir del ciclo verifica si aun falta valores con el sgte siclo
+		while(($filas[$i]!=$idnomina or $this->descuentos[$i][0]!=$numero)){
+			if ($i>=$cont){
+				$this->descuentos[$i][$j]=$suma;
+				$suma=0;
+				$j++;
+				if (($j)<=($col-1))
+					$i=1;
+			}
+			if ($j>($col-1)){$j--;break;}
+			$this->descuentos[$i][$j]=0;
+			$i++;
+		}
+	 
+	}	
+	/**
+	*Finalizando funciones de la liquidacion previa de nomina del empleado
+	*/
 	
 	public function liquidarNomina($Primavacacionesnomina){
 	 $connection = Yii::app()->db; 

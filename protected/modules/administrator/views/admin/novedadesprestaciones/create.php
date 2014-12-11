@@ -59,6 +59,7 @@ $this->breadcrumbs=array(
 	                                                  'Novedadesprestaciones'=>$Novedadesprestaciones,
 			                                          'data'=>$data,
 			                                          'Personasgenerales'=>$Personasgenerales,
+													  'arraynp'=>$arraynp,
 			                                          'id'=>$id,
 													 )
 									  ); 

@@ -1,7 +1,7 @@
 <?php
 Yii::app()->homeUrl = array('/administrator/');
 $this->breadcrumbs=array(
-	'Nomina Mensual'=>Yii::app()->request->urlReferrer,
+	'Prima semestral'=>Yii::app()->request->urlReferrer,
 	'Detalles'
 );
 
@@ -71,7 +71,7 @@ border-right: none;
 			 ?>	               
              </td>
              
-			 <td width="80%"><strong><span><em>DETALLES DE LIQUIDACION NOMINA MENSUAL ( <?php echo $Mensualnominaliquidaciones->MENO_PERIODO; ?> )<br><?php echo $tercero; ?></em></span></strong></td>
+			 <td width="80%"><strong><span><em>DETALLES LIQUIDACION DE PRIMA SEMESTARL ( <?php echo $Semestralnominaliquidaciones->SENO_PERIODO; ?> )<br><?php echo $tercero; ?></em></span></strong></td>
 			 
 			 <td width="10%" align="center">
 			 <?php	 
@@ -92,11 +92,11 @@ border-right: none;
   <tr>
     <td>
 <?php 
-$filas = count($Mensualnominaliquidaciones->liquidacion);
-$columnas = count($Mensualnominaliquidaciones->liquidacion[1]);
-$parafisales = count($Mensualnominaliquidaciones->parafiscales[0]);
+$filas = count($Semestralnominaliquidaciones->liquidacion);
+$columnas = count($Semestralnominaliquidaciones->liquidacion[1]);
+$parafisales = count($Semestralnominaliquidaciones->parafiscales[0]);
 
-$tblD = $Mensualnominaliquidaciones->descuentos;
+$tblD = $Semestralnominaliquidaciones->descuentos;
 $filasTblD = count($tblD);
 $columnasTblD = count($tblD[0]);	
   
@@ -110,20 +110,20 @@ for($i=1;$i<$filas;$i++){
  }
  */
 //echo $Mensualnominaliquidaciones->liquidacion[$i][27];
-$anio=substr($Mensualnominaliquidaciones->liquidacion[$i][26],0,4);    
+$anio=substr($Semestralnominaliquidaciones->liquidacion[$i][11],0,4);    
 $Parametrosglobales = new Parametrosglobales; 	 
 $Parametrosglobales = $Parametrosglobales->getParametrosglobales($anio);
 $valorPunto = $Parametrosglobales[1][3];
-$Mensualnominaliquidaciones->liquidacion[$i][26];
+$Semestralnomina = new Semestralnomina;
+$Semestralnomina->SENO_PERIODO = $Semestralnominaliquidaciones->SENO_PERIODO;
 $Mensualnomina = new Mensualnomina;
-$Mensualnomina->MENO_PERIODO = $Mensualnominaliquidaciones->MENO_PERIODO;
-$Mensualnomina->cargarEmpleoPlanta($Mensualnominaliquidaciones->liquidacion[$i][27]);
 
-if(($Mensualnominaliquidaciones->liquidacion[$i][2])!=0){
+$Mensualnomina->cargarEmpleoPlanta($Semestralnominaliquidaciones->liquidacion[$i][12]);
+
 ?>
 	<table width="100%" border="1" align="center" class="tabla2" >
         <tr>
-         <th colspan="2" align="center">NOMINA DE EMPLEADOS UNIVERSIDAD DE LA GUAJIRA</th>
+         <th colspan="2" align="center">PRIMA SEMESTRAL DE EMPLEADOS UNIVERSIDAD DE LA GUAJIRA</th>
         </tr>
         <tr>
          <th align="center" style="border:1px solid;padding:3px 3px; border-color:#000">INFORMACION BASICA</th>
@@ -137,12 +137,12 @@ if(($Mensualnominaliquidaciones->liquidacion[$i][2])!=0){
               
 			  <tr>
                 <td width="87">Comprobante No.</td>
-                <td width="181"><?php echo $Mensualnominaliquidaciones->liquidacion[$i][26]; ?> - <?php echo $Mensualnominaliquidaciones->liquidacion[$i][1]; ?></td>
+                <td width="181"><?php echo $Semestralnominaliquidaciones->liquidacion[$i][11]; ?> - <?php echo $Semestralnominaliquidaciones->liquidacion[$i][1]; ?></td>
               </tr>
              
 			 <tr>
                 <td width="87">Periodo Liquidación</td>
-                <td width="181"><?php echo $Mensualnomina->MENO_PERIODO; ?></td>
+                <td width="181"><?php echo $Semestralnomina->SENO_PERIODO; ?></td>
               </tr>
              
 			 <tr>
@@ -193,32 +193,32 @@ if(($Mensualnominaliquidaciones->liquidacion[$i][2])!=0){
 		    <table width="100%" border="0" class="tabla2" style="border:1px solid;padding:3px 3px; border-color:#000">
               <tr border="1">
                <th width="246" align="center" style="border:1px solid;padding:3px 3px; border-color:#000">DESCRIPCION</th>
-               <th width="66" align="center" style="border:1px solid;padding:3px 3px;border-color:#000">DIAS</th>
+               <th width="66" align="center" style="border:1px solid;padding:3px 3px;border-color:#000">MESES</th>
                <th width="110" align="center" style="border:1px solid;padding:3px 3px;border-color:#000">DEVENGADOS</th>
                <th width="110" align="center" style="border:1px solid;padding:3px 3px;border-color:#000">DEDUCCIONES</th>
                <th width="110" align="center" style="border:1px solid;padding:3px 3px;border-color:#000">NETO</th>
               </tr>
               <tr>
 	           <td>SUELDO(<?php  echo number_format($Mensualnomina->Empleoplanta->EMPL_SUELDO); ?>)</td>
-			   <td align='center'><?php echo $Mensualnominaliquidaciones->liquidacion[$i][2]; ?></td>
-			   <td align='right'><?php echo number_format($Mensualnominaliquidaciones->liquidacion[$i][4]); ?></td>
+			   <td align='center'><?php echo $Semestralnominaliquidaciones->liquidacion[$i][2]; ?></td>
+			   <td align='right'><?php echo number_format($Semestralnominaliquidaciones->liquidacion[$i][4]); ?></td>
 	           <td>&nbsp;</td>
 		       <td>&nbsp;</td>
 		      </tr>
-			  <?php
+			 <?php
 			  /* antiguedad, transporte y alimentacion*/
-			  for ($ln=5;$ln<8;$ln++){
-			   if($Mensualnominaliquidaciones->liquidacion[$i][$ln]!=0){
+			  for ($ln=5;$ln<11;$ln++){
+			   if($Semestralnominaliquidaciones->liquidacion[$i][$ln]!=0){
 			  if ($ln==5){
-		  		$antig = $Mensualnomina->Personageneral->getAntiguedad($Mensualnominaliquidaciones->liquidacion[$i][26])." A";
+		  		$antig = $Mensualnomina->Personageneral->getAntiguedad($Semestralnominaliquidaciones->liquidacion[$i][11])." A";
 		  		}else{
 					  $antig = "&nbsp;";
 			         }
 			  ?>
 	          <tr>
-		       <td><?php echo $Mensualnominaliquidaciones->liquidacion[0][$ln];?> </td>
+		       <td><?php echo $Semestralnominaliquidaciones->liquidacion[0][$ln];?> </td>
 		       <td align='center'><?php echo $antig; ?></td>
-		       <td align='right'><?php echo number_format($Mensualnominaliquidaciones->liquidacion[$i][$ln]); ?></td>
+		       <td align='right'><?php echo number_format($Semestralnominaliquidaciones->liquidacion[$i][$ln]); ?></td>
 		       <td>&nbsp;</td>
 		       <td>&nbsp;</td>
 		      </tr>
@@ -227,90 +227,23 @@ if(($Mensualnominaliquidaciones->liquidacion[$i][2])!=0){
               }
 			  ?>
 			  
-			  <?php
-			  /* horas extras */
-			  for ($ln=8;$ln<22;$ln=$ln+2){
-			   if($Mensualnominaliquidaciones->liquidacion[$i][$ln]!=0){
-			  ?>
-			  <tr>
-		       <td><?php echo $Mensualnominaliquidaciones->liquidacion[0][$ln+1];?></td>
-		       <td align='center'><?php echo number_format($Mensualnominaliquidaciones->liquidacion[$i][$ln]); ?></td>
-		       <td align='right' ><?php echo number_format($Mensualnominaliquidaciones->liquidacion[$i][$ln+1]); ?></td>
-		       <td>&nbsp;</td>
-		       <td>&nbsp;</td>
-		      </tr>
 			 <?php
-               }
-              }
-			  ?>
-			  <?php
-			  /*prima tecnica, gastos, bonificacion, prima de vacaciones*/
-			  for ($ln=22;$ln<26;$ln++){
-			   if($Mensualnominaliquidaciones->liquidacion[$i][$ln]!=0){
-			  ?>
-			  <tr>
-		       <td><?php echo $Mensualnominaliquidaciones->liquidacion[0][$ln];?></td>
-		       <td align='center'>&nbsp;</td>
-		       <td align='right'><?php echo number_format($Mensualnominaliquidaciones->liquidacion[$i][$ln]); ?></td>
-		       <td>&nbsp;</td>
-		       <td>&nbsp;</td>
-		      </tr>
-			  <?php
-               }
-              }
-			  ?>
-			  
-		      <?php  
-			  /*parafiscales parte 1*/
-			  /*salud, persion y sindicato*/
-			  for ($ln=1;$ln<6;$ln=$ln+2){
-			   if($Mensualnominaliquidaciones->parafiscales[$i][$ln+1]!=0){
-			   ?>
-			  <tr>
-               <?php			  
-			   if($ln==1){
-				$Salud = Salud::model()->findByPk($Mensualnominaliquidaciones->parafiscales[$i][$ln]);
-				?>
-			   <td><?php echo $Mensualnominaliquidaciones->parafiscales[0][$ln+1];?> (<?php echo $Salud->SALU_NOMBRE;?>)</td>			  
-			    <?php
-			    }elseif($ln==3){
-				$Pension = Pension::model()->findByPk($Mensualnominaliquidaciones->parafiscales[$i][$ln]);
-			    ?>
-		       <td><?php echo $Mensualnominaliquidaciones->parafiscales[0][$ln+1];?> (<?php echo $Pension->PENS_NOMBRE;?>)</td>
-		        <?php
-			    }elseif($ln==5){
-				$Sindicatos = Sindicatos::model()->findByPk($Mensualnominaliquidaciones->parafiscales[$i][$ln]);
-				?>
-		       <td><?php echo $Mensualnominaliquidaciones->parafiscales[0][$ln+1];?> (<?php echo $Sindicatos->SIND_NOMBRE;?>)</td>
-		        <?php
-			    }
-				?>			   
-			   <td>&nbsp;</td>
-		       <td>&nbsp;</td>
-			   <td align='right'><?php echo number_format($Mensualnominaliquidaciones->parafiscales[$i][$ln+1]); ?></td>		       
-		       <td>&nbsp;</td>
-		      </tr>
-			  <?php
-               }
-              }
-			  ?>
-			  
-			  <?php
 			  /*parafiscales parte 2*/
-			  for ($ln=7;$ln<11;$ln++){
-			   if($Mensualnominaliquidaciones->parafiscales[$i][$ln]!=0){
+			  for ($ln=1;$ln<2;$ln++){
+			   if($Semestralnominaliquidaciones->parafiscales[$i][$ln]!=0){
 			  ?>
 			  <tr>
-		       <td><?php echo $Mensualnominaliquidaciones->parafiscales[0][$ln];?></td>
+		       <td><?php echo $Semestralnominaliquidaciones->parafiscales[0][$ln];?></td>
 		       <td>&nbsp;</td>
 		       <td>&nbsp;</td>
-		       <td align='right'><?php echo number_format($Mensualnominaliquidaciones->parafiscales[$i][$ln]); ?></td>
+		       <td align='right'><?php echo number_format($Semestralnominaliquidaciones->parafiscales[$i][$ln]); ?></td>
 		       <td>&nbsp;</td>
 		      </tr>
 			  <?php
                }
               }
 			  ?>
+			  
 		      <?php
 			  for ($c=1;$c<($columnasTblD-1);$c++){
 			   if ($tblD[$i][$c]!=0){
@@ -328,9 +261,9 @@ if(($Mensualnominaliquidaciones->liquidacion[$i][2])!=0){
 			  ?>		
 	          <tr>
 	           <td colspan='2' style='border-top:1px solid;padding:3px 3px;border-color:#000'>TOTALES</td>
-	           <td align='right' style='border-top:1px solid;padding:3px 3px;border-color:#000'><?php echo number_format($Mensualnominaliquidaciones->liquidacion[$i][$columnas-2]); ?></td>
-	           <td align='right' style='border-top:1px solid;padding:3px 3px;border-color:#000'><?php echo number_format(($Mensualnominaliquidaciones->parafiscales[$i][$parafisales-1])+($tblD[$i][$columnasTblD-1])); ?></td>
-	           <td align='right' style='border-top:1px solid;padding:3px 3px;border-color:#000'><?php echo number_format(($Mensualnominaliquidaciones->liquidacion[$i][$columnas-2])-(($Mensualnominaliquidaciones->parafiscales[$i][$parafisales-1])+($tblD[$i][$columnasTblD-1]))); ?></td>
+	           <td align='right' style='border-top:1px solid;padding:3px 3px;border-color:#000'><?php echo number_format($Semestralnominaliquidaciones->liquidacion[$i][$columnas-2]); ?></td>
+	           <td align='right' style='border-top:1px solid;padding:3px 3px;border-color:#000'><?php echo number_format(($Semestralnominaliquidaciones->parafiscales[$i][$parafisales-1])+($tblD[$i][$columnasTblD-1])); ?></td>
+	           <td align='right' style='border-top:1px solid;padding:3px 3px;border-color:#000'><?php echo number_format(($Semestralnominaliquidaciones->liquidacion[$i][$columnas-2])-(($Semestralnominaliquidaciones->parafiscales[$i][$parafisales-1])+($tblD[$i][$columnasTblD-1]))); ?></td>
 	          </tr>
 			  
             </table>
@@ -343,7 +276,6 @@ if(($Mensualnominaliquidaciones->liquidacion[$i][2])!=0){
   <div><hr></hr></div>
 <?php
 	}	
-  }	
 ?>	
     </td>
   </tr>

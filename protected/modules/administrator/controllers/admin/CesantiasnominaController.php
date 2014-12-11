@@ -238,6 +238,23 @@ class CesantiasnominaController extends Controller
 			'model'=>$model,
 		));
 	}
+	
+	public function actionSetEstado($id)
+	{
+		
+		$Cesantiasnomina=$this->loadModel($id);		
+		if($Cesantiasnomina->CENO_ESTADO==1){
+		 Yii::app()->user->setFlash('warning','<strong>Oppss!. </strong> La Nomina de: <strong>'.$Cesantiasnomina->CENO_PERIODO.'</strong> se encuentra <strong>PAGADA</strong>, por lo tanto no se puede modificar el estado.');
+		}else{
+		      $Cesantiasnomina->CENO_ESTADO = 1;
+			  $Cesantiasnomina->CENO_FECHACAMBIO =  date('Y-m-d H:i:s');
+			  $Cesantiasnomina->CENO_REGISTRADOPOR = Yii::app()->user->id;
+		      $Cesantiasnomina->save();
+			  Yii::app()->user->setFlash('success',' EL estado de la nomina de: <strong>'.$Cesantiasnomina->CENO_PERIODO.'</strong> ha sido cambiado a <strong>PAGADA</strong> exitosamente...');
+			 }
+	
+	    $this->redirect(array('admin'));
+	}
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

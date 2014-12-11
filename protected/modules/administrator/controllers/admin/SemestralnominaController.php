@@ -39,7 +39,7 @@ class SemestralnominaController extends Controller
         return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'','views',
-                                 'delete','admin','create','update','search',  
+                                 'delete','admin','create','update','search','setEstado', 
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
 			),			
@@ -241,6 +241,23 @@ class SemestralnominaController extends Controller
 		$this->render('admin',array(
 			'model'=>$model,
 		));
+	}
+	
+	public function actionSetEstado($id)
+	{
+		
+		$Semestralnomina=$this->loadModel($id);		
+		if($Semestralnomina->SENO_ESTADO==1){
+		 Yii::app()->user->setFlash('warning','<strong>Oppss!. </strong> La Nomina de: <strong>'.$Semestralnomina->SENO_PERIODO.'</strong> se encuentra <strong>PAGADA</strong>, por lo tanto no se puede modificar el estado.');
+		}else{
+		      $Semestralnomina->SENO_ESTADO = 1;
+			  $Semestralnomina->SENO_FECHACAMBIO =  date('Y-m-d H:i:s');
+			  $Semestralnomina->SENO_REGISTRADOPOR = Yii::app()->user->id;
+		      $Semestralnomina->save();
+			  Yii::app()->user->setFlash('success',' EL estado de la nomina de: <strong>'.$Semestralnomina->SENO_PERIODO.'</strong> ha sido cambiado a <strong>PAGADA</strong> exitosamente...');
+			 }
+	
+	    $this->redirect(array('admin'));
 	}
 
 	/**

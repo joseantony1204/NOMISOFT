@@ -41,7 +41,7 @@ class SemestralnominaliquidacionesController extends Controller
 				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'',''.$array[5].'',
                                  ''.$array[6].'','admin','create','update','totales','detalles','resumen','planopagoexcel',
 								 'planoporunidades','planogeneral','planoresumen','descuento','downdescuento',
-								 'retefuente','downretefuente','mail',
+								 'retefuente','downretefuente','mail','preview',
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
 			),			
@@ -185,6 +185,25 @@ class SemestralnominaliquidacionesController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+	
+	public function actionPreview($personaGeneral,$id)
+	{
+		$Semestralnominaliquidaciones = new Semestralnomina;
+		$Semestralnominaliquidaciones->SENO_FECHAPROCESO = date("Y-m-d");
+		$Semestralnominaliquidaciones->SENO_ID = date("Y", strtotime($Semestralnominaliquidaciones->SENO_FECHAPROCESO)).date("m", strtotime($Semestralnominaliquidaciones->SENO_FECHAPROCESO))."11";          
+		$Semestralnominaliquidaciones->SENO_ESTADO = "f"; 			
+		$Semestralnominaliquidaciones->SENO_ANIO = date("Y",strtotime($Semestralnominaliquidaciones->SENO_FECHAPROCESO)); 			
+		$Semestralnominaliquidaciones->SENO_PERIODO = 'PRIMA SEMESTRAL '.$Semestralnominaliquidaciones->SENO_ANIO;
+		$Semestralnominaliquidaciones->SENO_FECHACAMBIO =  date('Y-m-d H:i:s');
+		$Semestralnominaliquidaciones->SENO_REGISTRADOPOR = Yii::app()->user->id;
+		$Semestralnominaliquidaciones->previewLiquidation($Semestralnominaliquidaciones,$personaGeneral);
+
+		$this->render('preview',array(
+			'Semestralnominaliquidaciones'=>$Semestralnominaliquidaciones,			
+			'personaGeneral'=>$personaGeneral,
+			'id'=>$id,
+		));
 	}
 	
 	public function actionTotales($semestralNomina=NULL,$semestralNomina2=NULL,$personaGral=NULL,$unidad=NULL,$tipoEmpleo=NULL)

@@ -41,7 +41,7 @@ class VacacionesnominaliquidacionesController extends Controller
 				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'','preview',
                                  ''.$array[6].'','admin','create','update','totales','detalles','resumen','planopagoexcel',
 								 'planoporunidades','planogeneral','planoresumen','descuento','downdescuento',
-								 'retefuente','downretefuente','mail', 
+								 'retefuente','downretefuente','mail','planocesantias', 
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
 			),			
@@ -355,6 +355,26 @@ class VacacionesnominaliquidacionesController extends Controller
 			'unidad'=>$unidad,
 			'tipoEmpleo'=>$tipoEmpleo,
 			'idDescuento'=>$idDescuento,
+		));
+		
+	}
+	
+	public function actionPlanocesantias($vacacionesNomina=NULL)
+	{
+		$Vacacionesnominaliquidaciones = new Vacacionesnominaliquidaciones;
+		if($vacacionesNomina!=NULL){
+		 $sql = ' vn."VANO_ID" = '.$vacacionesNomina.' ';
+		 $model=Vacacionesnomina::model()->findByPk($vacacionesNomina);
+		 $Periodo = trim($model->VANO_PERIODO);
+		}
+		
+        
+		$Vacacionesnominaliquidaciones->mostrarLiquidacion($sql);
+		
+		$this->render('planocesantias',array(
+			'Vacacionesnominaliquidaciones'=>$Vacacionesnominaliquidaciones,			
+			'vacacionesNomina'=>$vacacionesNomina,
+            'Periodo'=>$Periodo,			
 		));
 		
 	}
