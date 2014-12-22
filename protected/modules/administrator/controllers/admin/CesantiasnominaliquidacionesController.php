@@ -314,10 +314,12 @@ class CesantiasnominaliquidacionesController extends Controller
 	{
 		$Cesantiasnominaliquidaciones = new Cesantiasnominaliquidaciones;
 		$lista = $this->setParametros($cesantiasNomina,$cesantiasNomina2,$personaGral,$unidad,$tipoEmpleo);
-		 	
+		$Email = new Email;
+		
 		$Cesantiasnominaliquidaciones->mostrarLiquidacion($lista['sql']);		
 		$this->render('mail',array(
 			'Cesantiasnominaliquidaciones'=>$Cesantiasnominaliquidaciones,
+			'Email'=>$Email,
 			'Periodo'=>$lista['Periodo'],
 			'tercero'=>$lista['tercero'],
 			'cesantiasNomina'=>$cesantiasNomina,

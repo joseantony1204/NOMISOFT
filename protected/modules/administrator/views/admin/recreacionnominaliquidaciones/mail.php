@@ -1,4 +1,5 @@
 <?php
+set_time_limit(0);
 Yii::import('application.extensions.mail.');
 $phpExcelPath = Yii::getPathOfAlias('ext.mail');
 include($phpExcelPath . DIRECTORY_SEPARATOR . 'class.phpmailer.php');
@@ -179,7 +180,7 @@ $Mensualnomina->cargarEmpleoPlanta($Recreacionnominaliquidaciones->liquidacion[$
         <tr valign="top">
          <td width="45%">
 			
-			<table width="100%" border="1" CELLSPACING="0" class="tabla2">
+			<table width="100%" border="1" rules="all" class="tabla2">
               
 			  <tr>
                 <td width="87">Comprobante No.</td>
@@ -244,7 +245,7 @@ $Mensualnomina->cargarEmpleoPlanta($Recreacionnominaliquidaciones->liquidacion[$
 			
          <td width="55%" >
 			
-		    <table width="100%" border="0" class="tabla2" style="border:1px solid;padding:3px 3px; border-color:#000">
+		    <table width="100%" border="1" class="tabla2" rules="cols">
               <tr border="1">
                <th width="246" align="center" style="border:1px solid;padding:3px 3px; border-color:#000">DESCRIPCION</th>
                <th width="66" align="center" style="border:1px solid;padding:3px 3px;border-color:#000">MESES</th>

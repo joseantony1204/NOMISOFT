@@ -78,7 +78,7 @@ border-right: none;
 			 ?>	               
              </td>
              
-			 <td width="60%"><strong><span><em>DETALLES DE LIQUIDACION NOMINA DE CESANTIAS ( <?php echo $Periodo; ?> )<br><?php echo $tercero; ?></em></span></strong></td>
+			 <td width="70%"><strong><span><em>DETALLES DE LIQUIDACION NOMINA DE CESANTIAS ( <?php echo $Periodo; ?> )<br><?php echo $tercero; ?></em></span></strong></td>
 			 
 			 <td width="10%" align="center">
 			 <?php	 
@@ -97,15 +97,6 @@ border-right: none;
 		     echo CHtml::link($image, $url, $htmlOptions); 
              ?>           
              </td>
-			 
-			 <td width="10%" align="center">
-			 <?php				 
-			 $imageUrl = Yii::app()->request->baseUrl . '/images/icon_download_pdf.png';
-			 $htmlOptions = array('class' => 'thumbnail','rel' => 'tooltip','data-title' => 'Descargar Formato PDF');
-			 $image = CHtml::image($imageUrl);
-			 echo CHtml::link($image, array('admin/cesantiasnominaliquidaciones/create',),$htmlOptions ); 
-             ?>         
-			 </td>
            
 		   </tr>
         </table>

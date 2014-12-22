@@ -447,10 +447,11 @@ class VacacionesnominaliquidacionesController extends Controller
 	{
 		$Vacacionesnominaliquidaciones = new Vacacionesnominaliquidaciones;
 		$lista = $this->setParametros($vacacionesNomina,$vacacionesNomina2,$personaGral,$unidad,$tipoEmpleo);
-		 	
+		$Email = new Email;	
 		$Vacacionesnominaliquidaciones->mostrarLiquidacion($lista['sql']);		
 		$this->render('mail',array(
 			'Vacacionesnominaliquidaciones'=>$Vacacionesnominaliquidaciones,
+			'Email'=>$Email,
 			'Periodo'=>$lista['Periodo'],
 			'tercero'=>$lista['tercero'],
 			'vacacionesNomina'=>$vacacionesNomina,

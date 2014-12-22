@@ -1,7 +1,7 @@
 <?php
 Yii::app()->homeUrl = array('/administrator/');
 $this->breadcrumbs=array(
-	'Cesantias'=>array('admin/cesantiasnomina/admin'),
+	'Nomina Cesantias'=>array('admin/cesantiasnomina/admin'),
 	'Totales'
 );
 

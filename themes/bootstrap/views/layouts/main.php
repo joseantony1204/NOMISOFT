@@ -515,11 +515,13 @@
                     '---',
                     array('label'=>'NOTIFICACIONES E-MAIL'),
 					array('label'=>'Mensual', 'url'=>array('/administrator/admin/email/admin','id'=>1), 'visible'=>!Yii::app()->user->isGuest,),
-                    array('label'=>'Prima Semestral', 'url'=>array('/administrator/admin/email/admin','id'=>2), 'visible'=>!Yii::app()->user->isGuest,),
+                    array('label'=>'Retroactivos',  'url'=>array('/administrator/admin/email/admin','id'=>6), 'visible'=>!Yii::app()->user->isGuest,),
+					array('label'=>'Prima Semestral', 'url'=>array('/administrator/admin/email/admin','id'=>2), 'visible'=>!Yii::app()->user->isGuest,),
 					array('label'=>'Prima Navidad', 'url'=>array('/administrator/admin/email/admin','id'=>3), 'visible'=>!Yii::app()->user->isGuest,),
 					array('label'=>'Prima Vacaciones',  'url'=>array('/administrator/admin/email/admin','id'=>4), 'visible'=>!Yii::app()->user->isGuest,),
 					array('label'=>'Vacaciones',  'url'=>array('/administrator/admin/email/admin','id'=>5), 'visible'=>!Yii::app()->user->isGuest,),
-					array('label'=>'Retroactivos',  'url'=>array('/administrator/admin/email/admin','id'=>6), 'visible'=>!Yii::app()->user->isGuest,),
+					array('label'=>'Cesantias',  'url'=>array('/administrator/admin/email/admin','id'=>7), 'visible'=>!Yii::app()->user->isGuest,),
+					
 					
                 )),
 				/**

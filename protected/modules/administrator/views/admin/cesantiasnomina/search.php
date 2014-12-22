@@ -1,7 +1,7 @@
 <?php
 Yii::app()->homeUrl = array('/administrator/');
 $this->breadcrumbs=array(
-	'Nomina Cesantias'=>array('admin/recreacionnomina/search'),
+	'Nomina Cesantias'=>array('admin/cesantiasnomina/search'),
 	'Busqueda Avanzada',
 );
 
@@ -132,7 +132,7 @@ function validar(form){
 		var unidad = $("#Informes_INFO_UNIDAD").val();
 		var tipoEmpleado = $("#Informes_INFO_CARGO").val();
 		
-		window.location=("/NOMINA/administrator/admin/cesantiasnominaliquidaciones/mail/cesantiasNomina/"+anioInicial+mesInicial+"71/cesantiasNomina/"+anioFinal+mesFinal+"71/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
+		window.location=("/NOMINA/administrator/admin/cesantiasnominaliquidaciones/mail/cesantiasNomina/"+anioInicial+mesInicial+"71/cesantiasNomina2/"+anioFinal+mesFinal+"71/unidad/"+unidad+"/personaGral/"+identificacion+"/tipoEmpleo/"+tipoEmpleado);
 	  }
 	}
 </script>
@@ -153,7 +153,7 @@ function validar(form){
 					  ?>         
 					               
              </td>
-             <td width="63%"><strong><span><em>ADMINISTRACION DE REPORTES NOMINA RECREACION [ Busqueda Avanzada ] </em></span></strong></td>
+             <td width="63%"><strong><span><em>ADMINISTRACION DE REPORTES NOMINA CESANTIAS [ Busqueda Avanzada ] </em></span></strong></td>
 			 <td width="13%" align="center">
 					 <?php
 
@@ -161,7 +161,7 @@ function validar(form){
 					 $imageUrl = Yii::app()->request->baseUrl . '/images/regresar.png';
 					 $htmlOptions = array('class' => 'thumbnail','rel' => 'tooltip','data-title' => 'Regresar');
 					 $image = CHtml::image($imageUrl);
-					 echo CHtml::link($image, array('admin/recreacionnomina/admin',),$htmlOptions ); 
+					 echo CHtml::link($image, array('admin/cesantiasnomina/admin',),$htmlOptions ); 
 ?>         
 					              </td>
              <td width="13%" align="center">
@@ -171,7 +171,7 @@ function validar(form){
 					 $imageUrl = Yii::app()->request->baseUrl . '/images/refrescar.png';
 					 $htmlOptions = array('class' => 'thumbnail','rel' => 'tooltip','data-title' => 'Refrescar Pagina');
 					 $image = CHtml::image($imageUrl);
-					 echo CHtml::link($image, array('admin/recreacionnomina/search',),$htmlOptions ); 
+					 echo CHtml::link($image, array('admin/cesantiasnomina/search',),$htmlOptions ); 
 ?>         
 					              </td>
            </tr>
@@ -232,10 +232,10 @@ function validar(form){
                <td width="25%" align="center">
 			   <?php 
 		       $criterio = new CDbCriteria;
-		       $criterio ->select = '"VANO_ANIO"';
-		       $criterio->group = '"VANO_ANIO"'; 
-			   $criterio->order = '"VANO_ANIO" DESC';    
-		       $anios = CHtml::listData(Vacacionesnomina::model()->findAll($criterio),'VANO_ANIO','VANO_ANIO');
+		       $criterio ->select = '"CENO_ANIO"';
+		       $criterio->group = '"CENO_ANIO"'; 
+			   $criterio->order = '"CENO_ANIO" DESC';    
+		       $anios = CHtml::listData(Cesantiasnomina::model()->findAll($criterio),'CENO_ANIO','CENO_ANIO');
 		       ?>	      
 	               
                <?php echo $form->labelEx($Informes,'INFO_ANIOINICIO'); ?>
