@@ -403,7 +403,7 @@ class Vacacionesnomina extends CActiveRecord
 	 **/
 	 $sql = 'SELECT pg."PEGE_ID" 
 	         FROM "TBL_NOMPERSONASGENERALES" pg, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMMENSUALNOMINALIQUIDACIONES" mnl
-             WHERE pg."PEGE_ID" = ep."PEGE_ID" AND ep."EMPL_ID" = mnl."EMPL_ID" AND pg."PEGE_ID" = 1130 /*1420 2990 1130 1580*/
+             WHERE pg."PEGE_ID" = ep."PEGE_ID" AND ep."EMPL_ID" = mnl."EMPL_ID" /*AND pg."PEGE_ID" = 1130*/ /*1420 2990 1130 1580*/
              GROUP BY pg."PEGE_ID"
              ORDER BY pg."PEGE_ID" ASC';	
 	 $personas = $connection->createCommand($sql)->queryAll();	
@@ -548,7 +548,7 @@ class Vacacionesnomina extends CActiveRecord
 					  ) t
 			   ';
 		$bonificacion = $connection->createCommand($sql)->queryScalar();
-		return round($bonificacion/30*$this->diasvacaciones);	           
+		return round($bonificacion);	           
 	  }else{
 	         return 0; 
 	       }

@@ -87,7 +87,7 @@ class MensualnominaController extends Controller
 			$Mensualnomina->attributes=$_POST['Mensualnomina'];
 			$Informes->attributes=$_POST['Informes'];
 			$Mensualnomina->MENO_PERIODO = $_POST['Mensualnomina']['MENO_PERIODO'];
-			$codigo = $Mensualnomina->MENO_ANIO.$Mensualnomina->MENO_PERIODO[0].$Informes->INFO_CORTE = '0'.$_POST['Informes']['INFO_CORTE'];	        
+			$codigo = $Mensualnomina->MENO_ANIO.$Mensualnomina->MENO_PERIODO[0].$Informes->INFO_CORTE = '0'.(int)$_POST['Informes']['INFO_CORTE'];	        
 			$Mensualnomina->MENO_ID = $codigo;		
 	        $Mensualnomina->MENO_PERIODO = $Mensualnomina->periodoNomina($Mensualnomina->MENO_ID);         
 			$Mensualnomina->MENO_ESTADO = "0"; 							

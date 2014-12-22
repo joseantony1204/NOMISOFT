@@ -49,6 +49,22 @@ class CatedrasController extends Controller
 		);
 	  }else{ return array( array('deny','users'=>array('*'),),);}
 	}
+	
+	public function actionNv()
+	 {
+		/*$connection = Yii::app()->db3;
+	    $sql = 'SELECT c."CATE_ID"
+				FROM "TBL_CATCATEDRAS" c 
+				ORDER BY c."CATE_ID" ASC';
+		
+	    $result = $connection->createCommand($sql)->queryAll();	
+		
+		foreach($result as $registro){
+		$Catedra = Catedras::model()->findByPk($registro['CATE_ID']);
+		echo $Catedra->CATE_ID.' '.$Catedra->PEGE_ID.'<br>';
+		$Catedra->defaultDescuentosMensuales($Catedra->CATE_ID); 
+		}*/
+	 }
 
 	/**
 	 * Displays a particular model.
@@ -109,6 +125,7 @@ class CatedrasController extends Controller
 			$Catedras->attributes=$_POST['Catedras'];
 			$Facultades = Facultades::model()->findByPk($Catedras->FACU_ID);
 			$Catedras->CATE_CATEDRA = 'CATEDRA EN: '.$Facultades->FACU_NOMBRE;
+			$Catedras->CATE_ARCHIVO = 'NULL';
 			
 	        $Catedras->CATE_FECHACAMBIO =  date('Y-m-d H:i:s');
 			$Catedras->CATE_REGISTRADOPOR = Yii::app()->user->id;			 

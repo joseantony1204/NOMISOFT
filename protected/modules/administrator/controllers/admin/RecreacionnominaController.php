@@ -87,7 +87,7 @@ class RecreacionnominaController extends Controller
 			$Recreacionnomina->attributes=$_POST['Recreacionnomina'];
 	        $Recreacionnomina->RENO_ID = date("Y", strtotime($Recreacionnomina->RENO_FECHAPROCESO)).date("m", strtotime($Recreacionnomina->RENO_FECHAPROCESO))."51"; 
 	        $Recreacionnomina->RENO_ANIO = date("Y",strtotime($Recreacionnomina->RENO_FECHAPROCESO));
-			$Recreacionnomina->RENO_PERIODO = 'RECRACION '.$Recreacionnomina->RENO_ANIO;         
+			$Recreacionnomina->RENO_PERIODO = 'RECREACION DE '.$Recreacionnomina->RENO_ANIO;         
 			$Recreacionnomina->RENO_ESTADO = 0; 			
 			 			
 			$Recreacionnomina->RENO_FECHACAMBIO =  date('Y-m-d H:i:s');

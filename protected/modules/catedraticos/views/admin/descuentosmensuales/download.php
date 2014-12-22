@@ -2,7 +2,7 @@
 $filas = count($Descuentosmensuales->deducciones);
 $columnas = count($Descuentosmensuales->deducciones[1]);
  
- $path = ("reportes\\terceros\\");
+ $path = ("reportes/terceros/");
  $file = ("descuento");
  $realPath = $path.$file; 
  $modo="w";

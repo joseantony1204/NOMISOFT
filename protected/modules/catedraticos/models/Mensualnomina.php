@@ -260,7 +260,9 @@ class Mensualnomina extends CActiveRecord
                        '.$Mensualnomina->MENO_ID.' AS "MENO_ID", c."CATE_ID",  
                        ROUND(("CATE_NUMHORAS"*"CATE_VALORHORA")) AS "TOTAL_DEVENGADO"
 				FROM "TBL_CATPERSONASGENERALES" p, "TBL_CATSINDICATOS" s, "TBL_CATCATEDRAS" c, "TBL_CATPERIODOSACADEMICOS" pa
-				WHERE p."PEGE_ID" = c."PEGE_ID" AND p."PEGE_ID" = '.$id.' AND p."SIND_ID" = s."SIND_ID" AND c."PEAC_ID" = pa."PEAC_ID" AND pa."PEAC_ESTADO" = 1
+				WHERE p."PEGE_ID" = c."PEGE_ID" AND p."PEGE_ID" = '.$id.' AND p."SIND_ID" = s."SIND_ID" 
+				AND c."PEAC_ID" = pa."PEAC_ID" AND pa."PEAC_ESTADO" = 1
+				ORDER BY c."CATE_ID" DESC
 				';
 	 $query = $connection->createCommand($sql)->queryAll();
 	 
@@ -304,7 +306,8 @@ class Mensualnomina extends CActiveRecord
                        '.$Mensualnomina->MENO_ID.' AS "MENO_ID", c."CATE_ID",
 					   (0+0+ROUND(("SIND_PORCENTAJE"/100*("CATE_NUMHORAS"*"CATE_VALORHORA")),2)+(("CATE_NUMHORAS"*"CATE_VALORHORA")*0.01)+0) AS "MENL_PARAFISCALES"
 				FROM "TBL_CATPERSONASGENERALES" p, "TBL_CATSINDICATOS" s, "TBL_CATCATEDRAS" c, "TBL_CATPERIODOSACADEMICOS" pa
-				WHERE p."PEGE_ID" = c."PEGE_ID" AND p."PEGE_ID" = '.$id.' AND p."SIND_ID" = s."SIND_ID" AND c."PEAC_ID" = pa."PEAC_ID" AND pa."PEAC_ESTADO" = 1
+				WHERE p."PEGE_ID" = c."PEGE_ID" AND p."PEGE_ID" = '.$id.' AND p."SIND_ID" = s."SIND_ID" AND c."PEAC_ID" = pa."PEAC_ID" 
+				AND pa."PEAC_ESTADO" = 1 ORDER BY c."CATE_ID" DESC
 				';
 	 $query = $connection->createCommand($sql)->queryAll();
 
@@ -359,7 +362,7 @@ class Mensualnomina extends CActiveRecord
 				 FROM "TBL_CATDESCUENTOSMENSUALES" dm, "TBL_CATNOVEDADESMENSUALES" nm, "TBL_CATCATEDRAS" c, "TBL_CATPERIODOSACADEMICOS" pa
 				 WHERE dm."DEME_ID" = nm."DEME_ID" AND nm."CATE_ID" = c."CATE_ID" AND c."PEGE_ID" = '.$id.'
 				 AND c."PEAC_ID" = pa."PEAC_ID" AND pa."PEAC_ESTADO" = 1 
-				 ORDER BY dm."DEME_ID", c."CATE_ID" ASC';
+				 ORDER BY dm."DEME_ID", c."CATE_ID" DESC';
 		   
      $rows1 = $connection->createCommand($string1)->queryAll();
 	 
@@ -368,7 +371,7 @@ class Mensualnomina extends CActiveRecord
 				  WHERE dm."DEME_ID" = nm."DEME_ID" AND nm."CATE_ID" = c."CATE_ID" AND c."PEGE_ID" = '.$id.'
 			      AND c."PEAC_ID" = pa."PEAC_ID" AND pa."PEAC_ESTADO" = 1 
 				  GROUP BY c."CATE_ID"
-			      ORDER BY c."CATE_ID" ASC';		   
+			      ORDER BY c."CATE_ID" DESC';		   
 		   
      $rows2 = $connection->createCommand($string2)->queryAll();
 	 $cont=1;	 

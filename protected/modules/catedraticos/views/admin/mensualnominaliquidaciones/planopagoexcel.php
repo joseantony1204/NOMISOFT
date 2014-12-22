@@ -65,7 +65,7 @@ $objPHPExcel->getActiveSheet()->getStyle('D2:D'.$fxls)->getNumberFormat()->setFo
 	$objPHPExcel->getActiveSheet()->setTitle('PagoPlanta'.$mensualNomina);
 	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 	
-	$objWriter->save('reportes/pagomes/TotalPlano.xlsx');
+	$objWriter->save('TotalPlano.xlsx');
     header('Content-Type: application/vnd.ms-excel');
     header('Content-Disposition: attachment;filename="PAGOMES.xls"');
     header('Cache-Control: max-age=0');

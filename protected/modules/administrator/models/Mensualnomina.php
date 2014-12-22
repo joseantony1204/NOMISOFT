@@ -872,13 +872,13 @@ class Mensualnomina extends CActiveRecord
 	   /* 03. inicio calcular valor BSP devolverlo-------*/		  
 	   if (($this->Empleoplanta->EMPL_SUELDO)+($this->getPrimaTecnica())+($this->getGastosRepresentacion())+$prantiguedad[0]>$bon){
 		$bon_s_pres = (($this->Empleoplanta->EMPL_SUELDO)+($this->getPrimaTecnica())+($this->getGastosRepresentacion())+ round($prantiguedad[0]))*($this->valorestablecidos[8][3]/100);
-		$this->Empleoplanta->EMPL_DIASAPAGAR = $diastemporal;
 		$valor = (($bon_s_pres)/30)*($this->Empleoplanta->EMPL_DIASAPAGAR);
+		$this->Empleoplanta->EMPL_DIASAPAGAR = $diastemporal;
 		return ($valor);
 	   }else{
 			 $bon_s_pres = (($this->Empleoplanta->EMPL_SUELDO)+($this->getPrimaTecnica())+($this->getGastosRepresentacion())+round($prantiguedad[0]))*($this->valorestablecidos[9][3]/100);	
-			 $this->Empleoplanta->EMPL_DIASAPAGAR = $diastemporal;
 			 $valor = (($bon_s_pres)/30)*($this->Empleoplanta->EMPL_DIASAPAGAR);
+			 $this->Empleoplanta->EMPL_DIASAPAGAR = $diastemporal;
 			 return ($valor);
 			}
 	   /* 03. fin calcular valor BSP devolverlo---------*/
@@ -917,11 +917,12 @@ class Mensualnomina extends CActiveRecord
 	}
 	
 	private function calcularBaseSaludPensionDiciembreEnero() {  
-	  
+	  //echo '<br><br><br>';
 	  /*para empleados que cambian de cargo en los meses de diciembre y enero*/
 	 if($this->verificarNuevoCargoDiciembreEnero()==1){
-		/*para el cargo anterior se calcula lasalud con los dias trabajados*/
+		/*para el cargo anterior se calcula la salud con los dias trabajados*/
 		$Cargo = $this->cargoAnteriorDiciembreEnero();
+		//echo $Cargo[0].'=='.$this->Empleoplanta->EMPL_FECHAINGRESO;
 	   if($Cargo[0]==$this->Empleoplanta->EMPL_FECHAINGRESO){
 		return($this->baseSaludPensionDiciembreEneroNuevoCargo($Cargo));
 		}else{
@@ -965,12 +966,12 @@ class Mensualnomina extends CActiveRecord
 	
 	private function verificarNuevoCargoDiciembreEnero(){ 
 	  $connection = Yii::app()->db;
-	  $sql='SELECT  COUNT(*) 
+	  $sql='SELECT  COUNT(*) AS "TOTAL"
 		      FROM "TBL_NOMEMPLEOSPLANTA" ep 
 			  WHERE ep."EMPL_FECHAINGRESO" BETWEEN '."'".date("Y", strtotime($this->MENO_FECHAPROCESO)).'-'.date("m", strtotime($this->MENO_FECHAPROCESO))."-01'".' 
 			  AND '."'".date("Y", strtotime($this->MENO_FECHAPROCESO)).'-'.date("m", strtotime($this->MENO_FECHAPROCESO)+1)."-31'".' AND ep."PEGE_ID"  = '.$this->Personageneral->PEGE_ID;		
       $row = $connection->createCommand($sql)->queryRow();
-	  if(count($row)>0){
+	  if($row['TOTAL']>0){
 	   $mesEntradaEmpleado = date("m", strtotime($this->Personageneral->PEGE_FECHAINGRESO)); 
 	   $mesLiquidando = date("m", strtotime($this->MENO_FECHAPROCESO)); 
 	   if(($mesEntradaEmpleado==$mesLiquidando)){

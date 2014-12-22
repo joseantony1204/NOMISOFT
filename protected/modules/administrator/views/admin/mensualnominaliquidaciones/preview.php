@@ -133,7 +133,7 @@ if(($Mensualnominaliquidaciones->liquidacion[$i][2])!=0){
         <tr valign="top">
          <td width="45%">
 			
-			<table width="100%" border="1" class="tabla2">
+			<table width="100%" rules="all" border="1" class="tabla2">
               
 			  <tr>
                 <td width="87">Comprobante No.</td>
@@ -190,7 +190,7 @@ if(($Mensualnominaliquidaciones->liquidacion[$i][2])!=0){
 			
          <td width="55%" >
 			
-		    <table width="100%" border="0" class="tabla2" style="border:1px solid;padding:3px 3px; border-color:#000">
+		    <table width="100%" border="1" rules="cols" class="tabla2">
               <tr border="1">
                <th width="246" align="center" style="border:1px solid;padding:3px 3px; border-color:#000">DESCRIPCION</th>
                <th width="66" align="center" style="border:1px solid;padding:3px 3px;border-color:#000">DIAS</th>

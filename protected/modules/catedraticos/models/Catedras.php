@@ -591,7 +591,6 @@ class Catedras extends CActiveRecord
 		  $Catedra->CATE_FECHACAMBIO = date('Y-m-d');
 	      $Catedra->CATE_REGISTRADOPOR = Yii::app()->user->id;
 	      if($Catedra->save()){
-		   $Catedra->defaultDescuentosMensuales($Catedra->CATE_ID);
 		   $this->docSiCateInFacultAct[]=$idemp;
 		  }else{
 		        $msg = print_r($Catedra->getErrors(),1);

@@ -232,10 +232,10 @@ function validar(form){
                <td width="25%" align="center">
 			   <?php 
 		       $criterio = new CDbCriteria;
-		       $criterio ->select = '"VANO_ANIO"';
-		       $criterio->group = '"VANO_ANIO"'; 
-			   $criterio->order = '"VANO_ANIO" DESC';    
-		       $anios = CHtml::listData(Vacacionesnomina::model()->findAll($criterio),'VANO_ANIO','VANO_ANIO');
+		       $criterio ->select = '"RENO_ANIO"';
+		       $criterio->group = '"RENO_ANIO"'; 
+			   $criterio->order = '"RENO_ANIO" DESC';    
+		       $anios = CHtml::listData(Recreacionnomina::model()->findAll($criterio),'RENO_ANIO','RENO_ANIO');
 		       ?>	      
 	               
                <?php echo $form->labelEx($Informes,'INFO_ANIOINICIO'); ?>
