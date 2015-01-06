@@ -6562,3 +6562,19 @@ LINE 3:    FROM
 in /var/www/NOMINA/protected/modules/administrator/models/Empleosplanta.php (1228)
 in /var/www/NOMINA/protected/modules/administrator/controllers/admin/EmpleosplantaController.php (453)
 in /var/www/NOMINA/index.php (13)
+2014/12/26 08:53:27 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[HY000]: General error. The SQL statement executed was: .
+in /var/www/NOMINA/protected/modules/ocasionales/models/Mensualnominaliquidaciones.php (1191)
+in /var/www/NOMINA/protected/modules/ocasionales/controllers/admin/MensualnominaliquidacionesController.php (270)
+in /var/www/NOMINA/index.php (13)
+2014/12/26 08:56:06 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[HY000]: General error. The SQL statement executed was: .
+in /var/www/NOMINA/protected/modules/ocasionales/models/Mensualnominaliquidaciones.php (1191)
+in /var/www/NOMINA/protected/modules/ocasionales/controllers/admin/MensualnominaliquidacionesController.php (270)
+in /var/www/NOMINA/index.php (13)
+2014/12/26 09:05:00 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[HY000]: General error. The SQL statement executed was: .
+in /var/www/NOMINA/protected/modules/ocasionales/models/Mensualnominaliquidaciones.php (1191)
+in /var/www/NOMINA/protected/modules/ocasionales/controllers/admin/MensualnominaliquidacionesController.php (270)
+in /var/www/NOMINA/index.php (13)
+2014/12/26 09:30:40 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[HY000]: General error. The SQL statement executed was: .
+in /var/www/NOMINA/protected/modules/ocasionales/models/Mensualnominaliquidaciones.php (1191)
+in /var/www/NOMINA/protected/modules/ocasionales/controllers/admin/MensualnominaliquidacionesController.php (270)
+in /var/www/NOMINA/index.php (13)

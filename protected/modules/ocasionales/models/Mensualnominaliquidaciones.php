@@ -1156,11 +1156,76 @@ class Mensualnominaliquidaciones extends CActiveRecord
 	{
 	 $connection = Yii::app()->db2;
 	 $anionomina = substr($codigo,0,4);  $mesnomina = substr($codigo,4,-2);
-     $periodo = substr($codigo,0,-2);;
+     $periodo = substr($codigo,0,-2);
+	 $Mensualnomina = new Mensualnomina;
  
      if(($periodo == $anionomina."12") or ($periodo == $anionomina."01")){
-     
-	 
+      $string='SELECT mnl."MENL_ID", mnl."EMPL_ID", p."PEGE_IDENTIFICACION", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE", p."PEGE_SEGUNDONOMBRE", 
+                  SUM(round(mnl."MENL_SALARIO"/30*mnl."MENL_DIAS")+round(mnl."MENL_PRIMAANTIGUEDAD"/30*mnl."MENL_DIAS")+round(mnl."MENL_HEDTOTAL"/30*mnl."MENL_DIAS")+
+                      round(mnl."MENL_HENTOTAL"/30*mnl."MENL_DIAS")+round(mnl."MENL_HEDFTOTAL"/30*mnl."MENL_DIAS")+round(mnl."MENL_HENFTOTAL"/30*mnl."MENL_DIAS")+
+                      round(mnl."MENL_DYFTOTAL"/30*mnl."MENL_DIAS")+round(mnl."MENL_RENTOTAL"/30*mnl."MENL_DIAS")+round(mnl."MENL_RENDYFTOTAL"/30*mnl."MENL_DIAS")+
+                      round(mnl."MENL_PRIMATECNICA"/30*mnl."MENL_DIAS")+round(mnl."MENL_GASTOSRP"/30*mnl."MENL_DIAS")
+		             ) AS "MENL_IBC", s."SALU_NOMBRE", pen."PENS_NOMBRE"
+		   FROM "TBL_NOMMENSUALNOMINALIQUIDACIONES" "mnl"
+		   INNER JOIN "TBL_NOMMENSUALNOMINA" "mn" ON mnl."MENO_ID" = mn."MENO_ID"
+		   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON mnl."EMPL_ID" = ep."EMPL_ID"
+		   INNER JOIN "TBL_NOMUNIDADES" "u" ON ep."UNID_ID" = u."UNID_ID"
+		   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"		  
+		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"
+		   INNER JOIN "TBL_NOMSALUD" "s" ON s."SALU_ID" = p."SALU_ID" 
+		   INNER JOIN "TBL_NOMPENSION" "pen" ON pen."PENS_ID" = p."PENS_ID"  
+		   WHERE '.$parametros.'
+		   GROUP BY mnl."MENL_ID", p."PEGE_ID",  mn."MENO_ID", s."SALU_ID", pen."PENS_ID"
+           ORDER BY mn."MENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC
+	      ';
+		  
+	  $queryS = $connection->createCommand($string)->queryAll();
+      foreach ($queryS as $querySt) {	
+	   $Mensualnomina->cargarEmpleoPlanta($querySt['EMPL_ID']);
+	   
+	   
+	   $anioEntrada = (date("Y", strtotime($Mensualnomina->Empleoplanta->EMPL_FECHAINGRESO))); 
+	   $mesEntrada = (date("m", strtotime($Mensualnomina->Empleoplanta->EMPL_FECHAINGRESO)));
+	   $entrada =$anioEntrada.$mesEntrada; 
+	   if($periodo==$entrada){
+	   $sql='SELECT mnl."MENL_ID", mnl."EMPL_ID", p."PEGE_IDENTIFICACION", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE", p."PEGE_SEGUNDONOMBRE", 
+                  SUM(mnl."MENL_SALARIO"+mnl."MENL_PRIMAANTIGUEDAD"+mnl."MENL_HEDTOTAL"+mnl."MENL_HENTOTAL" +
+                      mnl."MENL_HEDFTOTAL"+mnl."MENL_HENFTOTAL"+mnl."MENL_DYFTOTAL"+mnl."MENL_RENTOTAL"+mnl."MENL_RENDYFTOTAL"+mnl."MENL_PRIMATECNICA" +
+                      mnl."MENL_GASTOSRP"
+		             ) AS "MENL_IBC", s."SALU_NOMBRE", pen."PENS_NOMBRE"
+		   FROM "TBL_NOMMENSUALNOMINALIQUIDACIONES" "mnl"
+		   INNER JOIN "TBL_NOMMENSUALNOMINA" "mn" ON mnl."MENO_ID" = mn."MENO_ID"
+		   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON mnl."EMPL_ID" = ep."EMPL_ID"
+		   INNER JOIN "TBL_NOMUNIDADES" "u" ON ep."UNID_ID" = u."UNID_ID"
+		   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"		  
+		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"
+		   INNER JOIN "TBL_NOMSALUD" "s" ON s."SALU_ID" = p."SALU_ID" 
+		   INNER JOIN "TBL_NOMPENSION" "pen" ON pen."PENS_ID" = p."PENS_ID"  
+		   WHERE '.$parametros.'
+		   GROUP BY mnl."MENL_ID", p."PEGE_ID",  mn."MENO_ID", s."SALU_ID", pen."PENS_ID"
+           ORDER BY mn."MENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC
+		  ';	  
+	 }else{
+	        $sql='SELECT mnl."MENL_ID", mnl."EMPL_ID", p."PEGE_IDENTIFICACION", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE", p."PEGE_SEGUNDONOMBRE", 
+                  SUM(round(mnl."MENL_SALARIO")+round(mnl."MENL_PRIMAANTIGUEDAD")+round(mnl."MENL_HEDTOTAL")+
+                      round(mnl."MENL_HENTOTAL")+round(mnl."MENL_HEDFTOTAL")+round(mnl."MENL_HENFTOTAL")+
+                      round(mnl."MENL_DYFTOTAL")+round(mnl."MENL_RENTOTAL")+round(mnl."MENL_RENDYFTOTAL")+
+                      round(mnl."MENL_PRIMATECNICA")+round(mnl."MENL_GASTOSRP")
+		             ) AS "MENL_IBC", s."SALU_NOMBRE", pen."PENS_NOMBRE"
+		   FROM "TBL_NOMMENSUALNOMINALIQUIDACIONES" "mnl"
+		   INNER JOIN "TBL_NOMMENSUALNOMINA" "mn" ON mnl."MENO_ID" = mn."MENO_ID"
+		   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON mnl."EMPL_ID" = ep."EMPL_ID"
+		   INNER JOIN "TBL_NOMUNIDADES" "u" ON ep."UNID_ID" = u."UNID_ID"
+		   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"		  
+		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"
+		   INNER JOIN "TBL_NOMSALUD" "s" ON s."SALU_ID" = p."SALU_ID" 
+		   INNER JOIN "TBL_NOMPENSION" "pen" ON pen."PENS_ID" = p."PENS_ID"  
+		   WHERE '.$parametros.'
+		   GROUP BY mnl."MENL_ID", p."PEGE_ID",  mn."MENO_ID", s."SALU_ID", pen."PENS_ID"
+           ORDER BY mn."MENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC
+		  ';
+		   
+	 }}
 	 }else{
 	      
            //echo "<br><br><br>".
