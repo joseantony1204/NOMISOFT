@@ -6578,3 +6578,245 @@ in /var/www/NOMINA/index.php (13)
 in /var/www/NOMINA/protected/modules/ocasionales/models/Mensualnominaliquidaciones.php (1191)
 in /var/www/NOMINA/protected/modules/ocasionales/controllers/admin/MensualnominaliquidacionesController.php (270)
 in /var/www/NOMINA/index.php (13)
+2015/01/07 11:01:18 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «ORDER»
+LINE 16:      ORDER BY cn."CENO_ID",   p."PEGE_PRIMERAPELLIDO", p."PE...
+              ^. The SQL statement executed was: SELECT cnl."CENL_ID", cnl."CENL_CODIGO", cnl."CENL_DIAS", cnl."CENL_PUNTOS", cnl."CENL_SUELDO", cnl."CENL_SALARIO", cnl."CENL_PRIMAANTIGUEDAD",
+				  cnl."CENL_TRANSPORTE", cnl."CENL_ALIMENTACION", cnl."CENL_PRIMATECNICA", cnl."CENL_GASTOSRP", cnl."CENL_BONIFICACION", 
+				  cnl."CENL_HORASEXTRAS", cnl."CENL_SEMESTRAL", cnl."CENL_PRIMAVACACIONES", cnl."CENL_PRIMANAVIDAD",
+				  cnl."CENO_ID", cnl."EMPL_ID",  
+                  SUM(cnl."CENL_SALARIO"+cnl."CENL_PRIMAANTIGUEDAD"+cnl."CENL_TRANSPORTE"+cnl."CENL_ALIMENTACION"+cnl."CENL_PRIMATECNICA"+
+				      cnl."CENL_GASTOSRP"+cnl."CENL_BONIFICACION"+cnl."CENL_HORASEXTRAS"+cnl."CENL_SEMESTRAL"+cnl."CENL_PRIMAVACACIONES"+
+					  cnl."CENL_PRIMANAVIDAD") AS "CENL_DEVENGADO"
+		   FROM "TBL_NOMCESANTIASNOMINALIQUIDACIONES" "cnl"
+		   INNER JOIN "TBL_NOMCESANTIASNOMINA" "cn" ON cnl."CENO_ID" = cn."CENO_ID"
+		   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON cnl."EMPL_ID" = ep."EMPL_ID"
+		   INNER JOIN "TBL_NOMUNIDADES" "u" ON ep."UNID_ID" = u."UNID_ID"
+		   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"		  
+		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"   
+		   WHERE   cn."CENO_ID" = 20141271  AND p."PEGE_IDENTIFICACION" =  '40918469'
+		   GROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID", 
+		   ORDER BY cn."CENO_ID",   p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, cnl."CENL_ID" DESC
+		  .
+in /var/www/NOMINA/protected/modules/administrator/models/Cesantiasnominaliquidaciones.php (315)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/CesantiasnominaliquidacionesController.php (208)
+in /var/www/NOMINA/index.php (13)
+2015/01/07 11:01:50 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «,»
+LINE 16:      ORDER BY cn."CENO_ID", , tc.TICA_ID ASC, p."PEGE_PRIMER...
+                                     ^. The SQL statement executed was: SELECT cnl."CENL_ID", cnl."CENL_CODIGO", cnl."CENL_DIAS", cnl."CENL_PUNTOS", cnl."CENL_SUELDO", cnl."CENL_SALARIO", cnl."CENL_PRIMAANTIGUEDAD",
+				  cnl."CENL_TRANSPORTE", cnl."CENL_ALIMENTACION", cnl."CENL_PRIMATECNICA", cnl."CENL_GASTOSRP", cnl."CENL_BONIFICACION", 
+				  cnl."CENL_HORASEXTRAS", cnl."CENL_SEMESTRAL", cnl."CENL_PRIMAVACACIONES", cnl."CENL_PRIMANAVIDAD",
+				  cnl."CENO_ID", cnl."EMPL_ID",  
+                  SUM(cnl."CENL_SALARIO"+cnl."CENL_PRIMAANTIGUEDAD"+cnl."CENL_TRANSPORTE"+cnl."CENL_ALIMENTACION"+cnl."CENL_PRIMATECNICA"+
+				      cnl."CENL_GASTOSRP"+cnl."CENL_BONIFICACION"+cnl."CENL_HORASEXTRAS"+cnl."CENL_SEMESTRAL"+cnl."CENL_PRIMAVACACIONES"+
+					  cnl."CENL_PRIMANAVIDAD") AS "CENL_DEVENGADO"
+		   FROM "TBL_NOMCESANTIASNOMINALIQUIDACIONES" "cnl"
+		   INNER JOIN "TBL_NOMCESANTIASNOMINA" "cn" ON cnl."CENO_ID" = cn."CENO_ID"
+		   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON cnl."EMPL_ID" = ep."EMPL_ID"
+		   INNER JOIN "TBL_NOMUNIDADES" "u" ON ep."UNID_ID" = u."UNID_ID"
+		   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"		  
+		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"   
+		   WHERE  cn."CENO_ID" = 20141271 
+		   GROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID" , tc.TICA_ID
+		   ORDER BY cn."CENO_ID", , tc.TICA_ID ASC, p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, cnl."CENL_ID" DESC
+		  .
+in /var/www/NOMINA/protected/modules/administrator/models/Cesantiasnominaliquidaciones.php (315)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/CesantiasnominaliquidacionesController.php (320)
+in /var/www/NOMINA/index.php (13)
+2015/01/07 11:02:28 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «tc»
+LINE 15: ...ROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID"  tc.TICA_ID
+                                                              ^. The SQL statement executed was: SELECT cnl."CENL_ID", cnl."CENL_CODIGO", cnl."CENL_DIAS", cnl."CENL_PUNTOS", cnl."CENL_SUELDO", cnl."CENL_SALARIO", cnl."CENL_PRIMAANTIGUEDAD",
+				  cnl."CENL_TRANSPORTE", cnl."CENL_ALIMENTACION", cnl."CENL_PRIMATECNICA", cnl."CENL_GASTOSRP", cnl."CENL_BONIFICACION", 
+				  cnl."CENL_HORASEXTRAS", cnl."CENL_SEMESTRAL", cnl."CENL_PRIMAVACACIONES", cnl."CENL_PRIMANAVIDAD",
+				  cnl."CENO_ID", cnl."EMPL_ID",  
+                  SUM(cnl."CENL_SALARIO"+cnl."CENL_PRIMAANTIGUEDAD"+cnl."CENL_TRANSPORTE"+cnl."CENL_ALIMENTACION"+cnl."CENL_PRIMATECNICA"+
+				      cnl."CENL_GASTOSRP"+cnl."CENL_BONIFICACION"+cnl."CENL_HORASEXTRAS"+cnl."CENL_SEMESTRAL"+cnl."CENL_PRIMAVACACIONES"+
+					  cnl."CENL_PRIMANAVIDAD") AS "CENL_DEVENGADO"
+		   FROM "TBL_NOMCESANTIASNOMINALIQUIDACIONES" "cnl"
+		   INNER JOIN "TBL_NOMCESANTIASNOMINA" "cn" ON cnl."CENO_ID" = cn."CENO_ID"
+		   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON cnl."EMPL_ID" = ep."EMPL_ID"
+		   INNER JOIN "TBL_NOMUNIDADES" "u" ON ep."UNID_ID" = u."UNID_ID"
+		   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"		  
+		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"   
+		   WHERE  cn."CENO_ID" = 20141271 
+		   GROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID"  tc.TICA_ID
+		   ORDER BY cn."CENO_ID",  tc.TICA_ID ASC, p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, cnl."CENL_ID" DESC
+		  .
+in /var/www/NOMINA/protected/modules/administrator/models/Cesantiasnominaliquidaciones.php (315)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/CesantiasnominaliquidacionesController.php (320)
+in /var/www/NOMINA/index.php (13)
+2015/01/07 11:03:38 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «tc»
+LINE 15: ...GROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID" tc.TICA_ID
+                                                              ^. The SQL statement executed was: SELECT cnl."CENL_ID", cnl."CENL_CODIGO", cnl."CENL_DIAS", cnl."CENL_PUNTOS", cnl."CENL_SUELDO", cnl."CENL_SALARIO", cnl."CENL_PRIMAANTIGUEDAD",
+				  cnl."CENL_TRANSPORTE", cnl."CENL_ALIMENTACION", cnl."CENL_PRIMATECNICA", cnl."CENL_GASTOSRP", cnl."CENL_BONIFICACION", 
+				  cnl."CENL_HORASEXTRAS", cnl."CENL_SEMESTRAL", cnl."CENL_PRIMAVACACIONES", cnl."CENL_PRIMANAVIDAD",
+				  cnl."CENO_ID", cnl."EMPL_ID",  
+                  SUM(cnl."CENL_SALARIO"+cnl."CENL_PRIMAANTIGUEDAD"+cnl."CENL_TRANSPORTE"+cnl."CENL_ALIMENTACION"+cnl."CENL_PRIMATECNICA"+
+				      cnl."CENL_GASTOSRP"+cnl."CENL_BONIFICACION"+cnl."CENL_HORASEXTRAS"+cnl."CENL_SEMESTRAL"+cnl."CENL_PRIMAVACACIONES"+
+					  cnl."CENL_PRIMANAVIDAD") AS "CENL_DEVENGADO"
+		   FROM "TBL_NOMCESANTIASNOMINALIQUIDACIONES" "cnl"
+		   INNER JOIN "TBL_NOMCESANTIASNOMINA" "cn" ON cnl."CENO_ID" = cn."CENO_ID"
+		   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON cnl."EMPL_ID" = ep."EMPL_ID"
+		   INNER JOIN "TBL_NOMUNIDADES" "u" ON ep."UNID_ID" = u."UNID_ID"
+		   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"		  
+		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"   
+		   WHERE  cn."CENO_ID" = 20141271 
+		   GROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID" tc.TICA_ID
+		   ORDER BY cn."CENO_ID", tc.TICA_ID ASC, p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, cnl."CENL_ID" DESC
+		  .
+in /var/www/NOMINA/protected/modules/administrator/models/Cesantiasnominaliquidaciones.php (315)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/CesantiasnominaliquidacionesController.php (320)
+in /var/www/NOMINA/index.php (13)
+2015/01/07 11:08:12 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «tc»
+LINE 15: ...GROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID" tc.TICA_ID
+                                                              ^. The SQL statement executed was: SELECT cnl."CENL_ID", cnl."CENL_CODIGO", cnl."CENL_DIAS", cnl."CENL_PUNTOS", cnl."CENL_SUELDO", cnl."CENL_SALARIO", cnl."CENL_PRIMAANTIGUEDAD",
+				  cnl."CENL_TRANSPORTE", cnl."CENL_ALIMENTACION", cnl."CENL_PRIMATECNICA", cnl."CENL_GASTOSRP", cnl."CENL_BONIFICACION", 
+				  cnl."CENL_HORASEXTRAS", cnl."CENL_SEMESTRAL", cnl."CENL_PRIMAVACACIONES", cnl."CENL_PRIMANAVIDAD",
+				  cnl."CENO_ID", cnl."EMPL_ID",  
+                  SUM(cnl."CENL_SALARIO"+cnl."CENL_PRIMAANTIGUEDAD"+cnl."CENL_TRANSPORTE"+cnl."CENL_ALIMENTACION"+cnl."CENL_PRIMATECNICA"+
+				      cnl."CENL_GASTOSRP"+cnl."CENL_BONIFICACION"+cnl."CENL_HORASEXTRAS"+cnl."CENL_SEMESTRAL"+cnl."CENL_PRIMAVACACIONES"+
+					  cnl."CENL_PRIMANAVIDAD") AS "CENL_DEVENGADO"
+		   FROM "TBL_NOMCESANTIASNOMINALIQUIDACIONES" "cnl"
+		   INNER JOIN "TBL_NOMCESANTIASNOMINA" "cn" ON cnl."CENO_ID" = cn."CENO_ID"
+		   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON cnl."EMPL_ID" = ep."EMPL_ID"
+		   INNER JOIN "TBL_NOMUNIDADES" "u" ON ep."UNID_ID" = u."UNID_ID"
+		   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"		  
+		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"   
+		   WHERE  cn."CENO_ID" = 20141271 
+		   GROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID" tc.TICA_ID
+		   ORDER BY cn."CENO_ID", tc.TICA_ID ASC, p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, cnl."CENL_ID" DESC
+		  .
+in /var/www/NOMINA/protected/modules/administrator/models/Cesantiasnominaliquidaciones.php (315)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/CesantiasnominaliquidacionesController.php (320)
+in /var/www/NOMINA/index.php (13)
+2015/01/07 11:10:37 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «tc»
+LINE 15: ...GROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID" tc.'TICA_I...
+                                                              ^. The SQL statement executed was: SELECT cnl."CENL_ID", cnl."CENL_CODIGO", cnl."CENL_DIAS", cnl."CENL_PUNTOS", cnl."CENL_SUELDO", cnl."CENL_SALARIO", cnl."CENL_PRIMAANTIGUEDAD",
+				  cnl."CENL_TRANSPORTE", cnl."CENL_ALIMENTACION", cnl."CENL_PRIMATECNICA", cnl."CENL_GASTOSRP", cnl."CENL_BONIFICACION", 
+				  cnl."CENL_HORASEXTRAS", cnl."CENL_SEMESTRAL", cnl."CENL_PRIMAVACACIONES", cnl."CENL_PRIMANAVIDAD",
+				  cnl."CENO_ID", cnl."EMPL_ID",  
+                  SUM(cnl."CENL_SALARIO"+cnl."CENL_PRIMAANTIGUEDAD"+cnl."CENL_TRANSPORTE"+cnl."CENL_ALIMENTACION"+cnl."CENL_PRIMATECNICA"+
+				      cnl."CENL_GASTOSRP"+cnl."CENL_BONIFICACION"+cnl."CENL_HORASEXTRAS"+cnl."CENL_SEMESTRAL"+cnl."CENL_PRIMAVACACIONES"+
+					  cnl."CENL_PRIMANAVIDAD") AS "CENL_DEVENGADO"
+		   FROM "TBL_NOMCESANTIASNOMINALIQUIDACIONES" "cnl"
+		   INNER JOIN "TBL_NOMCESANTIASNOMINA" "cn" ON cnl."CENO_ID" = cn."CENO_ID"
+		   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON cnl."EMPL_ID" = ep."EMPL_ID"
+		   INNER JOIN "TBL_NOMUNIDADES" "u" ON ep."UNID_ID" = u."UNID_ID"
+		   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"		  
+		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"   
+		   WHERE  cn."CENO_ID" = 20141271 
+		   GROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID" tc.'TICA_ID'
+		   ORDER BY cn."CENO_ID", tc.'TICA_ID' ASC, p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, cnl."CENL_ID" DESC
+		  .
+in /var/www/NOMINA/protected/modules/administrator/models/Cesantiasnominaliquidaciones.php (315)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/CesantiasnominaliquidacionesController.php (321)
+in /var/www/NOMINA/index.php (13)
+2015/01/07 11:11:08 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «tc»
+LINE 15: ...GROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID" tc."TICA_I...
+                                                              ^. The SQL statement executed was: SELECT cnl."CENL_ID", cnl."CENL_CODIGO", cnl."CENL_DIAS", cnl."CENL_PUNTOS", cnl."CENL_SUELDO", cnl."CENL_SALARIO", cnl."CENL_PRIMAANTIGUEDAD",
+				  cnl."CENL_TRANSPORTE", cnl."CENL_ALIMENTACION", cnl."CENL_PRIMATECNICA", cnl."CENL_GASTOSRP", cnl."CENL_BONIFICACION", 
+				  cnl."CENL_HORASEXTRAS", cnl."CENL_SEMESTRAL", cnl."CENL_PRIMAVACACIONES", cnl."CENL_PRIMANAVIDAD",
+				  cnl."CENO_ID", cnl."EMPL_ID",  
+                  SUM(cnl."CENL_SALARIO"+cnl."CENL_PRIMAANTIGUEDAD"+cnl."CENL_TRANSPORTE"+cnl."CENL_ALIMENTACION"+cnl."CENL_PRIMATECNICA"+
+				      cnl."CENL_GASTOSRP"+cnl."CENL_BONIFICACION"+cnl."CENL_HORASEXTRAS"+cnl."CENL_SEMESTRAL"+cnl."CENL_PRIMAVACACIONES"+
+					  cnl."CENL_PRIMANAVIDAD") AS "CENL_DEVENGADO"
+		   FROM "TBL_NOMCESANTIASNOMINALIQUIDACIONES" "cnl"
+		   INNER JOIN "TBL_NOMCESANTIASNOMINA" "cn" ON cnl."CENO_ID" = cn."CENO_ID"
+		   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON cnl."EMPL_ID" = ep."EMPL_ID"
+		   INNER JOIN "TBL_NOMUNIDADES" "u" ON ep."UNID_ID" = u."UNID_ID"
+		   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"		  
+		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"   
+		   WHERE  cn."CENO_ID" = 20141271 
+		   GROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID" tc."TICA_ID"
+		   ORDER BY cn."CENO_ID", tc."TICA_ID" ASC, p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, cnl."CENL_ID" DESC
+		  .
+in /var/www/NOMINA/protected/modules/administrator/models/Cesantiasnominaliquidaciones.php (315)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/CesantiasnominaliquidacionesController.php (321)
+in /var/www/NOMINA/index.php (13)
+2015/01/07 11:12:02 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «tc»
+LINE 15: ...GROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID" tc."TICA_I...
+                                                              ^. The SQL statement executed was: SELECT cnl."CENL_ID", cnl."CENL_CODIGO", cnl."CENL_DIAS", cnl."CENL_PUNTOS", cnl."CENL_SUELDO", cnl."CENL_SALARIO", cnl."CENL_PRIMAANTIGUEDAD",
+				  cnl."CENL_TRANSPORTE", cnl."CENL_ALIMENTACION", cnl."CENL_PRIMATECNICA", cnl."CENL_GASTOSRP", cnl."CENL_BONIFICACION", 
+				  cnl."CENL_HORASEXTRAS", cnl."CENL_SEMESTRAL", cnl."CENL_PRIMAVACACIONES", cnl."CENL_PRIMANAVIDAD",
+				  cnl."CENO_ID", cnl."EMPL_ID",  
+                  SUM(cnl."CENL_SALARIO"+cnl."CENL_PRIMAANTIGUEDAD"+cnl."CENL_TRANSPORTE"+cnl."CENL_ALIMENTACION"+cnl."CENL_PRIMATECNICA"+
+				      cnl."CENL_GASTOSRP"+cnl."CENL_BONIFICACION"+cnl."CENL_HORASEXTRAS"+cnl."CENL_SEMESTRAL"+cnl."CENL_PRIMAVACACIONES"+
+					  cnl."CENL_PRIMANAVIDAD") AS "CENL_DEVENGADO"
+		   FROM "TBL_NOMCESANTIASNOMINALIQUIDACIONES" "cnl"
+		   INNER JOIN "TBL_NOMCESANTIASNOMINA" "cn" ON cnl."CENO_ID" = cn."CENO_ID"
+		   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON cnl."EMPL_ID" = ep."EMPL_ID"
+		   INNER JOIN "TBL_NOMUNIDADES" "u" ON ep."UNID_ID" = u."UNID_ID"
+		   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"		  
+		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"   
+		   WHERE  cn."CENO_ID" = 20141271 
+		   GROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID" tc."TICA_ID",
+		   ORDER BY cn."CENO_ID", tc."TICA_ID", ASC, p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, cnl."CENL_ID" DESC
+		  .
+in /var/www/NOMINA/protected/modules/administrator/models/Cesantiasnominaliquidaciones.php (315)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/CesantiasnominaliquidacionesController.php (320)
+in /var/www/NOMINA/index.php (13)
+2015/01/07 11:12:58 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «tc»
+LINE 15: ...GROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID" tc."TICA_I...
+                                                              ^. The SQL statement executed was: SELECT cnl."CENL_ID", cnl."CENL_CODIGO", cnl."CENL_DIAS", cnl."CENL_PUNTOS", cnl."CENL_SUELDO", cnl."CENL_SALARIO", cnl."CENL_PRIMAANTIGUEDAD",
+				  cnl."CENL_TRANSPORTE", cnl."CENL_ALIMENTACION", cnl."CENL_PRIMATECNICA", cnl."CENL_GASTOSRP", cnl."CENL_BONIFICACION", 
+				  cnl."CENL_HORASEXTRAS", cnl."CENL_SEMESTRAL", cnl."CENL_PRIMAVACACIONES", cnl."CENL_PRIMANAVIDAD",
+				  cnl."CENO_ID", cnl."EMPL_ID",  
+                  SUM(cnl."CENL_SALARIO"+cnl."CENL_PRIMAANTIGUEDAD"+cnl."CENL_TRANSPORTE"+cnl."CENL_ALIMENTACION"+cnl."CENL_PRIMATECNICA"+
+				      cnl."CENL_GASTOSRP"+cnl."CENL_BONIFICACION"+cnl."CENL_HORASEXTRAS"+cnl."CENL_SEMESTRAL"+cnl."CENL_PRIMAVACACIONES"+
+					  cnl."CENL_PRIMANAVIDAD") AS "CENL_DEVENGADO"
+		   FROM "TBL_NOMCESANTIASNOMINALIQUIDACIONES" "cnl"
+		   INNER JOIN "TBL_NOMCESANTIASNOMINA" "cn" ON cnl."CENO_ID" = cn."CENO_ID"
+		   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON cnl."EMPL_ID" = ep."EMPL_ID"
+		   INNER JOIN "TBL_NOMUNIDADES" "u" ON ep."UNID_ID" = u."UNID_ID"
+		   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"		  
+		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"   
+		   WHERE  cn."CENO_ID" = 20141271 
+		   GROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID" tc."TICA_ID"
+		   ORDER BY cn."CENO_ID", tc."TICA_ID" ASC, p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, cnl."CENL_ID" DESC
+		  .
+in /var/www/NOMINA/protected/modules/administrator/models/Cesantiasnominaliquidaciones.php (315)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/CesantiasnominaliquidacionesController.php (320)
+in /var/www/NOMINA/index.php (13)
+2015/01/07 11:13:14 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «,»
+LINE 16:      ORDER BY cn."CENO_ID", , tc."TICA_ID" ASC, p."PEGE_PRIM...
+                                     ^. The SQL statement executed was: SELECT cnl."CENL_ID", cnl."CENL_CODIGO", cnl."CENL_DIAS", cnl."CENL_PUNTOS", cnl."CENL_SUELDO", cnl."CENL_SALARIO", cnl."CENL_PRIMAANTIGUEDAD",
+				  cnl."CENL_TRANSPORTE", cnl."CENL_ALIMENTACION", cnl."CENL_PRIMATECNICA", cnl."CENL_GASTOSRP", cnl."CENL_BONIFICACION", 
+				  cnl."CENL_HORASEXTRAS", cnl."CENL_SEMESTRAL", cnl."CENL_PRIMAVACACIONES", cnl."CENL_PRIMANAVIDAD",
+				  cnl."CENO_ID", cnl."EMPL_ID",  
+                  SUM(cnl."CENL_SALARIO"+cnl."CENL_PRIMAANTIGUEDAD"+cnl."CENL_TRANSPORTE"+cnl."CENL_ALIMENTACION"+cnl."CENL_PRIMATECNICA"+
+				      cnl."CENL_GASTOSRP"+cnl."CENL_BONIFICACION"+cnl."CENL_HORASEXTRAS"+cnl."CENL_SEMESTRAL"+cnl."CENL_PRIMAVACACIONES"+
+					  cnl."CENL_PRIMANAVIDAD") AS "CENL_DEVENGADO"
+		   FROM "TBL_NOMCESANTIASNOMINALIQUIDACIONES" "cnl"
+		   INNER JOIN "TBL_NOMCESANTIASNOMINA" "cn" ON cnl."CENO_ID" = cn."CENO_ID"
+		   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON cnl."EMPL_ID" = ep."EMPL_ID"
+		   INNER JOIN "TBL_NOMUNIDADES" "u" ON ep."UNID_ID" = u."UNID_ID"
+		   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"		  
+		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"   
+		   WHERE  cn."CENO_ID" = 20141271 
+		   GROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID" , tc."TICA_ID"
+		   ORDER BY cn."CENO_ID", , tc."TICA_ID" ASC, p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, cnl."CENL_ID" DESC
+		  .
+in /var/www/NOMINA/protected/modules/administrator/models/Cesantiasnominaliquidaciones.php (315)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/CesantiasnominaliquidacionesController.php (320)
+in /var/www/NOMINA/index.php (13)
+2015/01/07 11:13:40 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «p»
+LINE 16:      ORDER BY cn."CENO_ID"   p."PEGE_PRIMERAPELLIDO", p."PEG...
+                                      ^. The SQL statement executed was: SELECT cnl."CENL_ID", cnl."CENL_CODIGO", cnl."CENL_DIAS", cnl."CENL_PUNTOS", cnl."CENL_SUELDO", cnl."CENL_SALARIO", cnl."CENL_PRIMAANTIGUEDAD",
+				  cnl."CENL_TRANSPORTE", cnl."CENL_ALIMENTACION", cnl."CENL_PRIMATECNICA", cnl."CENL_GASTOSRP", cnl."CENL_BONIFICACION", 
+				  cnl."CENL_HORASEXTRAS", cnl."CENL_SEMESTRAL", cnl."CENL_PRIMAVACACIONES", cnl."CENL_PRIMANAVIDAD",
+				  cnl."CENO_ID", cnl."EMPL_ID",  
+                  SUM(cnl."CENL_SALARIO"+cnl."CENL_PRIMAANTIGUEDAD"+cnl."CENL_TRANSPORTE"+cnl."CENL_ALIMENTACION"+cnl."CENL_PRIMATECNICA"+
+				      cnl."CENL_GASTOSRP"+cnl."CENL_BONIFICACION"+cnl."CENL_HORASEXTRAS"+cnl."CENL_SEMESTRAL"+cnl."CENL_PRIMAVACACIONES"+
+					  cnl."CENL_PRIMANAVIDAD") AS "CENL_DEVENGADO"
+		   FROM "TBL_NOMCESANTIASNOMINALIQUIDACIONES" "cnl"
+		   INNER JOIN "TBL_NOMCESANTIASNOMINA" "cn" ON cnl."CENO_ID" = cn."CENO_ID"
+		   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON cnl."EMPL_ID" = ep."EMPL_ID"
+		   INNER JOIN "TBL_NOMUNIDADES" "u" ON ep."UNID_ID" = u."UNID_ID"
+		   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"		  
+		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"   
+		   WHERE   cn."CENO_ID" = 20141271  AND p."PEGE_IDENTIFICACION" =  '40918469'
+		   GROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID" 
+		   ORDER BY cn."CENO_ID"   p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, cnl."CENL_ID" DESC
+		  .
+in /var/www/NOMINA/protected/modules/administrator/models/Cesantiasnominaliquidaciones.php (315)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/CesantiasnominaliquidacionesController.php (208)
+in /var/www/NOMINA/index.php (13)

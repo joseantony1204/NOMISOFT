@@ -135,55 +135,57 @@ border-color:#999;
 			                    $Cesantiasnominaliquidaciones->liquidacion[$filas-1][9]+
 			                    $Cesantiasnominaliquidaciones->liquidacion[$filas-1][8];
 			?>
-            <td width="20%" align="right"><?php echo number_format($Cesantiasnominaliquidaciones->liquidacion[$filas-1][5]);?></td>
             <td width="17%" align="right">&nbsp;</td>
+			<td width="20%" align="right"><?php echo number_format($Cesantiasnominaliquidaciones->liquidacion[$filas-1][5]);?></td>           
             <td width="18%" align="right">&nbsp;</td>
           </tr>
 		  
 		  <tr>
             <td width="45%">GASTOS DE REPRESENTACION</td>
-            <td width="20%" align="right"><?php echo number_format($Cesantiasnominaliquidaciones->liquidacion[$filas-1][10]);?></td>
             <td width="17%" align="right">&nbsp;</td>
+			<td width="20%" align="right"><?php echo number_format($Cesantiasnominaliquidaciones->liquidacion[$filas-1][10]);?></td>           
             <td width="18%" align="right">&nbsp;</td>
           </tr>
 		  
 		  <tr>
             <td width="45%">SUBSIDIO DE TRANSPORTTE</td>
+			<td width="17%" align="right">&nbsp;</td>
             <td width="20%" align="right"><?php echo number_format($Cesantiasnominaliquidaciones->liquidacion[$filas-1][7]);?></td>
-            <td width="17%" align="right">&nbsp;</td>
             <td width="18%" align="right">&nbsp;</td>
           </tr>
 		  
 		  <tr>
             <td width="45%">PRIMA DE ANTIGUEDAD</td>
+			<td width="17%" align="right">&nbsp;</td>
             <td width="20%" align="right"><?php echo number_format($Cesantiasnominaliquidaciones->liquidacion[$filas-1][6]);?></td>
-            <td width="17%" align="right">&nbsp;</td>
             <td width="18%" align="right">&nbsp;</td>
           </tr>
 		  
 		  <tr>
             <td width="45%">PRIMA TECNICA</td>
+			<td width="17%" align="right">&nbsp;</td>
             <td width="20%" align="right"><?php echo number_format($Cesantiasnominaliquidaciones->liquidacion[$filas-1][9]);?></td>
-            <td width="17%" align="right">&nbsp;</td>
             <td width="18%" align="right">&nbsp;</td>
           </tr>
           
 		  <tr>
             <td width="45%">SUBSIDIO DE ALIMENTACION</td>
+			<td width="17%" align="right">&nbsp;</td>
             <td width="20%" align="right"><?php echo number_format($Cesantiasnominaliquidaciones->liquidacion[$filas-1][8]);?></td>
-            <td width="17%" align="right">&nbsp;</td>
             <td width="18%" align="right">&nbsp;</td>
           </tr>
           
 		  <tr>
             <th>TOTAL DEVENGADO</th>
-            <td align="right">&nbsp;</td>
+			<td width="17%" align="right">&nbsp;</td>
             <th align="right"><?php echo number_format($total);?></th>
             <td align="right">&nbsp;</td>
           </tr>
 		  <tr>
             <td colspan='4'>&nbsp;</td>
-          </tr>	  		  
+          </tr>	
+
+  		  
          </table>
 	    </td>
         <td width="50%" valign="top">
@@ -235,6 +237,11 @@ border-color:#999;
 		
 		
 		</td>
+      </tr>
+	  
+	  <tr>
+         <th>TOTAL GENERAL (DEVENGADO Y PRESTACIONES)</th>
+         <th align="left"><?php echo number_format($total+$sumaprestaciones);?></th>
       </tr>
     </table>
 	

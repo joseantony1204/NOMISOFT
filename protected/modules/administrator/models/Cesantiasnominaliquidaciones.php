@@ -290,10 +290,13 @@ class Cesantiasnominaliquidaciones extends CActiveRecord
 		));
 	}
 	
-	public function mostrarLiquidacion($parametros)
+	public function mostrarLiquidacion($parametros,$campo=NULL,$orden=NULL)
 	{
 	 $connection = Yii::app()->db;
-	 $this->liquidacion = NULL; 
+	 $this->liquidacion = NULL;
+     if($campo==NULL){
+	 $st = ',';
+	 }	 
 	 //echo "<br><br><br>".
 	 $sql='SELECT cnl."CENL_ID", cnl."CENL_CODIGO", cnl."CENL_DIAS", cnl."CENL_PUNTOS", cnl."CENL_SUELDO", cnl."CENL_SALARIO", cnl."CENL_PRIMAANTIGUEDAD",
 				  cnl."CENL_TRANSPORTE", cnl."CENL_ALIMENTACION", cnl."CENL_PRIMATECNICA", cnl."CENL_GASTOSRP", cnl."CENL_BONIFICACION", 
@@ -309,8 +312,8 @@ class Cesantiasnominaliquidaciones extends CActiveRecord
 		   INNER JOIN "TBL_NOMTIPOSCARGOS" "tc" ON ep."TICA_ID" = tc."TICA_ID"		  
 		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"   
 		   WHERE '.$parametros.'
-		   GROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID"
-		   ORDER BY cn."CENO_ID", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, cnl."CENL_ID" DESC
+		   GROUP BY cnl."CENL_ID", p."PEGE_ID", cn."CENO_ID" '.$campo.'
+		   ORDER BY cn."CENO_ID" '.$st.' '.$campo.' '.$orden.' p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC, cnl."CENL_ID" DESC
 		  ';    		  
      $rows = $connection->createCommand($sql)->queryAll(); 
 	 

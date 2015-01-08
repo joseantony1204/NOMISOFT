@@ -36,7 +36,8 @@ $columnas = count($Cesantiasnominaliquidaciones->liquidacion[1]);
  $detalle1[5]=$arc->izquierda("PRIMA DE ALIMENTACION----------->".$arc->derecha(number_format($Cesantiasnominaliquidaciones->liquidacion[$filas-1][8]),16)."",80);
  $detalle1[6]=$arc->izquierda("TOTAL DEVENGADO:---------------->".$arc->derecha(number_format($total),16)."",80);
  $detalle1[7]=$arc->espacio(80);
- $detalle1[8]=$arc->espacio(80);
+ $detalle1[8]=$arc->espacio(80); 
+ $detalle1[9]=$arc->espacio(80);
  
  //*************************INCICIA LA CAPTURA DE LA COLUMNA 2 *************************************************
   $detalle2=NULL; 
@@ -54,7 +55,7 @@ $columnas = count($Cesantiasnominaliquidaciones->liquidacion[1]);
   $detalle2[4]=$arc->izquierda("TOTAL PRESTACIONES--------------->".$arc->derecha(number_format($sumaprestaciones),16)."",80);
   $detalle2[5]=$arc->espacio(80);
   $detalle2[6]=$arc->espacio(80);
-  
+  $detalle1[10]=$arc->izquierda("TOTAL GENERAL (DEVENGADO Y PRESTACIONES)---------------->".$arc->derecha(number_format($total+$sumaprestaciones),16)."",80);
  //************************A PARTIR DE AQUI SE COMIENZA A IMPRIMIR LO ANTES GUARDADO*************************************
 	if(count($detalle1)>count($detalle2)){
 		$linearep=count($detalle1);

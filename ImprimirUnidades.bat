@@ -19,6 +19,8 @@ Echo.
 
 		Echo    3    DIRECCION                                         
 
+		Echo    4    FACULTAD CIENCIAS BASICAS - DOCENTE               
+
 		Echo    5    FACULTAD C.ECONOMICA Y ADM - DOCENTE              
 
 		Echo    6    C.ECONOMICA Y ADM  - ADMINISTRATIVO               
@@ -48,6 +50,8 @@ Echo.
 
 		if %menup%==3 print reportes\planoporunidades\3.dat
 
+		if %menup%==4 print reportes\planoporunidades\4.dat
+
 		if %menup%==5 print reportes\planoporunidades\5.dat
 
 		if %menup%==6 print reportes\planoporunidades\6.dat
@@ -64,9 +68,9 @@ Echo.
 
 		if %menup%==13 print reportes\planoporunidades\13.dat
 
-if %menup%==1010 print reportes\planoporunidades\1.dat reportes\planoporunidades\2.dat reportes\planoporunidades\3.dat reportes\planoporunidades\5.dat reportes\planoporunidades\6.dat reportes\planoporunidades\7.dat reportes\planoporunidades\8.dat reportes\planoporunidades\9.dat reportes\planoporunidades\11.dat reportes\planoporunidades\12.dat reportes\planoporunidades\13.dat 
+if %menup%==1010 print reportes\planoporunidades\1.dat reportes\planoporunidades\2.dat reportes\planoporunidades\3.dat reportes\planoporunidades\4.dat reportes\planoporunidades\5.dat reportes\planoporunidades\6.dat reportes\planoporunidades\7.dat reportes\planoporunidades\8.dat reportes\planoporunidades\9.dat reportes\planoporunidades\11.dat reportes\planoporunidades\12.dat reportes\planoporunidades\13.dat 
 if %menup%==1020 print reportes\planoporunidades\1.dat reportes\planoporunidades\2.dat reportes\planoporunidades\3.dat reportes\planoporunidades\6.dat reportes\planoporunidades\8.dat reportes\planoporunidades\11.dat reportes\planoporunidades\12.dat 
-if %menup%==1030 print reportes\planoporunidades\5.dat reportes\planoporunidades\7.dat reportes\planoporunidades\9.dat reportes\planoporunidades\13.dat 
+if %menup%==1030 print reportes\planoporunidades\4.dat reportes\planoporunidades\5.dat reportes\planoporunidades\7.dat reportes\planoporunidades\9.dat reportes\planoporunidades\13.dat 
 if %menup%==0 goto Salir
 
 :error

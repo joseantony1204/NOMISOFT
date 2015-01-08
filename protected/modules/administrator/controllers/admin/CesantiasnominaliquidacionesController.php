@@ -40,7 +40,7 @@ class CesantiasnominaliquidacionesController extends Controller
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'',''.$array[5].'',
                                  ''.$array[6].'','admin','create','update','totales','detalles','resumen','planopagoexcel',
-								 'planoporunidades','planogeneral','planoresumen','mail',  
+								 'planoporunidades','planogeneral','planoresumen','mail', 'planocesantias', 'planoexcelgrad','planoexcelintd', 
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
 			),			
@@ -237,6 +237,42 @@ class CesantiasnominaliquidacionesController extends Controller
 		));
 	}
 	
+	public function actionPlanoexcelintd($cesantiasNomina=NULL,$cesantiasNomina2=NULL,$personaGral=NULL,$unidad=NULL,$tipoEmpleo=NULL)
+	{
+		$Cesantiasnominaliquidaciones = new Cesantiasnominaliquidaciones;
+		$lista = $this->setParametros($cesantiasNomina,$cesantiasNomina2,$personaGral,$unidad,$tipoEmpleo);
+		 	
+		$Cesantiasnominaliquidaciones->mostrarLiquidacion($lista['sql']);		
+		$this->render('planoexcelintd',array(
+			'Cesantiasnominaliquidaciones'=>$Cesantiasnominaliquidaciones,
+			'Periodo'=>$lista['Periodo'],
+			'tercero'=>$lista['tercero'],
+			'cesantiasNomina'=>$cesantiasNomina,
+			'cesantiasNomina2'=>$cesantiasNomina2,
+			'personaGral'=>$personaGral,
+			'unidad'=>$unidad,
+			'tipoEmpleo'=>$tipoEmpleo,
+		));
+	}
+	
+	public function actionPlanoexcelgrad($cesantiasNomina=NULL,$cesantiasNomina2=NULL,$personaGral=NULL,$unidad=NULL,$tipoEmpleo=NULL)
+	{
+		$Cesantiasnominaliquidaciones = new Cesantiasnominaliquidaciones;
+		$lista = $this->setParametros($cesantiasNomina,$cesantiasNomina2,$personaGral,$unidad,$tipoEmpleo);
+		 	
+		$Cesantiasnominaliquidaciones->mostrarLiquidacion($lista['sql']);		
+		$this->render('planoexcelgrad',array(
+			'Cesantiasnominaliquidaciones'=>$Cesantiasnominaliquidaciones,
+			'Periodo'=>$lista['Periodo'],
+			'tercero'=>$lista['tercero'],
+			'cesantiasNomina'=>$cesantiasNomina,
+			'cesantiasNomina2'=>$cesantiasNomina2,
+			'personaGral'=>$personaGral,
+			'unidad'=>$unidad,
+			'tipoEmpleo'=>$tipoEmpleo,
+		));
+	}
+	
 	public function actionPlanopagoexcel($cesantiasNomina=NULL,$cesantiasNomina2=NULL,$personaGral=NULL,$unidad=NULL,$tipoEmpleo=NULL,$sw=NULL)
 	{
 		$Cesantiasnominaliquidaciones = new Cesantiasnominaliquidaciones;
@@ -308,6 +344,22 @@ class CesantiasnominaliquidacionesController extends Controller
 			'unidad'=>$unidad,
 			'tipoEmpleo'=>$tipoEmpleo,
 		));
+	}
+	
+	public function actionPlanocesantias($cesantiasNomina=NULL)
+	{
+		$Cesantiasnominaliquidaciones = new Cesantiasnominaliquidaciones;
+		if($cesantiasNomina!=NULL){
+		 $sql = ' cn."CENO_ID" = '.$cesantiasNomina.' ';
+		}
+        $campo = ', tc.'.'"TICA_ID"';
+		$Cesantiasnominaliquidaciones->mostrarLiquidacion($sql,$campo, "ASC,");
+		
+		$this->render('planocesantias',array(
+			'Cesantiasnominaliquidaciones'=>$Cesantiasnominaliquidaciones,			
+			'cesantiasNomina'=>$cesantiasNomina,			
+		));
+		
 	}
 	
 	public function actionMail($cesantiasNomina=NULL,$cesantiasNomina2=NULL,$personaGral=NULL,$unidad=NULL,$tipoEmpleo=NULL,$sw=NULL)

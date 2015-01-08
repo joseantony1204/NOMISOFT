@@ -1,7 +1,7 @@
 <?php
 Yii::app()->homeUrl = array('/administrator/');
 $this->breadcrumbs=array(
-	'Nomina Cesantias'=>array('admin/cesantiasnomina/admin'),
+	'Cesantias'=>array('admin/cesantiasnomina/admin'),
 	'Totales'
 );
 
@@ -35,8 +35,8 @@ $Cesantiasnomina = Cesantiasnomina::model()->findByPk($Cesantiasnominaliquidacio
 					  ?>         
 					               
              </td>
-             <td width="44%"><strong><span><em>TOTALES DE LIQUIDACION NOMINA DE CESANTIAS <br>( <?php echo $Cesantiasnomina->CENO_PERIODO; ?> )</em></span></strong></td>
-			 <td width="10%" align="center">
+             <td width="34%"><strong><span><em>TOTALES DE LIQUIDACION NOMINA DE CESANTIAS <br>( <?php echo $Cesantiasnomina->CENO_PERIODO; ?> )</em></span></strong></td>
+			 <td width="8%" align="center">
 					 <?php
 
 					 
@@ -46,7 +46,7 @@ $Cesantiasnomina = Cesantiasnomina::model()->findByPk($Cesantiasnominaliquidacio
 					 echo CHtml::link($image, array('admin/cesantiasnomina/admin',),$htmlOptions ); 
 ?>         
 					              </td>
-             <td width="10%" align="center">
+             <td width="8%" align="center">
 					 <?php
 
 					 
@@ -57,26 +57,44 @@ $Cesantiasnomina = Cesantiasnomina::model()->findByPk($Cesantiasnominaliquidacio
 ?>         
 					              </td>
 
-			<td width="10%" align="center">
+			<td width="8%" align="center">
 					 <?php				 
-					 $imageUrl = Yii::app()->request->baseUrl . '/images/icon_download_fna.png';
+					 $imageUrl = Yii::app()->request->baseUrl . '/images/icon_download_ibc.png';
 					 $htmlOptions = array('class' => 'thumbnail','rel' => 'tooltip','data-title' => 'Descargar');
 					 $image = CHtml::image($imageUrl);
-					 echo CHtml::link($image, array('admin/cesantiasnominaliquidaciones/downfna','cesantiasNomina'=>$Cesantiasnominaliquidaciones->CENO_ID),$htmlOptions ); 
+					 echo CHtml::link($image, array('admin/cesantiasnominaliquidaciones/planocesantias','cesantiasNomina'=>$Cesantiasnominaliquidaciones->CENO_ID),$htmlOptions ); 
                      ?>         
 			</td>
-			<td width="10%" align="center">
+			<td width="8%" align="center">
+					 <?php				 
+					 $imageUrl = Yii::app()->request->baseUrl . '/images/icon_download_unidtotal.png';
+					 $htmlOptions = array('class' => 'thumbnail','rel' => 'tooltip','data-title' => 'Reporte de Pago General por Dependencias');
+					 $image = CHtml::image($imageUrl);
+					 echo CHtml::link($image, array('admin/cesantiasnominaliquidaciones/planoexcelgrad','cesantiasNomina'=>$Cesantiasnominaliquidaciones->CENO_ID),$htmlOptions ); 
+                     ?>         
+			</td>
+			
+			<td width="8%" align="center">
+					 <?php				 
+					 $imageUrl = Yii::app()->request->baseUrl . '/images/icon_download_unidinteres.png';
+					 $htmlOptions = array('class' => 'thumbnail','rel' => 'tooltip','data-title' => 'Reporte de Pago Intereses por Dependencias');
+					 $image = CHtml::image($imageUrl);
+					 echo CHtml::link($image, array('admin/cesantiasnominaliquidaciones/planoexcelintd','cesantiasNomina'=>$Cesantiasnominaliquidaciones->CENO_ID),$htmlOptions ); 
+                     ?>         
+			</td>
+			
+			<td width="8%" align="center">
 					 <?php				 
 					 $imageUrl = Yii::app()->request->baseUrl . '/images/icon_download_pagototal.png';
-					 $htmlOptions = array('class' => 'thumbnail','rel' => 'tooltip','data-title' => 'Reporte de Pago Mensual');
+					 $htmlOptions = array('class' => 'thumbnail','rel' => 'tooltip','data-title' => 'Reporte de Pago Plano General');
 					 $image = CHtml::image($imageUrl);
 					 echo CHtml::link($image, array('admin/cesantiasnominaliquidaciones/planopagoexcel','cesantiasNomina'=>$Cesantiasnominaliquidaciones->CENO_ID),$htmlOptions ); 
                      ?>         
 			</td>
-			<td width="10%" align="center">
+			<td width="8%" align="center">
 					 <?php				 
 					 $imageUrl = Yii::app()->request->baseUrl . '/images/icon_download_pagointeres.png';
-					 $htmlOptions = array('class' => 'thumbnail','rel' => 'tooltip','data-title' => 'Reporte de Pago Mensual');
+					 $htmlOptions = array('class' => 'thumbnail','rel' => 'tooltip','data-title' => 'Reporte de Pago Plano Intereses');
 					 $image = CHtml::image($imageUrl);
 					 echo CHtml::link($image, array('admin/cesantiasnominaliquidaciones/planopagoexcel','cesantiasNomina'=>$Cesantiasnominaliquidaciones->CENO_ID,'sw'=>true),$htmlOptions ); 
                      ?>         

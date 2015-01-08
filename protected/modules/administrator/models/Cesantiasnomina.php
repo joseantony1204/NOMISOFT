@@ -200,7 +200,9 @@ class Cesantiasnomina extends CActiveRecord
 	   if(((date("Y", strtotime($Personasgenerales->Estadoempleoplanta->ESEP_FECHAREGISTRO)))==(date("Y", strtotime($Cesantiasnomina->CENO_FECHAPROCESO)))) &
 	     ((date("m", strtotime($Personasgenerales->Estadoempleoplanta->ESEP_FECHAREGISTRO)))==(date("m", strtotime($Cesantiasnomina->CENO_FECHAPROCESO))))){
 	     $sw = 0; 			 
-	   }
+	   }elseif($Personasgenerales->Estadoempleoplanta->ESEM_ID==5){
+	        $sw = 0;
+			}
 	  }
 	  
 	   /*si todo esta bn se procede a calcular la nomina para la persona*/
