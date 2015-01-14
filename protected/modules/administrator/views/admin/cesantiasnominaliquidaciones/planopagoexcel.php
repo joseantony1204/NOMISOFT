@@ -41,9 +41,11 @@ for ($i=1;$i<$filas-1;$i++)
 	if($sw==true){
 	 $neto=($Cesantiasnominaliquidaciones->liquidacion[$i][$columnas-1])*(0.12);
 	 $nombreDocumento = 'PagoInteres'.$cesantiasNomina;
+	 $nombreDoc = 'PAGOINTERESES';
 	}else{
 	      $neto=($Cesantiasnominaliquidaciones->liquidacion[$i][$columnas-1]); 
 		  $nombreDocumento = 'PagoTotal'.$cesantiasNomina;
+		  $nombreDoc = 'PAGOCESANTIAS';
 		 }
 	
 	if($neto>0 AND ($Mensualnomina->Unidad->TIUN_ID==1 OR $Mensualnomina->Unidad->TIUN_ID==2)){
@@ -72,7 +74,7 @@ $objPHPExcel->getActiveSheet()->getStyle('D2:D'.$fxls)->getNumberFormat()->setFo
 	
 	$objWriter->save('reportes/pagomes/TotalPlano.xlsx');
     header('Content-Type: application/vnd.ms-excel');
-    header('Content-Disposition: attachment;filename="PAGOCESANTIAS.xls"');
+    header('Content-Disposition: attachment;filename="'.$nombreDoc.'.xls"');
     header('Cache-Control: max-age=0');
     $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
     $objWriter->save('php://output');    

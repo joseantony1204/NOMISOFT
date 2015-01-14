@@ -6820,3 +6820,155 @@ LINE 16:      ORDER BY cn."CENO_ID"   p."PEGE_PRIMERAPELLIDO", p."PEG...
 in /var/www/NOMINA/protected/modules/administrator/models/Cesantiasnominaliquidaciones.php (315)
 in /var/www/NOMINA/protected/modules/administrator/controllers/admin/CesantiasnominaliquidacionesController.php (208)
 in /var/www/NOMINA/index.php (13)
+2015/01/13 08:27:25 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «FROM»
+LINE 3:    FROM
+           ^. The SQL statement executed was:  UPDATE 	"TBL_NOMNOVEDADESPRIMANAVIDAD" "npn"
+            SET "NOPN_MESES" =              
+			FROM
+            (
+	 SELECT "NOPN_ID", "PEGE_ID", "PEGE_IDENTIFICACION", "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE", "NOPN_MESES"
+     FROM (SELECT pg.*, npn."NOPN_ID", npn."NOPN_MESES", (SELECT eep."ESEM_ID"
+		     FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+		     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+		     ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+		     LIMIT 1 
+		    ) AS "ESEM_ID", 
+		    (SELECT  ep."TICA_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                    ) AS "TICA_ID", 
+                    (SELECT  ep."UNID_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                     ) AS "UNID_ID" 
+      FROM "TBL_NOMPERSONASGENERALES" "pg"  
+      INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON pg."PEGE_ID" = ep."PEGE_ID"
+      INNER JOIN "TBL_NOMNOVEDADESPRIMANAVIDAD" npn ON pg."PEGE_ID" = npn."PEGE_ID"  						  
+      GROUP BY pg."PEGE_ID", ep."EMPL_ID", npn."NOPN_ID" ) s  
+     WHERE "ESEM_ID" = 1  
+     ORDER BY "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE"			
+			) ta
+			
+            WHERE npn."NOPN_ID" = ta."NOPN_ID"
+		  .
+in /var/www/NOMINA/protected/modules/administrator/models/Empleosplanta.php (1228)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/EmpleosplantaController.php (439)
+in /var/www/NOMINA/index.php (13)
+2015/01/13 08:27:26 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «FROM»
+LINE 3:    FROM
+           ^. The SQL statement executed was:  UPDATE 	"TBL_NOMNOVEDADESRETROACTIVO" "nra"
+            SET "NORE_DIAS" =              
+			FROM
+            (
+	 SELECT "NORE_ID", "PEGE_ID", "PEGE_IDENTIFICACION", "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE", "NORE_DIAS"
+     FROM (SELECT pg.*, nra."NORE_ID", nra."NORE_DIAS", (SELECT eep."ESEM_ID"
+		     FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+		     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+		     ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+		     LIMIT 1 
+		    ) AS "ESEM_ID", 
+		    (SELECT  ep."TICA_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                    ) AS "TICA_ID", 
+                    (SELECT  ep."UNID_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                     ) AS "UNID_ID" 
+      FROM "TBL_NOMPERSONASGENERALES" "pg"  
+      INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON pg."PEGE_ID" = ep."PEGE_ID"
+      INNER JOIN "TBL_NOMNOVEDADESRETROACTIVO" nra ON pg."PEGE_ID" = nra."PEGE_ID"  						  
+      GROUP BY pg."PEGE_ID", ep."EMPL_ID", nra."NORE_ID" ) s  
+     WHERE "ESEM_ID" = 1  
+     ORDER BY "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE" 		
+			) ta
+			
+            WHERE nra."NORE_ID" = ta."NORE_ID"
+		  .
+in /var/www/NOMINA/protected/modules/administrator/models/Empleosplanta.php (1228)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/EmpleosplantaController.php (453)
+in /var/www/NOMINA/index.php (13)
+2015/01/13 08:28:25 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «FROM»
+LINE 3:    FROM
+           ^. The SQL statement executed was:  UPDATE 	"TBL_NOMNOVEDADESRETROACTIVO" "nra"
+            SET "NORE_DIAS" =              
+			FROM
+            (
+	 SELECT "NORE_ID", "PEGE_ID", "PEGE_IDENTIFICACION", "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE", "NORE_DIAS"
+     FROM (SELECT pg.*, nra."NORE_ID", nra."NORE_DIAS", (SELECT eep."ESEM_ID"
+		     FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+		     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+		     ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+		     LIMIT 1 
+		    ) AS "ESEM_ID", 
+		    (SELECT  ep."TICA_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                    ) AS "TICA_ID", 
+                    (SELECT  ep."UNID_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                     ) AS "UNID_ID" 
+      FROM "TBL_NOMPERSONASGENERALES" "pg"  
+      INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON pg."PEGE_ID" = ep."PEGE_ID"
+      INNER JOIN "TBL_NOMNOVEDADESRETROACTIVO" nra ON pg."PEGE_ID" = nra."PEGE_ID"  						  
+      GROUP BY pg."PEGE_ID", ep."EMPL_ID", nra."NORE_ID" ) s  
+     WHERE "ESEM_ID" = 1  
+     ORDER BY "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE" 		
+			) ta
+			
+            WHERE nra."NORE_ID" = ta."NORE_ID"
+		  .
+in /var/www/NOMINA/protected/modules/administrator/models/Empleosplanta.php (1228)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/EmpleosplantaController.php (453)
+in /var/www/NOMINA/index.php (13)
+2015/01/13 08:28:38 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «FROM»
+LINE 3:    FROM
+           ^. The SQL statement executed was:  UPDATE 	"TBL_NOMNOVEDADESPRIMANAVIDAD" "npn"
+            SET "NOPN_MESES" =              
+			FROM
+            (
+	 SELECT "NOPN_ID", "PEGE_ID", "PEGE_IDENTIFICACION", "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE", "NOPN_MESES"
+     FROM (SELECT pg.*, npn."NOPN_ID", npn."NOPN_MESES", (SELECT eep."ESEM_ID"
+		     FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+		     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+		     ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+		     LIMIT 1 
+		    ) AS "ESEM_ID", 
+		    (SELECT  ep."TICA_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                    ) AS "TICA_ID", 
+                    (SELECT  ep."UNID_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                     ) AS "UNID_ID" 
+      FROM "TBL_NOMPERSONASGENERALES" "pg"  
+      INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON pg."PEGE_ID" = ep."PEGE_ID"
+      INNER JOIN "TBL_NOMNOVEDADESPRIMANAVIDAD" npn ON pg."PEGE_ID" = npn."PEGE_ID"  						  
+      GROUP BY pg."PEGE_ID", ep."EMPL_ID", npn."NOPN_ID" ) s  
+     WHERE "ESEM_ID" = 1  
+     ORDER BY "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE"			
+			) ta
+			
+            WHERE npn."NOPN_ID" = ta."NOPN_ID"
+		  .
+in /var/www/NOMINA/protected/modules/administrator/models/Empleosplanta.php (1228)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/EmpleosplantaController.php (439)
+in /var/www/NOMINA/index.php (13)

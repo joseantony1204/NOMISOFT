@@ -90,7 +90,7 @@ border-right: none;
 			 $imageUrl = Yii::app()->request->baseUrl . '/images/sendmail.png';
 			 $htmlOptions = array('class' => 'thumbnail','rel' => 'tooltip','data-title' => 'Enviar correos electronicos');
 			 $image = CHtml::image($imageUrl);
-		     echo CHtml::link($image, array('admin/cesantiasnominaliquidaciones/email',
+		     echo CHtml::link($image, array('admin/cesantiasnominaliquidaciones/mail',
 			                                                               'cesantiasNomina'=>$cesantiasNomina,
 																		   'cesantiasNomina2'=>$cesantiasNomina2,
 																		   'personaGral'=>$personaGral,

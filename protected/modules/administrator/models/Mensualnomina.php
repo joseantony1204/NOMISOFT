@@ -933,8 +933,8 @@ class Mensualnomina extends CActiveRecord
 			 }
 	 }else{
 	  /*para empleados nuevos en los meses de diciembre y enero o fallecidos en estos dos mese*/
-	  $mesEntradaEmpleado = date("m", strtotime($this->Personageneral->PEGE_FECHAINGRESO)); 
-	  $mesLiquidando = date("m", strtotime($this->MENO_FECHAPROCESO)); 
+	  $mesEntradaEmpleado = date("m", strtotime($this->Personageneral->PEGE_FECHAINGRESO)).date("Y", strtotime($this->Personageneral->PEGE_FECHAINGRESO)); 
+	  $mesLiquidando = date("m", strtotime($this->MENO_FECHAPROCESO)).date("Y", strtotime($this->MENO_FECHAPROCESO)); 
 	  if($this->Estadoempleoplanta->ESEM_ID==4 or ($mesEntradaEmpleado==$mesLiquidando)){	
 		return $this->baseSaludPensionDiciembreEneroNuevosFallecidos();
 	  }else{		
