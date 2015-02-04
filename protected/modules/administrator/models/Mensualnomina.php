@@ -303,12 +303,12 @@ class Mensualnomina extends CActiveRecord
 	 *fecha de liquidacion de la nomina mensual del mismo periodo.
 	 **/
 	 if($notification==NULL){
-	  $sql = 'SELECT  ep."EMPL_ID" FROM "TBL_NOMEMPLEOSPLANTA" ep ORDER BY  ep."PEGE_ID" ASC';
+	  $sql = 'SELECT  ep."EMPL_ID" FROM "TBL_NOMEMPLEOSPLANTA" ep  ORDER BY  ep."EMPL_FECHAINGRESO" DESC';
 	 }elseif($notification==TRUE){
 	         $sql = 'SELECT  ep."EMPL_ID" 
 					 FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" ep
 					 WHERE p."PEGE_ID" = ep."PEGE_ID" AND p."PEGE_FECHAINGRESO">='."'".$objet->MENO_FECHAPROCESO."'".'
-					 ORDER BY  ep."EMPL_ID" ASC
+					 ORDER BY  ep."EMPL_FECHAINGRESO" DESC
 				   ';
 		   }
 		   
@@ -827,6 +827,7 @@ class Mensualnomina extends CActiveRecord
 			$prAlimenta = $this->getSubAlimentacion();
 			$bonserv = $this->getBonServiciosPrestados();
 			$fecha = $this->Personageneral->PEGE_FECHAINGRESO;
+			
 			if(date("n",strtotime($fecha))==date("n",strtotime($this->MENO_FECHAPROCESO)) && date("Y", strtotime($fecha))< date("Y", strtotime($this->MENO_FECHAPROCESO))){
 			 if(($this->Empleoplanta->EMPL_SUELDO)+($this->getGastosRepresentacion())>$bon){
 			  $serv=(($this->Empleoplanta->EMPL_SUELDO)+($this->getPrimaTecnica())+($this->getGastosRepresentacion())+round($prantiguedad[0]))*($this->valorestablecidos[8][3]/100);
@@ -919,7 +920,7 @@ class Mensualnomina extends CActiveRecord
 	private function calcularBaseSaludPensionDiciembreEnero() {  
 	  //echo '<br><br><br>';
 	  /*para empleados que cambian de cargo en los meses de diciembre y enero*/
-	 if($this->verificarNuevoCargoDiciembreEnero()==1){
+	  if($this->verificarNuevoCargoDiciembreEnero()==1){
 		/*para el cargo anterior se calcula la salud con los dias trabajados*/
 		$Cargo = $this->cargoAnteriorDiciembreEnero();
 		//echo $Cargo[0].'=='.$this->Empleoplanta->EMPL_FECHAINGRESO;
@@ -1025,23 +1026,57 @@ class Mensualnomina extends CActiveRecord
 		return $tdevengado;	
     }
 	
-	private function baseSaludPensionDiciembreEneroNuevosFallecidos() {
-		$basico=$this->getSueldoBasico();
-		$hed=round($this->getHorasExtrasDiurna());
-		$hen=round($this->getHorasExtrasNocturna());
-		$hedf=round($this->getHorasExtrasDiurnaFestivo());
-		$henf=round($this->getHorasExtrasNocturnaFestivo());
-		$dyf=round($this->getDomingosYfestivos());
-		$ren=round($this->getRecargoNocturno());
-		$rndyf=round($this->getRecargoNocturnoDyF());
-		$prantiguedad=$this->getPrimaAntiguedad();
-		$primatec=round($this->getPrimaTecnica());
-		$gastosrp=round($this->getGastosRepresentacion());
-		$bonserv=round($this->getBonServiciosPrestados());
-		$tdevengado=$basico+$hed+$hedf+$hen+$henf+$dyf+$ren+$rndyf;
-		$tdevengado=$tdevengado+round($primatec)+round($gastosrp)+round($sobrenumera);
-		$tdevengado=$tdevengado+round($prantiguedad[1]);
-		return $tdevengado;
+	private function baseSaludPensionDiciembreEneroNuevosFallecidos(){
+		//echo '<br><br><br>';
+		$periodoSalidaEmpleado = date("m", strtotime($this->Estadoempleoplanta->ESEP_FECHAREGISTRO)).date("Y", strtotime($this->Estadoempleoplanta->ESEP_FECHAREGISTRO)); 
+	    $periodoLiquidando = date("m", strtotime($this->MENO_FECHAPROCESO)).date("Y", strtotime($this->MENO_FECHAPROCESO));
+		
+		if($periodoSalidaEmpleado==$periodoLiquidando){
+		 /**
+		 *si la fecha de salida del empleado es igual al mes que se esta liquidando se hace 
+		 *el calculo utilizando el dia de la fecha de retiro
+		 */
+		 $diasTemp = $this->Empleoplanta->EMPL_DIASAPAGAR;
+		 $this->Empleoplanta->EMPL_DIASAPAGAR = date("d", strtotime($this->Estadoempleoplanta->ESEP_FECHAREGISTRO));
+		 
+		 $basico=$this->getSueldoBasico();
+		 $hed=round($this->getHorasExtrasDiurna());
+		 $hen=round($this->getHorasExtrasNocturna());
+		 $hedf=round($this->getHorasExtrasDiurnaFestivo());
+		 $henf=round($this->getHorasExtrasNocturnaFestivo());
+		 $dyf=round($this->getDomingosYfestivos());
+		 $ren=round($this->getRecargoNocturno());
+		 $rndyf=round($this->getRecargoNocturnoDyF());
+		 $prantiguedad=$this->getPrimaAntiguedad();
+		 $primatec=round($this->getPrimaTecnica());
+		 $gastosrp=round($this->getGastosRepresentacion());
+		 $bonserv=round($this->getBonServiciosPrestados());
+		 $tdevengado=$basico+$hed+$hedf+$hen+$henf+$dyf+$ren+$rndyf;
+		 $tdevengado=$tdevengado+round($primatec)+round($gastosrp)+round($sobrenumera);
+		 $tdevengado=$tdevengado+round($prantiguedad[1]);
+		
+		 $this->Empleoplanta->EMPL_DIASAPAGAR = $diasTemp;
+		 return $tdevengado;
+		
+		}else{	     
+			 
+				$basico=$this->getSueldoBasico();
+				$hed=round($this->getHorasExtrasDiurna());
+				$hen=round($this->getHorasExtrasNocturna());
+				$hedf=round($this->getHorasExtrasDiurnaFestivo());
+				$henf=round($this->getHorasExtrasNocturnaFestivo());
+				$dyf=round($this->getDomingosYfestivos());
+				$ren=round($this->getRecargoNocturno());
+				$rndyf=round($this->getRecargoNocturnoDyF());
+				$prantiguedad=$this->getPrimaAntiguedad();
+				$primatec=round($this->getPrimaTecnica());
+				$gastosrp=round($this->getGastosRepresentacion());
+				$bonserv=round($this->getBonServiciosPrestados());
+				$tdevengado=$basico+$hed+$hedf+$hen+$henf+$dyf+$ren+$rndyf;
+				$tdevengado=$tdevengado+round($primatec)+round($gastosrp)+round($sobrenumera);
+				$tdevengado=$tdevengado+round($prantiguedad[1]);
+				return $tdevengado;
+		}
     }
 	
     private	function getSubsistencia($total){

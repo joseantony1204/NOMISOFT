@@ -163,7 +163,9 @@ class Liqvacaciones extends CActiveRecord
 	 /**
 	 *Guardar la liquidacion
 	 */
-	 $this->setLiquidacion($Personasgeneral,$Liquidaciones,$devengados);
+	 if($this->mesesvacaciones>0){
+	  $this->setLiquidacion($Personasgeneral,$Liquidaciones,$devengados);
+	 } 
 	 
 	}
 	

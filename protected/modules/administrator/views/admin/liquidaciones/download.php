@@ -161,7 +161,7 @@ $objPHPExcel->getActiveSheet()->getStyle('B5:H5')->applyFromArray($styleArray);
 	 
 	 $fxls = $fxls+1;
 	 $objPHPExcel->setActiveSheetIndex($index)->mergeCells('B'.$fxls.':C'.$fxls);
-	 $objPHPExcel->getActiveSheet()->setCellValue('B'.$fxls, 'TOTAL DE SERVICIOS VACACIONES');
+	 $objPHPExcel->getActiveSheet()->setCellValue('B'.$fxls, 'TOTAL DE PRIMA SERVICIOS');
 	 $totalliquidacion = $totalliquidacion+$Liqprimasemestral->liquidacion[$i][13];
 	 $objPHPExcel->getActiveSheet()->setCellValue('H'.$fxls, $Liqprimasemestral->liquidacion[$i][13]);
 	 $objPHPExcel->getActiveSheet()->getStyle('H'.$fxls)->getNumberFormat()->setFormatCode('#,##0');
@@ -455,7 +455,7 @@ $objPHPExcel->getActiveSheet()->getStyle('B5:H5')->applyFromArray($styleArray);
 	$objPHPExcel->getActiveSheet()->setTitle($nombre);
 	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 	
-	$objWriter->save('Liquidacion_'.$Liquidaciones->LIQU_ID.'.xlsx');
+	$objWriter->save('reportes/liquidaciones/Liquidacion_'.$Liquidaciones->LIQU_ID.'.xlsx'); 
     header('Content-Type: application/vnd.ms-excel');
     header('Content-Disposition: attachment;filename="Liquidacion_'.$Liquidaciones->LIQU_ID.'.xls"');
     header('Cache-Control: max-age=0');

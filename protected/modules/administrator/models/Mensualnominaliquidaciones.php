@@ -488,6 +488,7 @@ class Mensualnominaliquidaciones extends CActiveRecord
        $j++;	 
      }
 	 
+	  //echo "<br><br><br>".
 	 $string='SELECT COUNT("MENP_ID") AS "MENP_ID", COUNT("SALU_ID") AS "SALU_ID", SUM("MENP_SALUDTOTAL") AS "MENP_SALUDTOTAL", COUNT("PENS_ID") AS "PENS_ID", 
                      SUM("MENP_PENSIONTOTAL") AS "MENP_PENSIONTOTAL", COUNT("SIND_ID") AS "SIND_ID", 
                      SUM("MENP_SINDICATOTOTAL") AS "MENP_SINDICATOTOTAL", SUM("MENP_FONDOSP") AS "MENP_FONDOSP", SUM("MENP_SUBSISTENCIA") AS "MENP_SUBSISTENCIA", 
@@ -1174,7 +1175,8 @@ class Mensualnominaliquidaciones extends CActiveRecord
 	 $Mensualnomina = new Mensualnomina;
 	 $connection = Yii::app()->db;
 	 $anionomina = substr($codigo,0,4);  $mesnomina = substr($codigo,4,-2);
-     $periodo = substr($codigo,0,-2);
+     //echo '<br><br><br>'; 
+	 $periodo = substr($codigo,0,-2);
  
      if(($periodo == $anionomina."12") or ($periodo == $anionomina."01")){
       $string='SELECT mnl."MENL_ID", mnl."EMPL_ID", p."PEGE_IDENTIFICACION", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE", p."PEGE_SEGUNDONOMBRE", 
@@ -1200,10 +1202,11 @@ class Mensualnominaliquidaciones extends CActiveRecord
 	   $Mensualnomina->cargarEmpleoPlanta($querySt['EMPL_ID']);
 	   
 	   
-	   $anioEntrada = (date("Y", strtotime($Mensualnomina->Empleoplanta->EMPL_FECHAINGRESO))); 
-	   $mesEntrada = (date("m", strtotime($Mensualnomina->Empleoplanta->EMPL_FECHAINGRESO)));
+	   $anioEntrada = (date("Y", strtotime($Mensualnomina->Personageneral->PEGE_FECHAINGRESO))); 
+	   $mesEntrada = (date("m", strtotime($Mensualnomina->Personageneral->PEGE_FECHAINGRESO)));
 	   $entrada =$anioEntrada.$mesEntrada; 
 	   if($periodo==$entrada){
+	   //echo '<br>1.0';
 	   $sql='SELECT mnl."MENL_ID", mnl."EMPL_ID", p."PEGE_IDENTIFICACION", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE", p."PEGE_SEGUNDONOMBRE", 
                   SUM(mnl."MENL_SALARIO"+mnl."MENL_PRIMAANTIGUEDAD"+mnl."MENL_HEDTOTAL"+mnl."MENL_HENTOTAL" +
                       mnl."MENL_HEDFTOTAL"+mnl."MENL_HENFTOTAL"+mnl."MENL_DYFTOTAL"+mnl."MENL_RENTOTAL"+mnl."MENL_RENDYFTOTAL"+mnl."MENL_PRIMATECNICA" +
@@ -1223,7 +1226,8 @@ class Mensualnominaliquidaciones extends CActiveRecord
 		  '; 
 	   
 	  }else{
-	        $sql='SELECT mnl."MENL_ID", mnl."EMPL_ID", p."PEGE_IDENTIFICACION", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE", p."PEGE_SEGUNDONOMBRE", 
+	        //echo '<br>2.0';
+			$sql='SELECT mnl."MENL_ID", mnl."EMPL_ID", p."PEGE_IDENTIFICACION", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE", p."PEGE_SEGUNDONOMBRE", 
                   SUM(round(mnl."MENL_SALARIO"/mnl."MENL_DIAS"*30)+round(mnl."MENL_PRIMAANTIGUEDAD"/mnl."MENL_DIAS"*30)+round(mnl."MENL_HEDTOTAL"/mnl."MENL_DIAS"*30)+
                       round(mnl."MENL_HENTOTAL"/mnl."MENL_DIAS"*30)+round(mnl."MENL_HEDFTOTAL"/mnl."MENL_DIAS"*30)+round(mnl."MENL_HENFTOTAL"/mnl."MENL_DIAS"*30)+
                       round(mnl."MENL_DYFTOTAL"/mnl."MENL_DIAS"*30)+round(mnl."MENL_RENTOTAL"/mnl."MENL_DIAS"*30)+round(mnl."MENL_RENDYFTOTAL"/mnl."MENL_DIAS"*30)+

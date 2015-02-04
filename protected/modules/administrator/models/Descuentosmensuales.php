@@ -141,17 +141,38 @@ class Descuentosmensuales extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 		
-		$criteria->select = 't.*, (SELECT COUNT('."'PEGE_ID'".')
-                                   FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" e, "TBL_NOMESTADOSEMPLEOSPLANTA" ee, "TBL_NOMNOVEDADESMENSUALES" nm
-								   WHERE t."DEME_ID" = nm."DEME_ID" AND nm."EMPL_ID" = e."EMPL_ID" AND e."EMPL_ID" = ee."EMPL_ID" AND ee."ESEM_ID" = 1
-								   AND e."PEGE_ID" = p."PEGE_ID" AND nm."NOME_VALOR">0 GROUP BY nm."DEME_ID"
-								  )  "AFILIADOS",
+		$criteria->select = 't.*, (SELECT COUNT(*) FROM 
+		                           (
+		                            SELECT  p."PEGE_ID", ep."EMPL_ID", 								    
+									(SELECT eep."ESEM_ID"
+									 FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+									 WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = p."PEGE_ID"
+									 ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+									 LIMIT 1 
+									 ) AS "ESEM_ID"
+									 
+									 FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMNOVEDADESMENSUALES" nm
+									 WHERE t."DEME_ID" = nm."DEME_ID" AND nm."EMPL_ID" = ep."EMPL_ID" 										  
+									 AND ep."PEGE_ID" = p."PEGE_ID" AND nm."NOME_VALOR">0 
+									 ) g
+									 
+									 WHERE "ESEM_ID" = 1
+								   )  "AFILIADOS",
 								  
-								  (SELECT SUM("NOME_VALOR")
-                                   FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" e, "TBL_NOMESTADOSEMPLEOSPLANTA" ee, "TBL_NOMNOVEDADESMENSUALES" nm
-								   WHERE t."DEME_ID" = nm."DEME_ID" AND nm."EMPL_ID" = e."EMPL_ID" AND e."EMPL_ID" = ee."EMPL_ID" AND ee."ESEM_ID" = 1
-								   AND e."PEGE_ID" = p."PEGE_ID" AND nm."NOME_VALOR">0 GROUP BY nm."DEME_ID"
-								  )  "SUMATORIA"';
+								  (SELECT SUM("NOME_VALOR") FROM 
+								   (SELECT  p."PEGE_ID", ep."EMPL_ID", nm."NOME_VALOR",
+								    (SELECT eep."ESEM_ID"
+								     FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+								     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = p."PEGE_ID"
+								     ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+								     LIMIT 1 
+								    ) AS "ESEM_ID"
+								    FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMNOVEDADESMENSUALES" nm
+								    WHERE t."DEME_ID" = nm."DEME_ID" AND nm."EMPL_ID" = ep."EMPL_ID" 									  
+								    AND ep."PEGE_ID" = p."PEGE_ID" AND nm."NOME_VALOR">0 
+								   ) g
+								   WHERE "ESEM_ID" = 1 GROUP BY "DEME_ID"
+								  ) AS "SUMATORIA"';
 
 		$criteria->compare('"DEME_ID"',$this->DEME_ID);
 		$criteria->compare('"DEME_NOMBRE"',$this->DEME_NOMBRE,true);
@@ -168,11 +189,21 @@ class Descuentosmensuales extends CActiveRecord
 	
 	public function getAfiliados($descuento){
 	$connection = Yii::app()->db;
-     $sql = 'SELECT p."PEGE_IDENTIFICACION", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE", p."PEGE_SEGUNDONOMBRE",  dm."DEME_NOMBRE", nm."NOME_VALOR"			 
-             FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMNOVEDADESMENSUALES" nm, "TBL_NOMDESCUENTOSMENSUALES" dm, "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
-             WHERE p."PEGE_ID" = ep."PEGE_ID" AND dm."DEME_ID" = nm."DEME_ID" AND nm."EMPL_ID" = ep."EMPL_ID" AND dm."DEME_ID" = '.$descuento.' AND nm."NOME_VALOR"!=0
-             AND ep."EMPL_ID" = eep."EMPL_ID" AND eep."ESEM_ID" = 1
-			 ORDER BY  p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE" ASC
+     $sql = 'SELECT * FROM
+			(
+			SELECT p."PEGE_IDENTIFICACION", p."PEGE_PRIMERAPELLIDO", p."PEGE_SEGUNDOAPELLIDOS", p."PEGE_PRIMERNOMBRE", p."PEGE_SEGUNDONOMBRE",  dm."DEME_NOMBRE", nm."NOME_VALOR",
+			(SELECT eep."ESEM_ID"
+			FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+			WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = p."PEGE_ID"
+			ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+			LIMIT 1
+			) AS "ESEM_ID"
+			FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMNOVEDADESMENSUALES" nm, "TBL_NOMDESCUENTOSMENSUALES" dm
+			WHERE dm."DEME_ID" = nm."DEME_ID" AND nm."EMPL_ID" = ep."EMPL_ID" AND dm."DEME_ID" = '.$descuento.'
+			AND ep."PEGE_ID" = p."PEGE_ID" AND nm."NOME_VALOR">0
+			) g
+			WHERE "ESEM_ID" = 1
+			ORDER BY  "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE" ASC
 	        ';
 		
 	 $query = $connection->createCommand($sql)->queryAll();

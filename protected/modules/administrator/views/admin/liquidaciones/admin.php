@@ -180,7 +180,7 @@ $('.search-form form').submit(function(){
   {
     $.ajax({
             data:{id:id},
-            url:'updateState',		
+            url:'updatestate',		
             success:function(data){$("#liquidaciones-grid").yiiGridView("update",{});},
             complete: function(){alert('Registro actualizado con exito...');},			
           });

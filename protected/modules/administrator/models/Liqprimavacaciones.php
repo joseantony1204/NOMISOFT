@@ -165,9 +165,9 @@ class Liqprimavacaciones extends CActiveRecord
 	 /**
 	 *Guardar la liquidacion
 	 */
-	 $this->setLiquidacion($Personasgeneral,$Liquidaciones,$devengados);
-	 
-	 
+	 if($this->mesesprimavacaciones>0){
+	   $this->setLiquidacion($Personasgeneral,$Liquidaciones,$devengados);
+	 }	 
 	}
 	
 	private function getSueldoBasico($Personasgeneral,$Liquidaciones){

@@ -120,6 +120,7 @@ class PersonasgeneralesController extends Controller
 				$Personasgenerales->defaultNovedadesVacaciones($Personasgenerales);
 				$Personasgenerales->defaultNovedadesCesantias($Personasgenerales);
 				$Personasgenerales->defaultNovedadesRetroactivo($Personasgenerales);
+				$Personasgenerales->defaultNovedadesRetroactivopuntos($Personasgenerales);
 				
 				$Empleosplanta->PEGE_ID	= $Personasgenerales->PEGE_ID;			
                 $Empleosplanta->EMPL_FECHACAMBIO =  $Personasgenerales->PEGE_FECHACAMBIO;

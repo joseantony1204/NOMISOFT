@@ -184,6 +184,12 @@ class Liquidaciones extends CActiveRecord
 			 $iterador = $cont;
 			 foreach($Personas as $Persona){
 			  /**
+			  *inicializamos el modelos Liquidaciones para guardar cada una 
+			  *de las liquidaciones encontradas
+			  */
+			  $Liquidacion = new Liquidaciones;
+			 
+			 /**
 			  *inicializamos el modelos persona y cargamos sus ultimas funciones
 			  */
 			  $Personasgeneral = Personasgenerales::model()->findByPk($Persona["PEGE_ID"]);
@@ -199,11 +205,18 @@ class Liquidaciones extends CActiveRecord
 			   *procedemos a calcular y liquidar las prestaciones y demas
 			   */
 			   $codigo = $Liquidaciones->LIQU_ANIO.$Persona["PEGE_ID"];
-			   $Liquidaciones->LIQU_ID = $codigo;
-			   $Liquidaciones->PEGE_ID = $Persona["PEGE_ID"];
-			   $Liquidaciones->LIQU_FECHAINGRESO = $Personasgeneral->Personageneral->PEGE_FECHAINGRESO;
-			   $Liquidaciones->LIQU_FECHARETIRO = $Personasgeneral->Estadoempleoplanta->ESEP_FECHAREGISTRO;
-			   if($Liquidaciones->save()){
+			   $Liquidacion->LIQU_ID = $codigo;
+			   $Liquidacion->LIQU_MESINICIO = $Liquidaciones->LIQU_MESINICIO;
+			   $Liquidacion->LIQU_MESFINAL = $Liquidaciones->LIQU_MESFINAL;
+			   $Liquidacion->LIQU_ANIO = $Liquidaciones->LIQU_ANIO;
+			   $Liquidacion->LIQU_FECHAPROCESO = $Liquidaciones->LIQU_FECHAPROCESO;
+			   $Liquidacion->LIQU_ESTADO = $Liquidaciones->LIQU_ESTADO;
+			   $Liquidacion->PEGE_ID = $Persona["PEGE_ID"];
+			   $Liquidacion->LIQU_FECHAINGRESO = $Personasgeneral->Personageneral->PEGE_FECHAINGRESO;
+			   $Liquidacion->LIQU_FECHARETIRO = $Personasgeneral->Estadoempleoplanta->ESEP_FECHAREGISTRO;
+			   $Liquidacion->LIQU_FECHACAMBIO = $Liquidaciones->LIQU_FECHACAMBIO;
+			   $Liquidacion->LIQU_REGISTRADOPOR = $Liquidaciones->LIQU_REGISTRADOPOR;
+			   if($Liquidacion->save()){
 		        /**
 			    *inicializamos los modelos de liquidacion
 			    */			 
@@ -214,24 +227,24 @@ class Liquidaciones extends CActiveRecord
 			    $Liqcesantias = new Liqcesantias; 
 			  
 			    /**
-			    *empezamos a obtener las liquidaciones de cada modelo
+			    *empezamos a obtener las liquidacion de cada modelo
 			    */
-			    $Liqprimasemestral->getPrimasemestral($Personasgeneral,$Liquidaciones);
-			    $Liqvacaciones->getVacaciones($Personasgeneral,$Liquidaciones);
-			    $Liqprimavacaciones->getPrimavacaciones($Personasgeneral,$Liquidaciones);
-			    $Liqprimanavidad->getPrimanavidad($Personasgeneral,$Liquidaciones);
+			    $Liqprimasemestral->getPrimasemestral($Personasgeneral,$Liquidacion);
+			    $Liqvacaciones->getVacaciones($Personasgeneral,$Liquidacion);
+			    $Liqprimavacaciones->getPrimavacaciones($Personasgeneral,$Liquidacion);
+			    $Liqprimanavidad->getPrimanavidad($Personasgeneral,$Liquidacion);
 				
 				/**
 				*si la persona no pertenece al FNA se le calculan las cesantias
 				*/
 				if($Personasgeneral->Cesantias->CESA_ID!=1){				
-			     $Liqcesantias->getCesantias($Personasgeneral,$Liquidaciones);
+			     $Liqcesantias->getCesantias($Personasgeneral,$Liquidacion);
 				}
 				
 				$nombre = trim($Personasgeneral->Personageneral->PEGE_PRIMERNOMBRE).' '.trim($Personasgeneral->Personageneral->PEGE_PRIMERAPELLIDO).' '.trim($Personasgeneral->Personageneral->PEGE_SEGUNDOAPELLIDOS);
                 $this->log[$iterador]=array('<strong>'.$nombre.'</strong>',"Liquidacion generada correctamente :)",1);
 			   }else{
-		             $msg = print_r($Liquidaciones->getErrors(),1);
+		             $msg = print_r($Liquidacion->getErrors(),1);
                      throw new CHttpException(400,'data not saving: '.$msg );
 			        }
 			   	 
@@ -273,7 +286,7 @@ class Liquidaciones extends CActiveRecord
 	 
 	 $sql = 'SELECT p.*, eep.*
 	         FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" e, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
-			 WHERE p."PEGE_ID" = e."PEGE_ID" AND e."EMPL_ID" = eep."EMPL_ID" AND
+			 WHERE p."PEGE_ID" = e."PEGE_ID" AND e."EMPL_ID" = eep."EMPL_ID"  AND
                    eep."ESEP_FECHAREGISTRO" BETWEEN '."'".$fechainicial."'".' AND '."'".$fechafinal."'".' AND eep."ESEM_ID" = 4';
 	 $rows = $connection->createCommand($sql)->queryAll();
      return $rows;	 

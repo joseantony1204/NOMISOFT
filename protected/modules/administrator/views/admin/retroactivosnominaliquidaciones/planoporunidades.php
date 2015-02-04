@@ -21,7 +21,7 @@ $columnsgeneral = count($Retroactivosnominaliquidaciones->retroactivogeneral[$ro
 
 
  
- $path = ("reportes\\planoporunidades\\");
+ $path = ("reportes/planoporunidades/");
  $file = ($Unidades->UNID_ID);
  $realPath = $path.$file; 
  $modo="w";

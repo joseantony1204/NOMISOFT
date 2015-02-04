@@ -39,7 +39,7 @@ class LiquidacionesController extends Controller
         return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'','planogeneral',
-                                 'delete','admin','create','update','download', 'email' 
+                                 'delete','admin','create','update','download', 'email', 'updatestate',
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
 			),			
@@ -59,6 +59,21 @@ class LiquidacionesController extends Controller
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
 		));
+	}
+	
+	public function actionUpdatestate($id)
+	{
+		
+		$Liquidaciones = $this->loadModel($id);		
+		if($Liquidaciones->LIQU_ESTADO==1){
+		 
+		}else{
+		      $Liquidaciones->LIQU_ESTADO = 1;
+			  $Liquidaciones->LIQU_FECHACAMBIO =  date('Y-m-d H:i:s');
+			  $Liquidaciones->LIQU_REGISTRADOPOR = Yii::app()->user->id;
+		      $Liquidaciones->save();		  
+			 }
+	
 	}
 	
 	public function actionPlanoGeneral($id=NULL,$sw=NULL)

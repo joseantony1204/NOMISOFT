@@ -6972,3 +6972,122 @@ LINE 3:    FROM
 in /var/www/NOMINA/protected/modules/administrator/models/Empleosplanta.php (1228)
 in /var/www/NOMINA/protected/modules/administrator/controllers/admin/EmpleosplantaController.php (439)
 in /var/www/NOMINA/index.php (13)
+2015/01/15 09:32:48 [error] [system.db.CDbCommand] CDbCommand::fetchColumn() failed: SQLSTATE[42703]: Undefined column: 7 ERROR:  no existe la columna eep.ESEM_IDd
+LINE 1: ...COUNT(*) FROM (SELECT * FROM (SELECT p.*, (SELECT eep."ESEM_...
+                                                             ^. The SQL statement executed was: SELECT COUNT(*) FROM (SELECT * FROM (SELECT p.*, (SELECT eep."ESEM_IDd"
+                                          FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+	                                      WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = p."PEGE_ID"
+	                                      ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+	                                      LIMIT 1 
+	                                      ) AS "ESEM_ID" FROM "TBL_NOMNOVEDADESMENSUALES" "t" INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON ep."EMPL_ID" = t."EMPL_ID"
+		                   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON p."PEGE_ID" = ep."PEGE_ID" WHERE p."PEGE_ID"=:ycp0 GROUP BY p."PEGE_ID", ep."EMPL_ID") s WHERE ("ESEM_ID" = 1 OR "ESEM_ID" = 5)) sq.
+in /var/www/NOMINA/protected/extensions/bootstrap/widgets/TbGridView.php (49)
+in /var/www/NOMINA/protected/modules/administrator/views/admin/novedadesmensuales/admin.php (103)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/NovedadesmensualesController.php (235)
+2015/01/15 09:32:50 [error] [system.db.CDbCommand] CDbCommand::fetchColumn() failed: SQLSTATE[42703]: Undefined column: 7 ERROR:  no existe la columna eep.ESEM_IDd
+LINE 1: ...COUNT(*) FROM (SELECT * FROM (SELECT p.*, (SELECT eep."ESEM_...
+                                                             ^. The SQL statement executed was: SELECT COUNT(*) FROM (SELECT * FROM (SELECT p.*, (SELECT eep."ESEM_IDd"
+                                          FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+	                                      WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = p."PEGE_ID"
+	                                      ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+	                                      LIMIT 1 
+	                                      ) AS "ESEM_ID" FROM "TBL_NOMNOVEDADESMENSUALES" "t" INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON ep."EMPL_ID" = t."EMPL_ID"
+		                   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON p."PEGE_ID" = ep."PEGE_ID" WHERE "PEGE_PRIMERNOMBRE" LIKE :ycp0 GROUP BY p."PEGE_ID", ep."EMPL_ID") s WHERE ("ESEM_ID" = 1 OR "ESEM_ID" = 5)) sq.
+in /var/www/NOMINA/protected/extensions/bootstrap/widgets/TbGridView.php (49)
+in /var/www/NOMINA/protected/modules/administrator/views/admin/novedadesmensuales/admin.php (103)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/NovedadesmensualesController.php (235)
+2015/01/15 09:32:51 [error] [system.db.CDbCommand] CDbCommand::fetchColumn() failed: SQLSTATE[42703]: Undefined column: 7 ERROR:  no existe la columna eep.ESEM_IDd
+LINE 1: ...COUNT(*) FROM (SELECT * FROM (SELECT p.*, (SELECT eep."ESEM_...
+                                                             ^. The SQL statement executed was: SELECT COUNT(*) FROM (SELECT * FROM (SELECT p.*, (SELECT eep."ESEM_IDd"
+                                          FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+	                                      WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = p."PEGE_ID"
+	                                      ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+	                                      LIMIT 1 
+	                                      ) AS "ESEM_ID" FROM "TBL_NOMNOVEDADESMENSUALES" "t" INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON ep."EMPL_ID" = t."EMPL_ID"
+		                   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON p."PEGE_ID" = ep."PEGE_ID" WHERE "PEGE_PRIMERNOMBRE" LIKE :ycp0 GROUP BY p."PEGE_ID", ep."EMPL_ID") s WHERE ("ESEM_ID" = 1 OR "ESEM_ID" = 5)) sq.
+in /var/www/NOMINA/protected/extensions/bootstrap/widgets/TbGridView.php (49)
+in /var/www/NOMINA/protected/modules/administrator/views/admin/novedadesmensuales/admin.php (103)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/NovedadesmensualesController.php (235)
+2015/01/15 09:32:56 [error] [system.db.CDbCommand] CDbCommand::fetchColumn() failed: SQLSTATE[42703]: Undefined column: 7 ERROR:  no existe la columna eep.ESEM_IDd
+LINE 1: ...COUNT(*) FROM (SELECT * FROM (SELECT p.*, (SELECT eep."ESEM_...
+                                                             ^. The SQL statement executed was: SELECT COUNT(*) FROM (SELECT * FROM (SELECT p.*, (SELECT eep."ESEM_IDd"
+                                          FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+	                                      WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = p."PEGE_ID"
+	                                      ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+	                                      LIMIT 1 
+	                                      ) AS "ESEM_ID" FROM "TBL_NOMNOVEDADESMENSUALES" "t" INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON ep."EMPL_ID" = t."EMPL_ID"
+		                   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON p."PEGE_ID" = ep."PEGE_ID" WHERE p."PEGE_ID"=:ycp0 GROUP BY p."PEGE_ID", ep."EMPL_ID") s WHERE ("ESEM_ID" = 1 OR "ESEM_ID" = 5)) sq.
+in /var/www/NOMINA/protected/extensions/bootstrap/widgets/TbGridView.php (49)
+in /var/www/NOMINA/protected/modules/administrator/views/admin/novedadesmensuales/admin.php (103)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/NovedadesmensualesController.php (235)
+2015/01/19 09:52:39 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42883]: Undefined function: 7 ERROR:  no existe la función counts(unknown)
+LINE 1: SELECT t.*, (SELECT COUNTs('PEGE_ID')
+                            ^
+HINT:  Ninguna función coincide en el nombre y tipos de argumentos. Puede ser necesario agregar conversión explícita de tipos.. The SQL statement executed was: SELECT t.*, (SELECT COUNTs('PEGE_ID')
+                                   FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" e, "TBL_NOMESTADOSEMPLEOSPLANTA" ee, "TBL_NOMNOVEDADESMENSUALES" nm
+								   WHERE t."DEME_ID" = nm."DEME_ID" AND nm."EMPL_ID" = e."EMPL_ID" AND e."EMPL_ID" = ee."EMPL_ID" AND ee."ESEM_ID" = 1
+								   AND e."PEGE_ID" = p."PEGE_ID" AND nm."NOME_VALOR">0 GROUP BY nm."DEME_ID"
+								  )  "AFILIADOS",
+								  
+								  (SELECT SUM("NOME_VALOR")
+                                   FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" e, "TBL_NOMESTADOSEMPLEOSPLANTA" ee, "TBL_NOMNOVEDADESMENSUALES" nm
+								   WHERE t."DEME_ID" = nm."DEME_ID" AND nm."EMPL_ID" = e."EMPL_ID" AND e."EMPL_ID" = ee."EMPL_ID" AND ee."ESEM_ID" = 1
+								   AND e."PEGE_ID" = p."PEGE_ID" AND nm."NOME_VALOR">0 GROUP BY nm."DEME_ID"
+								  )  "SUMATORIA" FROM "TBL_NOMDESCUENTOSMENSUALES" "t" LIMIT 30.
+in /var/www/NOMINA/protected/extensions/bootstrap/widgets/TbGridView.php (49)
+in /var/www/NOMINA/protected/modules/administrator/views/admin/descuentosmensuales/admin.php (138)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/DescuentosmensualesController.php (173)
+2015/01/19 11:46:39 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42883]: Undefined function: 7 ERROR:  no existe la función counts()
+LINE 1: SELECT t.*, (SELECT COUNTs(*) FROM 
+                            ^
+HINT:  Ninguna función coincide en el nombre y tipos de argumentos. Puede ser necesario agregar conversión explícita de tipos.. The SQL statement executed was: SELECT t.*, (SELECT COUNTs(*) FROM 
+		                           (
+		                            SELECT  p."PEGE_ID", ep."EMPL_ID", 								    
+									(SELECT eep."ESEM_ID"
+									 FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+									 WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = p."PEGE_ID"
+									 ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+									 LIMIT 1 
+									 ) AS "ESEM_ID"
+									 
+									 FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMNOVEDADESMENSUALES" nm
+									 WHERE t."DEME_ID" = nm."DEME_ID" AND nm."EMPL_ID" = ep."EMPL_ID" 										  
+									 AND ep."PEGE_ID" = p."PEGE_ID" AND nm."NOME_VALOR">0 
+									 ) g
+									 
+									 WHERE "ESEM_ID" = 1
+								   )  "AFILIADOS",
+								  
+								  (SELECT SUM("NOME_VALOR") FROM 
+								   (SELECT  p."PEGE_ID", ep."EMPL_ID", nm."NOME_VALOR",
+								    (SELECT eep."ESEM_ID"
+								     FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+								     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = p."PEGE_ID"
+								     ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+								     LIMIT 1 
+								    ) AS "ESEM_ID"
+								    FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMNOVEDADESMENSUALES" nm
+								    WHERE t."DEME_ID" = nm."DEME_ID" AND nm."EMPL_ID" = ep."EMPL_ID" 									  
+								    AND ep."PEGE_ID" = p."PEGE_ID" AND nm."NOME_VALOR">0 
+								   ) g
+								   WHERE "ESEM_ID" = 1 GROUP BY "DEME_ID"
+								  ) AS "SUMATORIA" FROM "TBL_NOMDESCUENTOSMENSUALES" "t" LIMIT 30.
+in /var/www/NOMINA/protected/extensions/bootstrap/widgets/TbGridView.php (49)
+in /var/www/NOMINA/protected/modules/administrator/views/admin/descuentosmensuales/admin.php (138)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/DescuentosmensualesController.php (173)
+2015/01/21 11:09:26 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «ORDER»
+LINE 1: ...EMPL_ID" FROM "TBL_NOMEMPLEOSPLANTA" ep ORDER BY  ORDER BY  ...
+                                                             ^. The SQL statement executed was: SELECT  ep."EMPL_ID" FROM "TBL_NOMEMPLEOSPLANTA" ep ORDER BY  ORDER BY  ep."EMPL_FECHAINGRESO" DESC.
+in /var/www/NOMINA/protected/modules/administrator/models/Mensualnomina.php (316)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/MensualnominaController.php (102)
+in /var/www/NOMINA/index.php (13)
+2015/01/21 11:10:37 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «ORDER»
+LINE 1: ...EMPL_ID" FROM "TBL_NOMEMPLEOSPLANTA" ep ORDER BY  ORDER BY  ...
+                                                             ^. The SQL statement executed was: SELECT  ep."EMPL_ID" FROM "TBL_NOMEMPLEOSPLANTA" ep ORDER BY  ORDER BY  ep."EMPL_FECHAINGRESO" DESC.
+in /var/www/NOMINA/protected/modules/administrator/models/Mensualnomina.php (316)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/MensualnominaController.php (102)
+in /var/www/NOMINA/index.php (13)
+2015/01/22 16:53:43 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23503]: Foreign key violation: 7 ERROR:  update o delete en «TBL_NOMPERSONASGENERALES» viola la llave foránea «PEGE_ID» en la tabla «TBL_NOMCUMPLEANIOS»
+DETAIL:  La llave (PEGE_ID)=(4050) todavía es referida desde la tabla «TBL_NOMCUMPLEANIOS».. The SQL statement executed was: DELETE FROM "TBL_NOMPERSONASGENERALES" WHERE "TBL_NOMPERSONASGENERALES"."PEGE_ID"=4050.
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/PersonasgeneralesController.php (204)
+in /var/www/NOMINA/index.php (13)

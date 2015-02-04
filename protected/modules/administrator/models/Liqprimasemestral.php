@@ -336,7 +336,17 @@ class Liqprimasemestral extends CActiveRecord
            GROUP BY sn."SENO_ID"
 		  ';    		  
      $rows = $connection->createCommand($sql)->queryRow();
-	 $fechaultimaliquidacion = $rows['SENO_FECHAPROCESO'];	 
+	 $fechaultimaliquidacion = $rows['SENO_FECHAPROCESO'];	
+	 
+	 if($fechaultimaliquidacion==''){
+		 $sql='SELECT sn."SENO_ID", sn."SENO_PERIODO", sn."SENO_FECHAPROCESO", sn."SENO_ESTADO"
+           FROM "TBL_NOMSEMESTRALNOMINA" sn, "TBL_NOMSEMESTRALNOMINALIQUIDACIONES" snl 
+           WHERE sn."SENO_ID" = snl."SENO_ID" AND sn."SENO_ANIO" = '.($Liquidaciones->LIQU_ANIO-1).'
+           GROUP BY sn."SENO_ID"
+		  ';    		  
+     $rows = $connection->createCommand($sql)->queryRow();
+	 $fechaultimaliquidacion = $rows['SENO_FECHAPROCESO'];
+	 }	 
      
 	 /**
 	 *verificando que la fecha de la ultima liquidacion no sea nula

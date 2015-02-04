@@ -590,6 +590,18 @@ class Personasgenerales extends CActiveRecord
 	 $Novedadesretroactivo->NORE_REGISTRADOPOR = Yii::app()->user->id;
 	 $Novedadesretroactivo->save(); 
 	}
+	
+	public function defaultNovedadesRetroactivopuntos($Personasgenerales)
+	{
+	 $Novedadesretroactivopuntos = new Novedadesretroactivopuntos;	 
+	 $Novedadesretroactivopuntos->PEGE_ID = $Personasgenerales->PEGE_ID;
+	 $Novedadesretroactivopuntos->NORP_FECHAINGRESO = $Personasgenerales->PEGE_FECHAINGRESO;
+	 $Novedadesretroactivopuntos->NORP_MESES = 0;
+
+	 $Novedadesretroactivopuntos->NORP_FECHACAMBIO = date('Y-m-d H:i:s');
+	 $Novedadesretroactivopuntos->NORP_REGISTRADOPOR = Yii::app()->user->id;
+	 $Novedadesretroactivopuntos->save(); 
+	}
 		
 	public function mesesPrimas($fechaInicio,$fechaCorte)
 	{

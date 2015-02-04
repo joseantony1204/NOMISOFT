@@ -40,7 +40,7 @@ class NovedadesprestacionesController extends Controller
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'',''.$array[5].'',
                                  'search','admin','create','update','updatesemestral','updatepvacaciones','updatevacaciones',
-								 'updatenavidad',  
+								 'updatenavidad', 'updateretroactivo', 'updateretroactivopuntos'
                                  ),
 				'users'=>array($Usuario->USUA_USUARIO),
 			),			
@@ -120,6 +120,10 @@ class NovedadesprestacionesController extends Controller
 		  $url = 'retroactivosnominaliquidaciones';
           $Novedadesretroactivo = Novedadesretroactivo::model()->findByAttributes(array('PEGE_ID'=>$personaGeneral));
 		  $arraynp = array('Id'  =>$id, 'Prestacion'=>$Novedadesretroactivo,'atributo2'=>'NORE_DIAS','url'=>'updateretroactivo', );		  
+		}elseif($id==6){ 
+		  $url = 'retroactivospuntosnominaliquidaciones';
+          $Novedadesretroactivopuntos = Novedadesretroactivopuntos::model()->findByAttributes(array('PEGE_ID'=>$personaGeneral));
+		  $arraynp = array('Id'  =>$id, 'Prestacion'=>$Novedadesretroactivopuntos,'atributo2'=>'NORP_MESES','url'=>'updateretroactivopuntos', );		  
 		}
 		 
 		if(isset($_POST['yt1']))
@@ -175,6 +179,30 @@ class NovedadesprestacionesController extends Controller
 	public function actionUpdatenavidad()
      {
       $es = new EditableSaver('Novedadesprimanavidad');
+      try {
+           $es->update();
+          }catch(CException $e) {
+           echo CJSON::encode(array('success' => false, 'msg' => $e->getMessage()));
+           return;
+           }
+    echo CJSON::encode(array('success' => true));
+    }
+	
+	public function actionUpdateretroactivo()
+     {
+      $es = new EditableSaver('Novedadesretroactivo');
+      try {
+           $es->update();
+          }catch(CException $e) {
+           echo CJSON::encode(array('success' => false, 'msg' => $e->getMessage()));
+           return;
+           }
+    echo CJSON::encode(array('success' => true));
+    }
+	
+	public function actionUpdateretroactivopuntos()
+     {
+      $es = new EditableSaver('Novedadesretroactivopuntos');
       try {
            $es->update();
           }catch(CException $e) {
@@ -308,4 +336,19 @@ class NovedadesprestacionesController extends Controller
 		                           )
 		              );
 	}
+	
+	public function actionAgregate()
+	{
+	 $connection = Yii::app()->db;
+	 $Personasgenerales = Personasgenerales::model()->findAll();
+	 foreach($Personasgenerales AS $Personageneral){
+	  $Novedadesretroactivopuntos = new Novedadesretroactivopuntos;
+	  $Novedadesretroactivopuntos->NORP_FECHAINGRESO = $Personageneral->PEGE_FECHAINGRESO;
+	  $Novedadesretroactivopuntos->NORP_MESES = 0;
+	  $Novedadesretroactivopuntos->PEGE_ID = $Personageneral->PEGE_ID;
+	  $Novedadesretroactivopuntos->NORP_FECHACAMBIO = $Personageneral->PEGE_FECHAINGRESO;
+	  $Novedadesretroactivopuntos->NORP_REGISTRADOPOR = Yii::app()->user->id;
+	  $Novedadesretroactivopuntos->save();
+     }
+    }
 }

@@ -35,6 +35,8 @@
 		   echo '<strong>DIAS</strong>';
 		   }elseif($id==5){ 
 		   echo '<strong>DIAS</strong>';
+		   } elseif($id==6){ 
+		   echo '<strong>MESES</strong>';
 		   } 
 		  ?>
 		</td>
