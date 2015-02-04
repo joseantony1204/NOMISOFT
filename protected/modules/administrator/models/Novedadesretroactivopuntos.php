@@ -21,6 +21,7 @@ class Novedadesretroactivopuntos extends CActiveRecord
 	 * @param string $ className activo nombre de la clase de registro. 
 	 * @Devuelve Novedadesretroactivopuntos la clase del modelo estàtico.
 	 */
+	public $unidadesretroactivospuntosDataProvider;
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -70,7 +71,7 @@ class Novedadesretroactivopuntos extends CActiveRecord
 		return array(
 						'NORP_ID' => 'NORP',
 						'NORP_FECHAINGRESO' => 'NORP FECHAINGRESO',
-						'NORP_MESES' => 'MESES',
+						'NORP_MESES' => 'NORP MESES',
 						'PEGE_ID' => 'PEGE',
 						'NORP_FECHACAMBIO' => 'NORP FECHACAMBIO',
 						'NORP_REGISTRADOPOR' => 'NORP REGISTRADOPOR',
@@ -99,4 +100,108 @@ class Novedadesretroactivopuntos extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	
+	/**
+	*establecer dias de retroacivos
+	*/
+	public function previewdiasretroactivospuntos($Cform)
+	{
+	 $connection = Yii::app()->db; 
+	 $sql=' 
+	 SELECT "NORP_ID", "PEGE_ID", "PEGE_IDENTIFICACION", "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE", "NORP_MESES"
+     FROM (SELECT pg.*, nra."NORP_ID", nra."NORP_MESES", (SELECT eep."ESEM_ID"
+		     FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+		     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+		     ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+		     LIMIT 1 
+		    ) AS "ESEM_ID", 
+		    (SELECT  ep."TICA_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                    ) AS "TICA_ID", 
+                    (SELECT  ep."UNID_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                     ) AS "UNID_ID" 
+      FROM "TBL_NOMPERSONASGENERALES" "pg"  
+      INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON pg."PEGE_ID" = ep."PEGE_ID"
+      INNER JOIN "TBL_NOMNOVEDADESRETROACTIVOPUNTOS" nra ON pg."PEGE_ID" = nra."PEGE_ID"  						  
+      GROUP BY pg."PEGE_ID", ep."EMPL_ID", nra."NORP_ID" ) s  
+     WHERE "ESEM_ID" = 1 AND "TICA_ID" = 2
+     ORDER BY "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE"
+		  ';
+	
+	 $this->unidadesretroactivospuntosDataProvider = NULL;
+	 $count=Yii::app()->db->createCommand('SELECT COUNT(*) FROM ('.$sql.') AS q')->queryScalar();	  
+	 $this->unidadesretroactivospuntosDataProvider = $dataProvider=new CSqlDataProvider($sql, array(
+      'totalItemCount'=>$count,
+      'sort'=>array(
+        'attributes'=>array(
+             'PEGE_ID', 'PEGE_IDENTIFICACION', 'PEGE_PRIMERAPELLIDO','PEGE_SEGUNDOAPELLIDOS','PEGE_PRIMERNOMBRE','PEGE_SEGUNDONOMBRE','NORP_MESES',
+        ),
+      ),
+      'pagination'=>array(
+                          'pageSize'=>1000,
+                         ),
+      ),$connection
+	 );
+	}
+	
+	/**
+	*establecer dias para pago de nominas
+	*/
+	public function setUnidadesNomina($Cform)
+	{
+	 $connection = Yii::app()->db;
+	 
+	 /**
+	 *dias para retroactivos
+	 */
+	 if($Cform->NOVE_TIPONOMINA==07){
+	 $str = ' ';
+     if($Cform->NOVE_TIPOCARGO!=''){ $str = ' AND "TICA_ID" = '.$Cform->NOVE_TIPOCARGO;}
+	echo $sql=' UPDATE 	"TBL_NOMNOVEDADESRETROACTIVOPUNTOS" "nra"
+            SET "NORP_MESES" = '.$Cform->NOVE_UNIDADES.'             
+			FROM
+            (
+	 SELECT "NORP_ID", "PEGE_ID", "PEGE_IDENTIFICACION", "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE", "NORP_MESES"
+     FROM (SELECT pg.*, nra."NORP_ID", nra."NORP_MESES", (SELECT eep."ESEM_ID"
+		     FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+		     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+		     ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+		     LIMIT 1 
+		    ) AS "ESEM_ID", 
+		    (SELECT  ep."TICA_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                    ) AS "TICA_ID", 
+                    (SELECT  ep."UNID_ID"
+                     FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep
+                     WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = pg."PEGE_ID"
+                     ORDER BY eep."ESEP_FECHAREGISTRO" DESC
+                     LIMIT 1
+                     ) AS "UNID_ID" 
+      FROM "TBL_NOMPERSONASGENERALES" "pg"  
+      INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON pg."PEGE_ID" = ep."PEGE_ID"
+      INNER JOIN "TBL_NOMNOVEDADESRETROACTIVOPUNTOS" nra ON pg."PEGE_ID" = nra."PEGE_ID"  						  
+      GROUP BY pg."PEGE_ID", ep."EMPL_ID", nra."NORP_ID" ) s  
+     WHERE "ESEM_ID" = 1 AND "TICA_ID" = 2
+     ORDER BY "PEGE_PRIMERAPELLIDO", "PEGE_SEGUNDOAPELLIDOS", "PEGE_PRIMERNOMBRE", "PEGE_SEGUNDONOMBRE" 		
+			) ta
+			
+            WHERE nra."NORP_ID" = ta."NORP_ID"
+		  ';
+	 }
+	  if($connection->createCommand($sql)->execute()){
+	  return 'true';
+	 }else{
+	      return 'false';
+		  }
+	} 
 }

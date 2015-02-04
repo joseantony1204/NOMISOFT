@@ -213,7 +213,15 @@
                     array('label'=>'Docentes',  'url'=>array('/administrator/admin/empleosplanta/aumentodocen',), 'visible'=>!Yii::app()->user->isGuest,),
                     '---',
                     array('label'=>'OTRAS ACTUALIZACIONES'),
-                    array('label'=>'Dias de Nominas',  'url'=>array('/administrator/admin/empleosplanta/diasnominas',), 'visible'=>!Yii::app()->user->isGuest,),
+					array(
+					      'label'=>'Dias en Nominas',					   
+						  'visible'=>!Yii::app()->user->isGuest,
+						  'items'   => array(
+                                              array('label' => 'Administrar','url'=>array('//administrator/admin/empleosplanta/diasnominas',),),
+                                              //array('label' => 'Retroactivo Salarial','url'=>array('/administrator/admin/novedadesretroactivo/admin',),),
+                                              array('label' => 'Retroactivo Puntos','url'=>array('/administrator/admin/novedadesretroactivopuntos/admin',),),
+						                    ),
+						  ),  	           
                     array('label'=>'Actualizar Puntos',  'url'=>array('/administrator/admin/empleosplanta/aumentopuntos',), 'visible'=>!Yii::app()->user->isGuest,),
                     
                     
