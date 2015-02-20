@@ -211,7 +211,7 @@ class Liqprimasemestral extends CActiveRecord
 					$factor=0.25;				
 					
 					$conversion = ((($this->mesessemestral)*22)/12);			
-					$antiguedad[0]=round(($Personasgeneral->Empleoplanta->EMPL_SUELDO/30)*((((12)*22)/12))*$factor);
+				    $antiguedad[0]=round(($Personasgeneral->Empleoplanta->EMPL_SUELDO/30)*((((12)*22)/12))*$factor);
 					$antiguedad[1]=round(((($Personasgeneral->Empleoplanta->EMPL_SUELDO)/30)*($conversion)*$factor));
 		}
 
@@ -266,7 +266,7 @@ class Liqprimasemestral extends CActiveRecord
 		  if ($this->mesessemestral==0){
 		   return 0;
 		  }else{
-				 $sql ='SELECT ROUND(SUM("BONIFICACION")/12)
+				$sql ='SELECT ROUND(SUM("BONIFICACION")/12)
 						   FROM ( 
 								 SELECT SUM("RANL_BONIFICACION") AS "BONIFICACION" 
 								 FROM  "TBL_NOMPERSONASGENERALES" pg, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMMENSUALNOMINALIQUIDACIONES" mnl, "TBL_NOMRETROACTIVOSNOMINA" rn, "TBL_NOMRETROACTIVOSNOMINALIQUIDACIONES" rnl
@@ -278,7 +278,7 @@ class Liqprimasemestral extends CActiveRecord
 								 FROM  "TBL_NOMPERSONASGENERALES" pg, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMMENSUALNOMINALIQUIDACIONES" mnl, "TBL_NOMMENSUALNOMINA" mn
 								 WHERE pg."PEGE_ID" = ep."PEGE_ID" AND ep."EMPL_ID" = mnl."EMPL_ID" AND mn."MENO_ID" = mnl."MENO_ID" 
 								 AND pg."PEGE_ID" = '.$Personasgeneral->Personageneral->PEGE_ID.'
-								 AND mn."MENO_ID" >= '.$Liquidaciones->LIQU_ANIO.'0101 AND mn."MENO_ID" <= '.$Liquidaciones->LIQU_ANIO.'0601
+								 AND mn."MENO_ID" >= '.$Liquidaciones->LIQU_ANIO.'0101 AND mn."MENO_ID" <= '.$Liquidaciones->LIQU_ANIO.'1201
 							   ) t
 						  ';
 				  $bonificacion = $connection->createCommand($sql)->queryScalar();
@@ -287,11 +287,31 @@ class Liqprimasemestral extends CActiveRecord
 			        $valor = ($bonificacion/30)*($conversion);
 				   return round($valor);
 				  }else{	
-				        /**
+				        $sql ='SELECT ROUND(SUM("BONIFICACION")/12)
+						   FROM ( 
+								 SELECT SUM("RANL_BONIFICACION") AS "BONIFICACION" 
+								 FROM  "TBL_NOMPERSONASGENERALES" pg, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMMENSUALNOMINALIQUIDACIONES" mnl, "TBL_NOMRETROACTIVOSNOMINA" rn, "TBL_NOMRETROACTIVOSNOMINALIQUIDACIONES" rnl
+								 WHERE pg."PEGE_ID" = ep."PEGE_ID" AND ep."EMPL_ID" = mnl."EMPL_ID" AND rn."RANO_ID" = rnl."RANO_ID" 
+								 AND mnl."MENL_ID" = rnl."MENL_ID" AND pg."PEGE_ID" = '.$Personasgeneral->Personageneral->PEGE_ID.'
+								 AND rn."RANO_ID" = '.$Liquidaciones->LIQU_ANIO.'
+								 UNION ALL
+								 SELECT SUM("MENL_BONIFICACION") AS "BONIFICACION" 
+								 FROM  "TBL_NOMPERSONASGENERALES" pg, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMMENSUALNOMINALIQUIDACIONES" mnl, "TBL_NOMMENSUALNOMINA" mn
+								 WHERE pg."PEGE_ID" = ep."PEGE_ID" AND ep."EMPL_ID" = mnl."EMPL_ID" AND mn."MENO_ID" = mnl."MENO_ID" 
+								 AND pg."PEGE_ID" = '.$Personasgeneral->Personageneral->PEGE_ID.'
+								 AND mn."MENO_ID" >= '.($Liquidaciones->LIQU_ANIO-1).'0101 AND mn."MENO_ID" <= '.($Liquidaciones->LIQU_ANIO-1).'1201
+							   ) t
+						  ';
+				         $bonificacion = $connection->createCommand($sql)->queryScalar();
+						 $conversion = ((($this->mesessemestral)*22)/12);
+			             $valor = ($bonificacion/30)*($conversion);
+				         return round($valor);
+						
+						/**
 						 *En caso de que no halla cumplido anio de servicio aun se le calcula
 				         *como el limite establecido es diferente del profesor al administrativo,
 						 *Este condicional verifica quien es quien para obtener asi el limite
-						 */
+						 *
 						if($Personasgeneral->Tipocargo->TICA_ID==1){
 						 $bon=$this->valorestablecidos[6][3];
 						}else{ 
@@ -300,8 +320,9 @@ class Liqprimasemestral extends CActiveRecord
 						$conversion = ((($this->mesessemestral)*22)/12);
 						
 						if(($Personasgeneral->Empleoplanta->EMPL_SUELDO)+($this->getPrimaTecnica($Personasgeneral,$Liquidaciones))+($this->getGastosRepresentacion($Personasgeneral,$Liquidaciones))+$prantiguedad[0]>$bon){
-						 $valor1 = ($Personasgeneral->Empleoplanta->EMPL_SUELDO)+($this->getPrimaTecnica($Personasgeneral,$Liquidaciones));
-						 $valor2 = ($valor1+($this->getGastosRepresentacion($Personasgeneral,$Liquidaciones))+round($prantiguedad[0]))*($this->valorestablecidos[8][3]/100);
+						$valor1 = ($Personasgeneral->Empleoplanta->EMPL_SUELDO)+($this->getPrimaTecnica($Personasgeneral,$Liquidaciones));
+						 echo$valor2 = ($valor1+($this->getGastosRepresentacion($Personasgeneral,$Liquidaciones))+round($prantiguedad[0]))*($this->valorestablecidos[8][3]/100);
+						 //echo $valor3 = $valor2;
 						 $valor3 = ($valor2/12);
 						 $valor4 = ($valor3/30)*($conversion);
 						 return $valor4;
@@ -311,7 +332,7 @@ class Liqprimasemestral extends CActiveRecord
 						      $valor3 = ($valor2/12);
 						      $valor4 = ($valor3/30)*($conversion);
 						      return $valor4;
-							 }
+							 }*/
 					   }
 	           }
 	     }else{

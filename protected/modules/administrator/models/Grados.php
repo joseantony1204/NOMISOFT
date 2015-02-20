@@ -43,7 +43,7 @@ class Grados extends CActiveRecord
 		return array(
 			array('GRAD_FECHACAMBIO, GRAD_REGISTRADOPOR', 'required'),
 			array('GRAD_SUELDO, GRAD_REGISTRADOPOR', 'numerical', 'integerOnly'=>true),
-			array('GRAD_NOMBRE', 'length', 'max'=>3),
+			array('GRAD_NOMBRE', 'length', 'max'=>15),
 			//La siguiente regla es utilizada por search ().
             //Por favor, elimine los atributos que no se deben buscar.
 			array('GRAD_ID, GRAD_NOMBRE, GRAD_SUELDO, GRAD_FECHACAMBIO, GRAD_REGISTRADOPOR', 'safe', 'on'=>'search'),

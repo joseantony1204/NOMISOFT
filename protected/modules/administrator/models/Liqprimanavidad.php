@@ -274,16 +274,34 @@ class Liqprimanavidad extends CActiveRecord
 								 FROM  "TBL_NOMPERSONASGENERALES" pg, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMMENSUALNOMINALIQUIDACIONES" mnl, "TBL_NOMMENSUALNOMINA" mn
 								 WHERE pg."PEGE_ID" = ep."PEGE_ID" AND ep."EMPL_ID" = mnl."EMPL_ID" AND mn."MENO_ID" = mnl."MENO_ID" 
 								 AND pg."PEGE_ID" = '.$Personasgeneral->Personageneral->PEGE_ID.'
-								 AND mn."MENO_ID" >= '.$Liquidaciones->LIQU_ANIO.'0101 AND mn."MENO_ID" <= '.$Liquidaciones->LIQU_ANIO.'0601
+								 AND mn."MENO_ID" >= '.$Liquidaciones->LIQU_ANIO.'0101 AND mn."MENO_ID" <= '.$Liquidaciones->LIQU_ANIO.'1201
 							   ) t
 						  ';
 				  $bonificacion = $connection->createCommand($sql)->queryScalar();
 				  if($bonificacion!=0){
 				   return round($bonificacion/12*$this->mesesnavidad);
 				  }else{	
-				        //En caso de que no halla cumplido anio de servicio aun se le calcula//
+				        $sql ='SELECT ROUND(SUM("BONIFICACION")/12)
+						   FROM ( 
+								 SELECT SUM("RANL_BONIFICACION") AS "BONIFICACION" 
+								 FROM  "TBL_NOMPERSONASGENERALES" pg, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMMENSUALNOMINALIQUIDACIONES" mnl, "TBL_NOMRETROACTIVOSNOMINA" rn, "TBL_NOMRETROACTIVOSNOMINALIQUIDACIONES" rnl
+								 WHERE pg."PEGE_ID" = ep."PEGE_ID" AND ep."EMPL_ID" = mnl."EMPL_ID" AND rn."RANO_ID" = rnl."RANO_ID" 
+								 AND mnl."MENL_ID" = rnl."MENL_ID" AND pg."PEGE_ID" = '.$Personasgeneral->Personageneral->PEGE_ID.'
+								 AND rn."RANO_ID" = '.$Liquidaciones->LIQU_ANIO.'
+								 UNION ALL
+								 SELECT SUM("MENL_BONIFICACION") AS "BONIFICACION" 
+								 FROM  "TBL_NOMPERSONASGENERALES" pg, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMMENSUALNOMINALIQUIDACIONES" mnl, "TBL_NOMMENSUALNOMINA" mn
+								 WHERE pg."PEGE_ID" = ep."PEGE_ID" AND ep."EMPL_ID" = mnl."EMPL_ID" AND mn."MENO_ID" = mnl."MENO_ID" 
+								 AND pg."PEGE_ID" = '.$Personasgeneral->Personageneral->PEGE_ID.'
+								 AND mn."MENO_ID" >= '.($Liquidaciones->LIQU_ANIO-1).'0101 AND mn."MENO_ID" <= '.($Liquidaciones->LIQU_ANIO-1).'1201
+							   ) t
+						  ';
+				        $bonificacion = $connection->createCommand($sql)->queryScalar();
+						return round($bonificacion/12*$this->mesesnavidad);
+						//En caso de que no halla cumplido anio de servicio aun se le calcula//
 				        //como el limite establecido es diferente del profesor al administrativo,//
 						//Este condicional verifica quien es quien para obtener asi el limite//
+						/*
 						if($Personasgeneral->Tipocargo->TICA_ID==1){
 						 $bon=$this->valorestablecidos[6][3];
 						}else{ 
@@ -294,7 +312,7 @@ class Liqprimanavidad extends CActiveRecord
 						 return ((($Personasgeneral->Empleoplanta->EMPL_SUELDO)+($this->getPrimaTecnica($Personasgeneral,$Liquidaciones))+($this->getGastosRepresentacion($Personasgeneral,$Liquidaciones))+round($prantiguedad[0]))*($this->valorestablecidos[8][3]/100)/12)*$this->mesesnavidad/12;
 						}else{ 
 							  return ((($Personasgeneral->Empleoplanta->EMPL_SUELDO)+($this->getPrimaTecnica($Personasgeneral,$Liquidaciones))+($this->getGastosRepresentacion($Personasgeneral,$Liquidaciones))+round($prantiguedad[0]))*($this->valorestablecidos[9][3]/100)/12)*$this->mesesnavidad/12;
-					         }
+					         }*/
 					   }
 	           }
 	     }else{
@@ -307,51 +325,30 @@ class Liqprimanavidad extends CActiveRecord
 
     public	function getPrimaSemestral($Personasgeneral,$Liquidaciones){
 	 $connection = Yii::app()->db;
-     $query = 'SELECT (snl."SENL_SALARIO"+snl."SENL_PRIMAANTIGUEDAD"+snl."SENL_TRANSPORTE"+snl."SENL_ALIMENTACION"+snl."SENL_PRIMATECNICA"+
-	                   snl."SENL_GASTOSRP"+snl."SENL_BONIFICACION")/12 AS "SENL_DEVENGADO"
-			  FROM "TBL_NOMSEMESTRALNOMINALIQUIDACIONES" snl, "TBL_NOMSEMESTRALNOMINA" sn,  "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMPERSONASGENERALES" "p"
-			  WHERE sn."SENO_ID" = snl."SENO_ID" AND snl."EMPL_ID" = ep."EMPL_ID" AND ep."PEGE_ID" = p."PEGE_ID" 
-			  AND p."PEGE_ID" = '.$Personasgeneral->Personageneral->PEGE_ID.'
-              AND sn."SENO_ANIO" = '.$Liquidaciones->LIQU_ANIO.'		  
-			  ';
+     $query='SELECT SUM("PRSE_SALARIO"+"PRSE_PRIMAANTIGUEDAD"+"PRSE_TRANSPORTE"+"PRSE_ALIMENTACION"+"PRSE_PRIMATECNICA"+
+                      "PRSE_GASTOSRP"+"PRSE_BONIFICACION") AS "PRSE_TOTAL"
+		   FROM "TBL_LIQPRIMASEMESTRAL" lps, "TBL_LIQLIQUIDACIONES" l
+		   WHERE l."LIQU_ID" = lps."LIQU_ID" AND lps."LIQU_ID" = '.$Liquidaciones->LIQU_ID.'
+		   GROUP BY lps."PRSE_ID"
+           ORDER BY lps."LIQU_ID" ASC
+		  ';
 	 $primasemestral = $connection->createCommand($query)->queryScalar();
-     $valor = ($primasemestral/12)*($this->mesesnavidad);
+     $primasemestral = $primasemestral/12;
+	 $valor = ($primasemestral/12)*($this->mesesnavidad);
 	 return $valor;		
     }
 	
 	public	function getPrimaVacaciones($Personasgeneral,$Liquidaciones){
 	 $connection = Yii::app()->db;
-     $query = ' SELECT SUM("PRIMAVACACIONES")/12 AS "PRIMAVACACIONES" FROM (
-	  SELECT rnl."RANL_PRIMAVACACIONES" AS "PRIMAVACACIONES"
-	  FROM "TBL_NOMRETROACTIVOSNOMINALIQUIDACIONES" "rnl"
-	       INNER JOIN "TBL_NOMMENSUALNOMINALIQUIDACIONES" "mnl" ON mnl."MENL_ID" = rnl."MENL_ID"
-		   INNER JOIN "TBL_NOMRETROACTIVOSNOMINA" "rn" ON rnl."RANO_ID" = rn."RANO_ID"
-		   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON mnl."EMPL_ID" = ep."EMPL_ID"	  
-		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID"
-	  WHERE rn."RANO_ID" = '.$Liquidaciones->LIQU_ANIO.' AND p."PEGE_ID" = '.$Personasgeneral->Personageneral->PEGE_ID.' 
-	  
-	  UNION ALL
-      
-	  SELECT SUM("MENL_PRIMAVACACIONES") AS "PRIMAVACACIONES"
-      FROM "TBL_NOMMENSUALNOMINALIQUIDACIONES" "mnl"
-		   INNER JOIN "TBL_NOMMENSUALNOMINA" "mn" ON mnl."MENO_ID" = mn."MENO_ID"
-		   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON mnl."EMPL_ID" = ep."EMPL_ID"		  
-		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID" 
-		   WHERE mn."MENO_ANIO" = '.$Liquidaciones->LIQU_ANIO.' AND p."PEGE_ID" = '.$Personasgeneral->Personageneral->PEGE_ID.' 
-		   
-	  UNION ALL
-      
-	  SELECT(pvnl."PVNL_SALARIO"+pvnl."PVNL_PRIMAANTIGUEDAD"+pvnl."PVNL_TRANSPORTE"+pvnl."PVNL_ALIMENTACION"+pvnl."PVNL_PRIMATECNICA"+
-	         pvnl."PVNL_GASTOSRP"+pvnl."PVNL_BONIFICACION"+pvnl."PVNL_SEMESTRAL") AS "PRIMAVACACIONES"					   
-      FROM "TBL_NOMPRIMAVACACIONESNOMINALIQUIDACIONES" "pvnl"
-		   INNER JOIN "TBL_NOMPRIMAVACACIONESNOMINA" "pvn" ON pvnl."PVNO_ID" = pvn."PVNO_ID"
-		   INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON pvnl."EMPL_ID" = ep."EMPL_ID"		  
-		   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON ep."PEGE_ID" = p."PEGE_ID" 
-		   WHERE pvn."PVNO_ANIO" = '.$Liquidaciones->LIQU_ANIO.' AND p."PEGE_ID" = '.$Personasgeneral->Personageneral->PEGE_ID.' 	  
-	  ) t
-	  ';
+     $query='SELECT  SUM("PRVA_SALARIO"+"PRVA_PRIMAANTIGUEDAD"+"PRVA_TRANSPORTE"+"PRVA_ALIMENTACION"+"PRVA_PRIMATECNICA"+"PRVA_GASTOSRP"+
+                    "PRVA_BONIFICACION"+"PRVA_SEMESTRAL") AS "PRVA_TOTALPRIMAVACACIONES"
+		  FROM "TBL_LIQPRIMAVACACIONES" lpv, "TBL_LIQLIQUIDACIONES" l
+		  WHERE l."LIQU_ID" = lpv."LIQU_ID" AND lpv."LIQU_ID" = '.$Liquidaciones->LIQU_ID.'
+		  GROUP BY lpv."PRVA_ID"
+		  '; 
 	 $primavacaciones = $connection->createCommand($query)->queryScalar();
-     $valor = ($primavacaciones/12)*($this->mesesnavidad);
+     $primavacaciones = $primavacaciones/12;
+	 $valor = ($primavacaciones/12)*($this->mesesnavidad);
 	 return $valor;		
     }
 	

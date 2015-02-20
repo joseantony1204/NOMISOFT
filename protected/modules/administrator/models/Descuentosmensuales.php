@@ -7,6 +7,13 @@
  * @Propiedad integer $DEME_ID
  * @Propiedad string $DEME_NOMBRE
  * @Propiedad string $DEME_DESCRIPCION
+ * @Propiedad string $DEME_NIT
+ * @Propiedad string $DEME_DIRECCION
+ * @Propiedad string $DEME_TELEFONO
+ * @Propiedad string $DEME_IDREPRESENTANTE
+ * @Propiedad string $DEME_NOMBREREPRESENTANTE
+ * @Propiedad string $DEME_IDCONTACTO
+ * @Propiedad string $DEME_NOMBRECONTACTO
  * @Propiedad string $DEME_FECHACAMBIO
  * @Propiedad integer $DEME_REGISTRADOPOR
  *
@@ -45,11 +52,15 @@ class Descuentosmensuales extends CActiveRecord
 		return array(
 			array('DEME_NOMBRE, DEME_DESCRIPCION, DEME_FECHACAMBIO, DEME_REGISTRADOPOR', 'required'),
 			array('DEME_REGISTRADOPOR', 'numerical', 'integerOnly'=>true),
-			array('DEME_NOMBRE', 'length', 'max'=>30),
-			array('DEME_DESCRIPCION', 'length', 'max'=>20),
+			array('DEME_NOMBRE, DEME_NIT, DEME_DIRECCION', 'length', 'max'=>30),
+			array('DEME_DESCRIPCION, ' , 'length', 'max'=>20),
+			array('DEME_TELEFONO, ' , 'length', 'max'=>10),
+			array('DEME_IDREPRESENTANTE, DEME_IDCONTACTO ' , 'length', 'max'=>15),
+			array('DEME_NOMBREREPRESENTANTE,DEME_NOMBRECONTACTO ' , 'length', 'max'=>50),
 			//La siguiente regla es utilizada por search ().
             //Por favor, elimine los atributos que no se deben buscar.
-			array('DEME_ID, DEME_NOMBRE, DEME_DESCRIPCION, DEME_FECHACAMBIO, DEME_REGISTRADOPOR', 'safe', 'on'=>'search'),
+			array('DEME_ID, DEME_NOMBRE, DEME_DESCRIPCION, DEME_NIT, DEME_DIRECCION, DEME_TELEFONO, DEME_IDREPRESENTANTE, 
+			       DEME_NOMBREREPRESENTANTE, DEME_IDCONTACTO, DEME_NOMBRECONTACTO DEME_FECHACAMBIO, DEME_REGISTRADOPOR', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,6 +85,13 @@ class Descuentosmensuales extends CActiveRecord
 						'DEME_ID' => 'ID',
 						'DEME_NOMBRE' => 'DESCUENTO',
 						'DEME_DESCRIPCION' => 'DESCRIPCION',
+						'DEME_NIT' => 'NIT',
+						'DEME_DIRECCION' => 'DIRECCION Y CIUDAD',
+						'DEME_TELEFONO' => 'TELEFONO',
+						'DEME_IDREPRESENTANTE' => 'CEDULA REPRESENTANTE',
+						'DEME_NOMBREREPRESENTANTE' => 'NOMBRE REPRESENTANTE',
+						'DEME_IDCONTACTO' => 'CEDULA CONTACTO',
+						'DEME_NOMBRECONTACTO' => 'NOMBRE CONTACTO',						
 						'SUMATORIA' => 'VALOR TOTAL',
 						'RESET' => 'REESTABLECER',
 						'PASS' => 'CONTRASEÑA DE ADMINISTRADOR',
@@ -94,8 +112,8 @@ class Descuentosmensuales extends CActiveRecord
         //No debe ser buscado.
 
 		$sort = new CSort();
+		$sort->defaultOrder = '"DEME_NOMBRE" ASC';
 		$sort->attributes = array(
-			'defaultOrder'=>'t."DEME_NOMBRE" ASC',
 			
 			'DEME_ID'=>array(
 				'asc'=>'t."DEME_ID"',
@@ -177,6 +195,13 @@ class Descuentosmensuales extends CActiveRecord
 		$criteria->compare('"DEME_ID"',$this->DEME_ID);
 		$criteria->compare('"DEME_NOMBRE"',$this->DEME_NOMBRE,true);
 		$criteria->compare('"DEME_DESCRIPCION"',$this->DEME_DESCRIPCION,true);
+		$criteria->compare('"DEME_NIT"',$this->DEME_NIT,true);
+		$criteria->compare('"DEME_DIRECCION"',$this->DEME_DIRECCION,true);
+		$criteria->compare('"DEME_TELEFONO"',$this->DEME_TELEFONO,true);
+		$criteria->compare('"DEME_IDREPRESENTANTE"',$this->DEME_IDREPRESENTANTE,true);
+		$criteria->compare('"DEME_NOMBREREPRESENTANTE"',$this->DEME_NOMBREREPRESENTANTE,true);
+		$criteria->compare('"DEME_IDCONTACTO"',$this->DEME_IDCONTACTO,true);
+		$criteria->compare('"DEME_NOMBRECONTACTO"',$this->DEME_NOMBRECONTACTO,true);
 		$criteria->compare('"DEME_FECHACAMBIO"',$this->DEME_FECHACAMBIO,true);
 		$criteria->compare('"DEME_REGISTRADOPOR"',$this->DEME_REGISTRADOPOR);
 

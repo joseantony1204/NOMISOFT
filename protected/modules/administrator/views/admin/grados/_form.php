@@ -17,7 +17,7 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
-	<?php echo $form->textFieldRow($model,'GRAD_NOMBRE',array('class'=>'span3','maxlength'=>3)); ?>
+	<?php echo $form->textFieldRow($model,'GRAD_NOMBRE',array('class'=>'span3','maxlength'=>15)); ?>
 
 	<?php echo $form->textFieldRow($model,'GRAD_SUELDO',array('class'=>'span3')); ?>
 

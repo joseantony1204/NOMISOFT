@@ -288,11 +288,31 @@ class Liqvacaciones extends CActiveRecord
 			        $valor = ($bonificacion/30)*($conversion);
 				    return round($valor);
 				  }else{	
-				        /**
+				        $sql ='SELECT ROUND(SUM("BONIFICACION")/12)
+						   FROM ( 
+								 SELECT SUM("RANL_BONIFICACION") AS "BONIFICACION" 
+								 FROM  "TBL_NOMPERSONASGENERALES" pg, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMMENSUALNOMINALIQUIDACIONES" mnl, "TBL_NOMRETROACTIVOSNOMINA" rn, "TBL_NOMRETROACTIVOSNOMINALIQUIDACIONES" rnl
+								 WHERE pg."PEGE_ID" = ep."PEGE_ID" AND ep."EMPL_ID" = mnl."EMPL_ID" AND rn."RANO_ID" = rnl."RANO_ID" 
+								 AND mnl."MENL_ID" = rnl."MENL_ID" AND pg."PEGE_ID" = '.$Personasgeneral->Personageneral->PEGE_ID.'
+								 AND rn."RANO_ID" = '.$Liquidaciones->LIQU_ANIO.'
+								 UNION ALL
+								 SELECT SUM("MENL_BONIFICACION") AS "BONIFICACION" 
+								 FROM  "TBL_NOMPERSONASGENERALES" pg, "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMMENSUALNOMINALIQUIDACIONES" mnl, "TBL_NOMMENSUALNOMINA" mn
+								 WHERE pg."PEGE_ID" = ep."PEGE_ID" AND ep."EMPL_ID" = mnl."EMPL_ID" AND mn."MENO_ID" = mnl."MENO_ID" 
+								 AND pg."PEGE_ID" = '.$Personasgeneral->Personageneral->PEGE_ID.'
+								 AND mn."MENO_ID" >= '.($Liquidaciones->LIQU_ANIO-1).'0101 AND mn."MENO_ID" <= '.($Liquidaciones->LIQU_ANIO-1).'1201
+							   ) t
+						  ';
+				        $bonificacion = $connection->createCommand($sql)->queryScalar();
+						$conversion = ((($this->mesesvacaciones)*22)/12);
+			            $valor = ($bonificacion/30)*($conversion);
+				        return round($valor);
+						
+						/**
 						 *En caso de que no halla cumplido anio de servicio aun se le calcula
 				         *como el limite establecido es diferente del profesor al administrativo,
 						 *Este condicional verifica quien es quien para obtener asi el limite
-						 */
+						 *
 						if($Personasgeneral->Tipocargo->TICA_ID==1){
 						 $bon=$this->valorestablecidos[6][3];
 						}else{ 
@@ -311,7 +331,7 @@ class Liqvacaciones extends CActiveRecord
 						      $valor3 = ($valor2/12);
 						      $valor4 = ($valor3/30)*($conversion);
 						      return $valor4;
-					         }
+					         }*/
 					   }
 	           }
 	     }else{
@@ -324,13 +344,13 @@ class Liqvacaciones extends CActiveRecord
 
     public	function getPrimaSemestral($Personasgeneral,$Liquidaciones){
 	 $connection = Yii::app()->db;
-     $query = 'SELECT (snl."SENL_SALARIO"+snl."SENL_PRIMAANTIGUEDAD"+snl."SENL_TRANSPORTE"+snl."SENL_ALIMENTACION"+snl."SENL_PRIMATECNICA"+
-	                   snl."SENL_GASTOSRP"+snl."SENL_BONIFICACION") AS "SENL_DEVENGADO"
-			  FROM "TBL_NOMSEMESTRALNOMINALIQUIDACIONES" snl, "TBL_NOMSEMESTRALNOMINA" sn,  "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMPERSONASGENERALES" "p"
-			  WHERE sn."SENO_ID" = snl."SENO_ID" AND snl."EMPL_ID" = ep."EMPL_ID" AND ep."PEGE_ID" = p."PEGE_ID" 
-			  AND p."PEGE_ID" = '.$Personasgeneral->Personageneral->PEGE_ID.'
-              AND sn."SENO_ANIO" = '.$Liquidaciones->LIQU_ANIO.'		  
-			  ';
+	 $query='SELECT SUM("PRSE_SALARIO"+"PRSE_PRIMAANTIGUEDAD"+"PRSE_TRANSPORTE"+"PRSE_ALIMENTACION"+"PRSE_PRIMATECNICA"+
+                      "PRSE_GASTOSRP"+"PRSE_BONIFICACION") AS "PRSE_TOTAL"
+		   FROM "TBL_LIQPRIMASEMESTRAL" lps, "TBL_LIQLIQUIDACIONES" l
+		   WHERE l."LIQU_ID" = lps."LIQU_ID" AND lps."LIQU_ID" = '.$Liquidaciones->LIQU_ID.'
+		   GROUP BY lps."PRSE_ID"
+           ORDER BY lps."LIQU_ID" ASC
+		  '; 
 	 $primasemestral = $connection->createCommand($query)->queryScalar();
      $primasemestral = $primasemestral/12;
 	 $conversion = ((($this->mesesvacaciones)*22)/12);
@@ -385,7 +405,12 @@ class Liqvacaciones extends CActiveRecord
 	   $fechainiciovacaciones = $anioultimaliquidacion.'-'.$mesingreso .'-'.$diaringreso;
 	   $mesiniciovacaciones = date("m", strtotime($fechainiciovacaciones));
 	  }elseif($anioultimaliquidacion==(date('Y')-1)){
-	    $fechainiciovacaciones = date('Y').'-'.$mesingreso .'-'.$diaringreso;
+		if($anioingreso<1995){		
+        $fechainiciovacaciones = (date('Y')-1).'-'.$mesingreso .'-'.$diaringreso;		
+	   }else{
+		    $fechainiciovacaciones = date('Y').'-'.$mesingreso .'-'.$diaringreso;
+	       }
+	    
 	    $mesiniciovacaciones = date("m", strtotime($fechainiciovacaciones));
 	  }
 	  
@@ -406,9 +431,13 @@ class Liqvacaciones extends CActiveRecord
 	 *calculando los meses de liquidacion de las vacaciones
 	 */
 	 $meses  = 0;
-	 if($anioretiro>$anioultimaliquidacion){
-	   $meses = $mesretiro-$mesiniciovacaciones-1;
+	 if($anioretiro>$aniolultimaliquidacion){	   
 	   //echo '<br>'.$diaretiro.' == '.$ultimodiamesretiro.' o '.$diaretiro.' == '.($ultimodiamesretiro-1).' - ciclo (1)<br>';
+	   if($anioingreso<1995){		
+        $meses = 12-$mesiniciovacaciones+$mesretiro-1;		
+	   }else{
+		    $meses = $mesretiro-$mesiniciovacaciones-1;
+	       }
 	  if(($diaretiro==$ultimodiamesretiro) or ($diaretiro==($ultimodiamesretiro-1))){
 	    $this->mesesvacaciones = $meses+1;       	   
 	  }else{

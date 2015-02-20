@@ -167,7 +167,7 @@ class Horasextrasyrecargos extends CActiveRecord
 				'desc'=>'ep."EMPL_CARGO" desc',
 			),
         );
-
+/*
 		$criteria = new CDbCriteria;
         $criteria->select = 't.*, p.*, ep.*';
 	    $criteria->join = 'INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON t."EMPL_ID" = ep."EMPL_ID"
@@ -175,6 +175,20 @@ class Horasextrasyrecargos extends CActiveRecord
 						   INNER JOIN "TBL_NOMESTADOSEMPLEOSPLANTA" "eep" ON eep."EMPL_ID" = ep."EMPL_ID" AND eep."ESEM_ID" = 1';
 		$criteria->order = 'ep."EMPL_ID" DESC';
 		$criteria->group = 't."HOER_ID", p."PEGE_ID", ep."EMPL_ID"';
+		
+		*/
+		
+		$criteria = new CDbCriteria;
+        $criteria->select = '* FROM (SELECT t.*, p.*, (SELECT eep."ESEM_ID"
+                                          FROM "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+	                                      WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = p."PEGE_ID"
+	                                      ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+	                                      LIMIT 1 
+	                                      ) AS "ESEM_ID"';
+		 
+	    $criteria->join = 'INNER JOIN "TBL_NOMEMPLEOSPLANTA" "ep" ON ep."EMPL_ID" = t."EMPL_ID"
+		                   INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON p."PEGE_ID" = ep."PEGE_ID"';
+		$criteria->group = 'p."PEGE_ID", ep."EMPL_ID", t."HOER_ID") s WHERE ("ESEM_ID" = 1 OR "ESEM_ID" = 5)';
 
 		$criteria->compare('HOER_ID',$this->HOER_ID);
 		$criteria->compare('HOER_HED',$this->HOER_HED);
