@@ -7332,3 +7332,125 @@ LINE 32: ...MDESCUENTOSMENSUALES" "t" ORDER BY "DEME_NOMBRE", ASC LIMIT ...
 in /var/www/NOMINA/protected/extensions/bootstrap/widgets/TbGridView.php (49)
 in /var/www/NOMINA/protected/modules/administrator/views/admin/descuentosmensuales/admin.php (138)
 in /var/www/NOMINA/protected/modules/administrator/controllers/admin/DescuentosmensualesController.php (173)
+2015/02/23 11:42:39 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23503]: Foreign key violation: 7 ERROR:  update o delete en «TBL_NOMPERSONASGENERALES» viola la llave foránea «PEGE_ID» en la tabla «TBL_NOMCUMPLEANIOS»
+DETAIL:  La llave (PEGE_ID)=(1500) todavía es referida desde la tabla «TBL_NOMCUMPLEANIOS».. The SQL statement executed was: DELETE FROM "TBL_NOMPERSONASGENERALES" WHERE "TBL_NOMPERSONASGENERALES"."PEGE_ID"=1500.
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/PersonasgeneralesController.php (205)
+in /var/www/NOMINA/index.php (13)
+2015/02/23 11:43:33 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23503]: Foreign key violation: 7 ERROR:  update o delete en «TBL_NOMPERSONASGENERALES» viola la llave foránea «PEGE_ID» en la tabla «TBL_NOMCUMPLEANIOS»
+DETAIL:  La llave (PEGE_ID)=(1500) todavía es referida desde la tabla «TBL_NOMCUMPLEANIOS».. The SQL statement executed was: DELETE FROM "TBL_NOMPERSONASGENERALES" WHERE "TBL_NOMPERSONASGENERALES"."PEGE_ID"=1500.
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/PersonasgeneralesController.php (205)
+in /var/www/NOMINA/index.php (13)
+2015/02/23 15:24:06 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23503]: Foreign key violation: 7 ERROR:  update o delete en «TBL_NOMPERSONASGENERALES» viola la llave foránea «PEGE_ID» en la tabla «TBL_NOMCUMPLEANIOS»
+DETAIL:  La llave (PEGE_ID)=(1500) todavía es referida desde la tabla «TBL_NOMCUMPLEANIOS».. The SQL statement executed was: DELETE FROM "TBL_NOMPERSONASGENERALES" WHERE "TBL_NOMPERSONASGENERALES"."PEGE_ID"=1500.
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/PersonasgeneralesController.php (205)
+in /var/www/NOMINA/index.php (13)
+2015/02/23 15:33:38 [error] [system.db.CDbCommand] CDbCommand::fetchColumn() failed: SQLSTATE[42703]: Undefined column: 7 ERROR:  no existe la columna eep.ESEM_IDs
+LINE 1: ...OUNT(*) FROM (SELECT * FROM (SELECT t.* , (SELECT eep."ESEM_...
+                                                             ^. The SQL statement executed was: SELECT COUNT(*) FROM (SELECT * FROM (SELECT t.* , (SELECT eep."ESEM_IDs"
+									 FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+									 WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = t."PEGE_ID"
+									 ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+									 LIMIT 1 
+									) AS "ESEM_ID",
+									
+									(SELECT eep."ESEP_FECHAREGISTRO"
+									 FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+									 WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = t."PEGE_ID"
+									 ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+									 LIMIT 1 
+									) AS "ESEP_FECHAREGISTRO" FROM "TBL_NOMPERSONASGENERALES" "t"  
+		                   INNER JOIN "TBL_NOMEMPLEOSPLANTA" ep ON t."PEGE_ID" = ep."PEGE_ID"  						  
+						   GROUP BY t."PEGE_ID" ) s WHERE "ESEM_ID" !=1) sq.
+in /var/www/NOMINA/protected/extensions/bootstrap/widgets/TbGridView.php (49)
+in /var/www/NOMINA/protected/modules/administrator/views/admin/personasgenerales/retirados.php (139)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/PersonasgeneralesController.php (251)
+2015/03/03 09:49:23 [error] [system.db.CDbCommand] CDbCommand::fetch() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «ORDER»
+LINE 9: ...p" ON p."PEGE_ID" = t."PEGE_ID" AND t."PEGE_ID" = ORDER BY t...
+                                                             ^. The SQL statement executed was: SELECT t.*, p.*,		
+		(SELECT eep."ESEP_FECHAREGISTRO"
+		 FROM "TBL_NOMESTADOSEMPLEOSPLANTA" "eep"
+		 WHERE t."EMPL_ID" = eep."EMPL_ID" ORDER BY eep."ESEP_FECHAREGISTRO" DESC LIMIT 1) AS "ESEP_FECHAREGISTRO",
+		
+		(SELECT ee."ESEM_NOMBRE" 
+		 FROM "TBL_NOMESTADOSEMPLEOSPLANTA" "eep",  "TBL_NOMESTADOSEMPLEOS" "ee"
+		 WHERE t."EMPL_ID" = eep."EMPL_ID" AND eep."ESEM_ID" = ee."ESEM_ID" ORDER BY eep."ESEP_FECHAREGISTRO" DESC LIMIT 1) AS "ESEM_NOMBRE"
+		 FROM "TBL_NOMEMPLEOSPLANTA" "t" INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON p."PEGE_ID" = t."PEGE_ID" AND t."PEGE_ID" = ORDER BY t."EMPL_FECHAINGRESO" DESC LIMIT 1.
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/NovedadesmensualesController.php (105)
+in /var/www/NOMINA/index.php (13)
+2015/03/03 09:49:32 [error] [system.db.CDbCommand] CDbCommand::fetch() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «ORDER»
+LINE 9: ...p" ON p."PEGE_ID" = t."PEGE_ID" AND t."PEGE_ID" = ORDER BY t...
+                                                             ^. The SQL statement executed was: SELECT t.*, p.*,		
+		(SELECT eep."ESEP_FECHAREGISTRO"
+		 FROM "TBL_NOMESTADOSEMPLEOSPLANTA" "eep"
+		 WHERE t."EMPL_ID" = eep."EMPL_ID" ORDER BY eep."ESEP_FECHAREGISTRO" DESC LIMIT 1) AS "ESEP_FECHAREGISTRO",
+		
+		(SELECT ee."ESEM_NOMBRE" 
+		 FROM "TBL_NOMESTADOSEMPLEOSPLANTA" "eep",  "TBL_NOMESTADOSEMPLEOS" "ee"
+		 WHERE t."EMPL_ID" = eep."EMPL_ID" AND eep."ESEM_ID" = ee."ESEM_ID" ORDER BY eep."ESEP_FECHAREGISTRO" DESC LIMIT 1) AS "ESEM_NOMBRE"
+		 FROM "TBL_NOMEMPLEOSPLANTA" "t" INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON p."PEGE_ID" = t."PEGE_ID" AND t."PEGE_ID" = ORDER BY t."EMPL_FECHAINGRESO" DESC LIMIT 1.
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/NovedadesmensualesController.php (105)
+in /var/www/NOMINA/index.php (13)
+2015/03/03 09:49:44 [error] [system.db.CDbCommand] CDbCommand::fetch() failed: SQLSTATE[42601]: Syntax error: 7 ERROR:  error de sintaxis en o cerca de «ORDER»
+LINE 9: ...p" ON p."PEGE_ID" = t."PEGE_ID" AND t."PEGE_ID" = ORDER BY t...
+                                                             ^. The SQL statement executed was: SELECT t.*, p.*,		
+		(SELECT eep."ESEP_FECHAREGISTRO"
+		 FROM "TBL_NOMESTADOSEMPLEOSPLANTA" "eep"
+		 WHERE t."EMPL_ID" = eep."EMPL_ID" ORDER BY eep."ESEP_FECHAREGISTRO" DESC LIMIT 1) AS "ESEP_FECHAREGISTRO",
+		
+		(SELECT ee."ESEM_NOMBRE" 
+		 FROM "TBL_NOMESTADOSEMPLEOSPLANTA" "eep",  "TBL_NOMESTADOSEMPLEOS" "ee"
+		 WHERE t."EMPL_ID" = eep."EMPL_ID" AND eep."ESEM_ID" = ee."ESEM_ID" ORDER BY eep."ESEP_FECHAREGISTRO" DESC LIMIT 1) AS "ESEM_NOMBRE"
+		 FROM "TBL_NOMEMPLEOSPLANTA" "t" INNER JOIN "TBL_NOMPERSONASGENERALES" "p" ON p."PEGE_ID" = t."PEGE_ID" AND t."PEGE_ID" = ORDER BY t."EMPL_FECHAINGRESO" DESC LIMIT 1.
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/NovedadesmensualesController.php (105)
+in /var/www/NOMINA/index.php (13)
+2015/03/03 10:28:48 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42883]: Undefined function: 7 ERROR:  el operador no existe: date >== unknown
+LINE 4:       AND ep."EMPL_FECHAINGRESO">=='2015-02-20' AND ep."EMPL...
+                                        ^
+HINT:  Ningún operador coincide con el nombre y el tipo de los argumentos. Puede ser necesario agregar conversiones explícitas de tipos.. The SQL statement executed was: 
+			         SELECT p."PEGE_ID", ep."EMPL_ID" FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" ep 
+					 WHERE p."PEGE_ID" = ep."PEGE_ID" 
+					 AND ep."EMPL_FECHAINGRESO">=='2015-02-20' AND ep."EMPL_FECHAINGRESO"<=='2015-02-28'
+					 AND ep."EMPL_ID"  NOT IN 
+					 ( SELECT mnl."EMPL_ID" 
+					  FROM "TBL_NOMMENSUALNOMINALIQUIDACIONES" mnl, "TBL_NOMMENSUALNOMINA" mn 
+					  WHERE mnl."MENO_ID" = mn."MENO_ID" AND mn."MENO_ID" = 20150201
+					 )
+					 ORDER BY ep."EMPL_FECHAINGRESO" DESC
+				   .
+in /var/www/NOMINA/protected/modules/administrator/models/Mensualnomina.php (325)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/MensualnominaController.php (198)
+in /var/www/NOMINA/index.php (13)
+2015/03/03 10:28:57 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42883]: Undefined function: 7 ERROR:  el operador no existe: date >== unknown
+LINE 4:       AND ep."EMPL_FECHAINGRESO">=='2015-02-20' AND ep."EMPL...
+                                        ^
+HINT:  Ningún operador coincide con el nombre y el tipo de los argumentos. Puede ser necesario agregar conversiones explícitas de tipos.. The SQL statement executed was: 
+			         SELECT p."PEGE_ID", ep."EMPL_ID" FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" ep 
+					 WHERE p."PEGE_ID" = ep."PEGE_ID" 
+					 AND ep."EMPL_FECHAINGRESO">=='2015-02-20' AND ep."EMPL_FECHAINGRESO"<=='2015-02-28'
+					 AND ep."EMPL_ID"  NOT IN 
+					 ( SELECT mnl."EMPL_ID" 
+					  FROM "TBL_NOMMENSUALNOMINALIQUIDACIONES" mnl, "TBL_NOMMENSUALNOMINA" mn 
+					  WHERE mnl."MENO_ID" = mn."MENO_ID" AND mn."MENO_ID" = 20150201
+					 )
+					 ORDER BY ep."EMPL_FECHAINGRESO" DESC
+				   .
+in /var/www/NOMINA/protected/modules/administrator/models/Mensualnomina.php (325)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/MensualnominaController.php (198)
+in /var/www/NOMINA/index.php (13)
+2015/03/03 10:29:02 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42883]: Undefined function: 7 ERROR:  el operador no existe: date >== unknown
+LINE 4:       AND ep."EMPL_FECHAINGRESO">=='2015-02-20' AND ep."EMPL...
+                                        ^
+HINT:  Ningún operador coincide con el nombre y el tipo de los argumentos. Puede ser necesario agregar conversiones explícitas de tipos.. The SQL statement executed was: 
+			         SELECT p."PEGE_ID", ep."EMPL_ID" FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" ep 
+					 WHERE p."PEGE_ID" = ep."PEGE_ID" 
+					 AND ep."EMPL_FECHAINGRESO">=='2015-02-20' AND ep."EMPL_FECHAINGRESO"<=='2015-02-28'
+					 AND ep."EMPL_ID"  NOT IN 
+					 ( SELECT mnl."EMPL_ID" 
+					  FROM "TBL_NOMMENSUALNOMINALIQUIDACIONES" mnl, "TBL_NOMMENSUALNOMINA" mn 
+					  WHERE mnl."MENO_ID" = mn."MENO_ID" AND mn."MENO_ID" = 20150201
+					 )
+					 ORDER BY ep."EMPL_FECHAINGRESO" DESC
+				   .
+in /var/www/NOMINA/protected/modules/administrator/models/Mensualnomina.php (325)
+in /var/www/NOMINA/protected/modules/administrator/controllers/admin/MensualnominaController.php (198)
+in /var/www/NOMINA/index.php (13)

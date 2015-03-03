@@ -59,6 +59,7 @@ class Personasgenerales extends CActiveRecord
 	public $ESEP_FECHAREGISTRO;	
 	public $PEG_ID, $PEG_IDENTIFICACION, $PEG_PRIMERNOMBRE, $PEG_SEGUNDONOMBRE, $PEG_PRIMERAPELLIDO, $PEG_SEGUNDOAPELLIDOS, $EMPL_CARGO, $EMPL_ID;	
 	public $TICA_ID, $UNID_ID;	
+	public $ESEP_ID;	
 	 
 	public static function model($className=__CLASS__)
 	{
@@ -337,7 +338,15 @@ class Personasgenerales extends CActiveRecord
 
 		$criteria=new CDbCriteria;
         
-		$criteria->select = '* FROM (SELECT t.* , (SELECT eep."ESEM_ID"
+		$criteria->select = '* FROM (SELECT t.* , 
+		                            (SELECT eep."ESEP_ID"
+									 FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
+									 WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = t."PEGE_ID"
+									 ORDER BY eep."ESEP_FECHAREGISTRO" DESC 
+									 LIMIT 1 
+									) AS "ESEP_ID",
+									
+									(SELECT eep."ESEM_ID"
 									 FROM "TBL_NOMEMPLEOSPLANTA" ep, "TBL_NOMESTADOSEMPLEOSPLANTA" eep 
 									 WHERE ep."EMPL_ID" = eep."EMPL_ID" AND ep."PEGE_ID" = t."PEGE_ID"
 									 ORDER BY eep."ESEP_FECHAREGISTRO" DESC 

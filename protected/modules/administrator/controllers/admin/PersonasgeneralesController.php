@@ -38,7 +38,7 @@ class PersonasgeneralesController extends Controller
 		}
         return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'',''.$array[4].'','view',
+				'actions'=>array(''.$array[0].'',''.$array[1].'',''.$array[2].'',''.$array[3].'','checkpass','view',
                                  'delete','admin','create','update','dptos','municipios','creates', 'retirados','crearretiro',
                                  'insertretiro',
                                  ),
@@ -241,6 +241,8 @@ class PersonasgeneralesController extends Controller
 	public function actionRetirados()
 	{
 		$model=new Personasgenerales('retirados');
+		$Cform=new Cform;
+		
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Personasgenerales'])){
 			$model->attributes=$_GET['Personasgenerales'];
@@ -248,7 +250,29 @@ class PersonasgeneralesController extends Controller
 		
 		$this->render('retirados',array(
 			'model'=>$model,
+			'Cform'=>$Cform,
 		));
+	}
+	
+	public function actionCheckpass()
+	{
+	 if(isset($_POST['info']))
+	 {
+		$pass = $_POST['info'];
+		$Usuario = Usuarios::model()->findByPk(Yii::app()->user->id);
+			
+		if($Usuario==NULL){
+		echo 'false';		
+		}else{
+		      if(!$Usuario->validatePassword($pass)){
+			   echo 'false';	
+		      }else{
+			        echo 'true';
+		           }
+		      }
+	 }else{
+		   echo "";
+	      }
 	}
 	
 	public function actionCrearretiro()

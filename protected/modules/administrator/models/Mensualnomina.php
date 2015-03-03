@@ -245,7 +245,7 @@ class Mensualnomina extends CActiveRecord
 		}
 	  }else{
 	        $this->error="No se ha grabado la nomina de ".$this->periodoNomina($Mensualnomina->MENO_FECHAPROCESO);
-		   }
+		   }	  
 	  return $this->error;	  
 	}
 	
@@ -289,7 +289,7 @@ class Mensualnomina extends CActiveRecord
 	}
 	
 	
-	public function liquidarNomina($objet,$notification=NULL){
+	public function liquidarNomina($objet,$notification=NULL,$fechaAuxiliar){
 	 $connection = Yii::app()->db; 
 	 $this->success = NULL; $this->warning = NULL; $this->flag = NULL;
 	 $this->s = 0; $this->w = 0; $this->f = 0;
@@ -305,10 +305,19 @@ class Mensualnomina extends CActiveRecord
 	 if($notification==NULL){
 	  $sql = 'SELECT  ep."EMPL_ID" FROM "TBL_NOMEMPLEOSPLANTA" ep  ORDER BY  ep."EMPL_FECHAINGRESO" DESC';
 	 }elseif($notification==TRUE){
-	         $sql = 'SELECT  ep."EMPL_ID" 
-					 FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" ep
-					 WHERE p."PEGE_ID" = ep."PEGE_ID" AND p."PEGE_FECHAINGRESO">='."'".$objet->MENO_FECHAPROCESO."'".'
-					 ORDER BY  ep."EMPL_FECHAINGRESO" DESC
+		    $ultimodiames = date("d",(mktime(0,0,0,(date("m", strtotime($fechaAuxiliar)))+1,1,(date("Y", strtotime($fechaAuxiliar))))-1));
+		    $fechaAuxiliar;
+		    $fecha = (date("Y", strtotime($fechaAuxiliar)))."-".(date("m", strtotime($fechaAuxiliar)))."-".$ultimodiames;
+	        $sql = '
+			         SELECT ep."EMPL_ID" FROM "TBL_NOMPERSONASGENERALES" p, "TBL_NOMEMPLEOSPLANTA" ep 
+					 WHERE p."PEGE_ID" = ep."PEGE_ID" 
+					 AND ep."EMPL_FECHAINGRESO">='."'".$fechaAuxiliar."'".' AND ep."EMPL_FECHAINGRESO"<='."'".$fecha."'".'
+					 AND ep."EMPL_ID"  NOT IN 
+					 ( SELECT mnl."EMPL_ID" 
+					  FROM "TBL_NOMMENSUALNOMINALIQUIDACIONES" mnl, "TBL_NOMMENSUALNOMINA" mn 
+					  WHERE mnl."MENO_ID" = mn."MENO_ID" AND mn."MENO_ID" = '.$objet->MENO_ID.'
+					 )
+					 ORDER BY ep."EMPL_FECHAINGRESO" DESC
 				   ';
 		   }
 		   

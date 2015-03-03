@@ -182,7 +182,8 @@ class MensualnominaController extends Controller
 			$Mensualnomina->MENO_ESTADO = 0; 			
 			$Mensualnomina->MENO_ANIO = date("Y",strtotime($Mensualnomina->MENO_FECHAPROCESO)); 			
 			$Mensualnomina->MENO_FECHACAMBIO =  date('Y-m-d H:i:s');
-			$Mensualnomina->MENO_REGISTRADOPOR = Yii::app()->user->id;			 
+			$Mensualnomina->MENO_REGISTRADOPOR = Yii::app()->user->id;
+            			
 			$msj = $this->validarNominapostcreate($Mensualnomina);
 			if($msj!=""){
 			 echo "<table border='1' align='center'  width='100%' style='border-collapse:collapse;'>
@@ -191,9 +192,10 @@ class MensualnominaController extends Controller
                    </tr>";      
             echo"</table>";
 		    }else{ 
-		         $Mensualnomina = $this->loadModel($Mensualnomina->MENO_ID);
-				 if($Mensualnomina){
-				   $Mensualnomina->liquidarNomina($Mensualnomina,TRUE);
+		         $fechaAuxiliar = $Mensualnomina->MENO_FECHAPROCESO;
+				 $Mensualnomina = $this->loadModel($Mensualnomina->MENO_ID);
+				 if($Mensualnomina){	
+				   $Mensualnomina->liquidarNomina($Mensualnomina,TRUE,$fechaAuxiliar);
 					
 					echo"
                     <table border='1' align='center'  width='100%' style='border-collapse:collapse;'>
